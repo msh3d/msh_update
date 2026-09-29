@@ -1,0 +1,2595 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modelling Studio HUB — Professional Rhino Jewelry Plugins</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%230c0c0e'/%3E%3Cpolygon points='32,5 56,18 56,46 32,59 8,46 8,18' fill='none' stroke='%23c9a96e' stroke-width='3'/%3E%3Cpolygon points='32,18 44,24 44,40 32,46 20,40 20,24' fill='none' stroke='%23c9a96e' stroke-width='2' opacity='.65'/%3E%3Ccircle cx='32' cy='32' r='4.5' fill='%23c9a96e'/%3E%3C/svg%3E">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <meta name="description" content="MSH Studio: native Rhino 8 jewellery plugin suite. Gradient and scattered pavé, azure cutters, metal weight reports and 8K capture, built by a working jewellery CAD designer.">
+  <link rel="canonical" href="https://msh3d.github.io/msh/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Modelling Studio HUB — Professional Rhino Jewelry Plugins">
+  <meta property="og:description" content="Design jewellery faster in Rhino. Automated pavé, azure cutters, metal reports and pro capture.">
+  <meta property="og:url" content="https://msh3d.github.io/msh/">
+  <meta property="og:image" content="https://msh3d.github.io/msh/msh-serpent-logo.png"><!-- FILL: replace with a 1200x630 social preview image (e.g. og-image.png) -->
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"SoftwareApplication","name":"MSH High Jewellery Suite","alternateName":"Modelling Studio HUB","applicationCategory":"DesignApplication","operatingSystem":"Windows (Rhino 8)","url":"https://msh3d.github.io/msh/",
+   "offers":[{"@type":"Offer","name":"Quarterly","price":"14999","priceCurrency":"INR"},{"@type":"Offer","name":"Half-Yearly","price":"29999","priceCurrency":"INR"},{"@type":"Offer","name":"Annual","price":"49999","priceCurrency":"INR"}]}
+  </script>
+
+  <style>
+    /* ============================================
+       CSS VARIABLES — DUAL THEME ENGINE
+       ============================================ */
+    :root {
+      --transition-theme: color 0.4s ease, background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+      --radius-sm: 12px;
+      --radius-md: 20px;
+      --radius-lg: 28px;
+      --radius-pill: 999px;
+    }
+
+    [data-theme="dark"] {
+      --bg-base-solid:  #0c0c0e;
+      --bg-base:        rgba(12, 12, 14, 0.5);
+      --bg-surface:     rgba(20, 20, 22, 0.42);
+      --bg-card:        rgba(26, 26, 30, 0.38);
+      --bg-card-hover:  rgba(32, 32, 38, 0.5);
+      --bg-glass:       rgba(20, 20, 22, 0.55);
+      --border:         rgba(255, 255, 255, 0.14);
+      --border-strong:  rgba(255, 255, 255, 0.24);
+      --text-primary:   #f0ede8;
+      --text-secondary: #8a8580;
+      --text-muted:     #4a4845;
+      --accent-gold:    #c9a96e;
+      --accent-gold-lt: #e8c99a;
+      --accent-blue:    #4a9eff;
+      --accent-glow:    rgba(201, 169, 110, 0.15);
+      --shadow-card:    0 8px 40px rgba(0,0,0,0.5);
+      --shadow-glow:    0 0 60px rgba(201,169,110,0.08);
+      --nav-bg:         rgba(12, 12, 14, 0.65);
+      --hero-overlay:   rgba(0,0,0,0.35);
+      --tag-bg:         rgba(201,169,110,0.1);
+      --tag-color:      #c9a96e;
+    }
+
+    [data-theme="light"] {
+      --bg-base-solid:  #faf9f7;
+      --bg-base:        rgba(250, 249, 247, 0.5);
+      --bg-surface:     rgba(244, 242, 238, 0.42);
+      --bg-card:        rgba(255, 255, 255, 0.4);
+      --bg-card-hover:  rgba(249, 248, 246, 0.55);
+      --bg-glass:       rgba(250, 249, 247, 0.6);
+      --border:         rgba(0,0,0,0.1);
+      --border-strong:  rgba(0,0,0,0.2);
+      --text-primary:   #1a1714;
+      --text-secondary: #6b6560;
+      --text-muted:     #b5b0aa;
+      --accent-gold:    #9a7340;
+      --accent-gold-lt: #c9a96e;
+      --accent-blue:    #1a6cd4;
+      --accent-glow:    rgba(154, 115, 64, 0.08);
+      --shadow-card:    0 2px 20px rgba(0,0,0,0.08);
+      --shadow-glow:    0 0 40px rgba(154,115,64,0.06);
+      --nav-bg:         rgba(250,249,247,0.72);
+      --hero-overlay:   rgba(0,0,0,0.22);
+      --tag-bg:         rgba(154,115,64,0.08);
+      --tag-color:      #9a7340;
+    }
+
+    /* ============================================
+       RESET & BASE
+       ============================================ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg-base-solid);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      transition: var(--transition-theme);
+      line-height: 1.6;
+    }
+
+    /* ============================================
+       SCROLLBAR
+       ============================================ */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg-base-solid); }
+    ::-webkit-scrollbar-thumb { background: var(--accent-gold); border-radius: 2px; }
+
+    /* ============================================
+       GRAIN TEXTURE OVERLAY
+       ============================================ */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
+    }
+
+    /* ============================================
+       CURSOR SERPENT
+       ============================================ */
+    .cursor-serpent {
+      position: fixed;
+      top: 0; left: 0;
+      width: 44px;
+      max-width: none;
+      height: auto;
+      pointer-events: none;
+      z-index: 10000;
+      opacity: 0;
+      transition: opacity 0.3s var(--ease);
+      will-change: transform;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.35));
+    }
+
+    @media (hover: none), (pointer: coarse) {
+      .cursor-serpent { display: none; }
+    }
+
+    /* ============================================
+       AMBIENT BACKGROUND GRADIENT BLOBS
+       ============================================ */
+    .bg-atmosphere {
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .bg-atmosphere .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.3;
+      will-change: transform;
+    }
+
+    .blob-1 {
+      width: 560px; height: 560px;
+      top: -140px; left: -120px;
+      background: radial-gradient(circle, var(--accent-gold) 0%, transparent 70%);
+      animation: floatBlob 24s ease-in-out infinite;
+    }
+
+    .blob-2 {
+      width: 620px; height: 620px;
+      bottom: -180px; right: -140px;
+      background: radial-gradient(circle, var(--accent-blue) 0%, transparent 70%);
+      animation: floatBlob 28s ease-in-out infinite reverse;
+    }
+
+    .blob-3 {
+      width: 440px; height: 440px;
+      top: 42%; left: 58%;
+      background: radial-gradient(circle, var(--accent-gold-lt) 0%, transparent 70%);
+      animation: floatBlob 32s ease-in-out infinite;
+    }
+
+    @keyframes floatBlob {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50%      { transform: translate(50px, -40px) scale(1.08); }
+    }
+
+    /* ============================================
+       ROTATING BACKGROUND LOGO
+       ============================================ */
+    .bg-serpent {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 560px;
+      max-width: none;
+      height: auto;
+      transform: translate(-50%, -50%) rotate(0deg);
+      opacity: 0.1;
+      pointer-events: none;
+      z-index: -2;
+      will-change: transform;
+    }
+
+    /* ============================================
+       NAVIGATION
+       ============================================ */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: var(--nav-bg);
+      backdrop-filter: saturate(200%) blur(24px);
+      -webkit-backdrop-filter: saturate(200%) blur(24px);
+      z-index: 1000;
+      border-bottom: 1px solid var(--border);
+      transition: var(--transition-theme);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 56px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .logo-mark {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .logo-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--accent-gold); }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    /* Trial License CTA */
+    .nav-trial {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 36px;
+      padding: 0 15px;
+      border: 1px solid var(--accent-gold);
+      border-radius: var(--radius-pill);
+      color: var(--accent-gold);
+      text-decoration: none;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      transition: all 0.3s;
+    }
+
+    .nav-trial:hover {
+      background: var(--accent-gold);
+      color: #0c0c0e;
+      box-shadow: 0 8px 24px rgba(201,169,110,0.18);
+    }
+
+    /* Theme Toggle */
+    .theme-toggle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid var(--border-strong);
+      background: transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--accent-gold);
+      color: var(--accent-gold);
+    }
+
+    .theme-toggle svg {
+      position: absolute;
+      transition: transform 0.4s ease, opacity 0.4s ease;
+    }
+
+    .icon-sun { opacity: 0; transform: rotate(-90deg) scale(0.5); }
+    .icon-moon { opacity: 1; transform: rotate(0deg) scale(1); }
+
+    [data-theme="light"] .icon-sun { opacity: 1; transform: rotate(0deg) scale(1); }
+    [data-theme="light"] .icon-moon { opacity: 0; transform: rotate(90deg) scale(0.5); }
+
+    /* ============================================
+       HERO
+       ============================================ */
+    .hero {
+      margin-top: 56px;
+      min-height: 95vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 100px 32px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: var(--hero-overlay);
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 900px;
+    }
+
+    .hero-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeSlideUp 0.8s ease 0.2s forwards;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(52px, 8vw, 96px);
+      font-weight: 300;
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+      margin-bottom: 8px;
+      opacity: 0;
+      animation: fadeSlideUp 0.9s ease 0.35s forwards;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--accent-gold-lt);
+    }
+
+    .hero-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(20px, 3vw, 28px);
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 28px;
+      letter-spacing: 0.02em;
+      opacity: 0;
+      animation: fadeSlideUp 0.9s ease 0.5s forwards;
+    }
+
+    .hero-desc {
+      font-size: 16px;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.8;
+      max-width: 600px;
+      margin: 0 auto 48px;
+      font-weight: 300;
+      opacity: 0;
+      animation: fadeSlideUp 0.9s ease 0.65s forwards;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      opacity: 0;
+      animation: fadeSlideUp 0.9s ease 0.8s forwards;
+    }
+
+    .btn-gold, .btn-outline {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-gold::before, .btn-outline::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -75%;
+      width: 50%; height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.4), transparent);
+      transform: skewX(-20deg);
+      transition: left 0.6s var(--ease);
+      pointer-events: none;
+    }
+
+    .btn-gold:hover::before, .btn-outline:hover::before { left: 125%; }
+
+    .btn-gold {
+      background: var(--accent-gold);
+      color: #0c0c0e;
+      padding: 14px 36px;
+      border-radius: var(--radius-pill);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: all 0.3s var(--ease);
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-gold:hover {
+      background: var(--accent-gold-lt);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(201,169,110,0.3);
+    }
+
+    .btn-outline {
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(12px) saturate(180%);
+      -webkit-backdrop-filter: blur(12px) saturate(180%);
+      color: rgba(255,255,255,0.85);
+      padding: 14px 36px;
+      border-radius: var(--radius-pill);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,0.3);
+      transition: all 0.3s var(--ease);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--accent-gold);
+      color: var(--accent-gold);
+      transform: translateY(-2px);
+    }
+
+    /* Scroll indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      animation: fadeIn 1s ease 1.4s forwards;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.3));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .scroll-line::after {
+      content: '';
+      position: absolute;
+      top: -100%;
+      width: 100%;
+      height: 100%;
+      background: var(--accent-gold);
+      animation: scrollDrop 2s ease-in-out infinite;
+    }
+
+    /* ============================================
+       SECTION COMMONS
+       ============================================ */
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 300;
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+    }
+
+    .section-subtitle {
+      font-size: 17px;
+      color: var(--text-secondary);
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    .divider {
+      width: 48px;
+      height: 1px;
+      background: var(--accent-gold);
+      margin: 20px auto;
+      opacity: 0.5;
+    }
+
+    /* ============================================
+       VIDEO SECTION
+       ============================================ */
+    .video-section {
+      background: var(--bg-surface);
+      padding: 120px 32px;
+      text-align: center;
+      transition: var(--transition-theme);
+    }
+
+    .video-section .section-header {
+      margin-bottom: 60px;
+    }
+
+    .video-wrapper {
+      max-width: 1000px;
+      margin: 0 auto;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      position: relative;
+    }
+
+    .video-wrapper::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      padding: 1px;
+      background: linear-gradient(135deg, var(--accent-gold) 0%, transparent 50%, var(--accent-gold) 100%);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0.25;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .video-wrapper iframe,
+    .video-wrapper video {
+      width: 100%;
+      aspect-ratio: 16/9;
+      border: none;
+      display: block;
+      object-fit: cover;
+    }
+
+    /* ============================================
+       PLUGINS SECTION
+       ============================================ */
+    .plugins-section {
+      padding: 140px 32px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .plugins-section .section-header {
+      text-align: center;
+      margin-bottom: 100px;
+    }
+
+    .plugin-grid {
+      display: grid;
+      gap: 20px;
+    }
+
+    .plugin-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: var(--bg-card);
+      backdrop-filter: blur(18px) saturate(180%);
+      -webkit-backdrop-filter: blur(18px) saturate(180%);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      transition: transform 0.4s var(--ease), border-color 0.4s var(--ease), box-shadow 0.4s var(--ease);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .plugin-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--accent-glow), transparent);
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+
+    .plugin-card:hover {
+      border-color: var(--border-strong);
+      box-shadow: var(--shadow-glow);
+      z-index: 1;
+    }
+
+    .plugin-card:hover::before { opacity: 1; }
+
+    .plugin-card:nth-child(even) .plugin-content { order: 2; }
+    .plugin-card:nth-child(even) .plugin-visual { order: 1; }
+
+    .plugin-content {
+      padding: 64px 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .plugin-number {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.15em;
+      margin-bottom: 20px;
+    }
+
+    .plugin-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--tag-bg);
+      color: var(--tag-color);
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      width: fit-content;
+    }
+
+    .plugin-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(28px, 3.5vw, 44px);
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+      margin-bottom: 18px;
+      color: var(--text-primary);
+    }
+
+    .plugin-desc {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      margin-bottom: 32px;
+      font-weight: 300;
+    }
+
+    .plugin-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--accent-gold);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: all 0.3s;
+      position: relative;
+    }
+
+    .plugin-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--accent-gold);
+      transition: width 0.3s;
+    }
+
+    .plugin-link:hover::after { width: 100%; }
+    .plugin-link:hover { gap: 14px; }
+
+    .plugin-visual {
+      position: relative;
+      overflow: hidden;
+      min-height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .plugin-visual svg { position: relative; z-index: 1; }
+
+    /* Visual gradients */
+    .vis-1 { background: linear-gradient(145deg, #1a1520 0%, #2d1f3d 50%, #1a1520 100%); }
+    .vis-2 { background: linear-gradient(145deg, #101a20 0%, #1a3040 50%, #101a20 100%); }
+    .vis-3 { background: linear-gradient(145deg, #201520 0%, #3d1f35 50%, #201520 100%); }
+    .vis-4 { background: linear-gradient(145deg, #201a10 0%, #3d3015 50%, #201a10 100%); }
+    .vis-5 { background: linear-gradient(145deg, #101520 0%, #1f2d40 50%, #101520 100%); }
+
+    [data-theme="light"] .vis-1 { background: linear-gradient(145deg, #f0eaf8 0%, #e0d0f0 50%, #f0eaf8 100%); }
+    [data-theme="light"] .vis-2 { background: linear-gradient(145deg, #e8f0f8 0%, #d0e4f5 50%, #e8f0f8 100%); }
+    [data-theme="light"] .vis-3 { background: linear-gradient(145deg, #f8e8f0 0%, #f0d0e4 50%, #f8e8f0 100%); }
+    [data-theme="light"] .vis-4 { background: linear-gradient(145deg, #f8f0e0 0%, #f5e8c0 50%, #f8f0e0 100%); }
+    [data-theme="light"] .vis-5 { background: linear-gradient(145deg, #e0e8f8 0%, #c8d8f5 50%, #e0e8f8 100%); }
+
+    /* ============================================
+       COMMAND HUB SECTION
+       ============================================ */
+    .command-section {
+      padding: 140px 32px;
+      background: var(--bg-surface);
+      transition: var(--transition-theme);
+    }
+
+    .command-section .section-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 80px;
+    }
+
+    .command-categories {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .category-block {
+      margin-bottom: 60px;
+    }
+
+    .category-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .category-icon {
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-gold);
+      flex-shrink: 0;
+    }
+
+    .category-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      color: var(--text-primary);
+    }
+
+    .category-count {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-left: auto;
+    }
+
+    .commands-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+    }
+
+    .command-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(18px) saturate(180%);
+      -webkit-backdrop-filter: blur(18px) saturate(180%);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      transition: all 0.3s;
+      cursor: default;
+    }
+
+    .command-card:hover {
+      border-color: var(--border-strong);
+      background: var(--bg-card-hover);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-card);
+    }
+
+    .command-icon-wrap {
+      width: 36px;
+      height: 36px;
+      background: var(--tag-bg);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--accent-gold);
+    }
+
+    .command-info { flex: 1; }
+
+    .command-name {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+      line-height: 1.3;
+    }
+
+    .command-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .command-badge {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      color: var(--accent-gold);
+      background: var(--tag-bg);
+      padding: 2px 6px;
+      border-radius: var(--radius-pill);
+      text-transform: uppercase;
+      margin-top: 8px;
+      display: inline-block;
+    }
+
+    /* ============================================
+       FEATURES SECTION
+       ============================================ */
+    .features-section {
+      padding: 140px 32px;
+      background: var(--bg-base);
+      transition: var(--transition-theme);
+    }
+
+    .features-section .section-header {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .feature-item {
+      background: var(--bg-base);
+      backdrop-filter: blur(14px) saturate(180%);
+      -webkit-backdrop-filter: blur(14px) saturate(180%);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-card);
+      padding: 56px 48px;
+      text-align: center;
+      position: relative;
+      transition: background 0.3s var(--ease), border-color 0.3s var(--ease), transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+    }
+
+    .feature-item:hover {
+      background: var(--bg-card);
+      border-color: var(--border-strong);
+      transform: translateY(-4px);
+    }
+
+    .feature-icon {
+      width: 52px;
+      height: 52px;
+      margin: 0 auto 24px;
+      color: var(--accent-gold);
+    }
+
+    .feature-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      letter-spacing: 0.02em;
+    }
+
+    .feature-text {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      font-weight: 300;
+    }
+
+    /* ============================================
+       PRICING SECTION
+       ============================================ */
+    .pricing-section {
+      padding: 140px 32px;
+      background: var(--bg-surface);
+      transition: var(--transition-theme);
+    }
+
+    .pricing-section .section-header {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .pricing-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(18px) saturate(180%);
+      -webkit-backdrop-filter: blur(18px) saturate(180%);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      padding: 56px 44px;
+      text-align: center;
+      position: relative;
+      transition: border-color 0.4s var(--ease), box-shadow 0.4s var(--ease), transform 0.4s var(--ease), background 0.4s var(--ease);
+    }
+
+    .pricing-card:hover {
+      border-color: var(--border-strong);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.35);
+      transform: translateY(-6px);
+    }
+
+    .pricing-card.featured {
+      border-color: var(--accent-gold);
+      background: var(--bg-card-hover);
+    }
+
+    .pricing-badge {
+      position: absolute;
+      top: -1px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent-gold);
+      color: #0c0c0e;
+      padding: 5px 20px;
+      border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .pricing-period {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    .pricing-amount {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 52px;
+      font-weight: 300;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .pricing-duration {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 40px;
+      font-weight: 300;
+    }
+
+    .pricing-features {
+      list-style: none;
+      margin-bottom: 44px;
+      text-align: left;
+    }
+
+    .pricing-features li {
+      padding: 10px 0;
+      font-size: 14px;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .pricing-features li:last-child { border-bottom: none; }
+
+    .pricing-features li::before {
+      content: '';
+      width: 4px;
+      height: 4px;
+      background: var(--accent-gold);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .btn-pricing {
+      display: block;
+      text-align: center;
+      padding: 14px 32px;
+      background: transparent;
+      border: 1px solid var(--accent-gold);
+      color: var(--accent-gold);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: all 0.3s;
+    }
+
+    .btn-pricing:hover,
+    .pricing-card.featured .btn-pricing {
+      background: var(--accent-gold);
+      color: #0c0c0e;
+    }
+
+    .pricing-card.featured .btn-pricing:hover {
+      background: var(--accent-gold-lt);
+      border-color: var(--accent-gold-lt);
+    }
+
+    /* ============================================
+       CONTACT SECTION
+       ============================================ */
+    .contact-section {
+      padding: 140px 32px;
+      background: var(--bg-base);
+      transition: var(--transition-theme);
+    }
+
+    .contact-section .section-header {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .contact-item {
+      background: var(--bg-base);
+      backdrop-filter: blur(14px) saturate(180%);
+      -webkit-backdrop-filter: blur(14px) saturate(180%);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-card);
+      padding: 48px 36px;
+      text-align: center;
+      transition: background 0.3s var(--ease), border-color 0.3s var(--ease), transform 0.3s var(--ease);
+    }
+
+    .contact-item:hover {
+      background: var(--bg-card);
+      border-color: var(--border-strong);
+      transform: translateY(-4px);
+    }
+
+    .contact-icon {
+      width: 36px;
+      height: 36px;
+      margin: 0 auto 20px;
+      color: var(--accent-gold);
+    }
+
+    .contact-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--text-muted);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .contact-value {
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--text-primary);
+    }
+
+    .contact-value a {
+      color: var(--accent-gold);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .contact-value a:hover { color: var(--accent-gold-lt); }
+
+    /* ============================================
+       FOOTER
+       ============================================ */
+    footer {
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border);
+      padding: 48px 32px;
+      transition: var(--transition-theme);
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .footer-text {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 0.05em;
+      transition: color 0.3s;
+    }
+
+    .footer-links a:hover { color: var(--accent-gold); }
+
+    /* ============================================
+       SCROLL REVEAL ANIMATIONS
+       ============================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ============================================
+       KEYFRAMES
+       ============================================ */
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes scrollDrop {
+      0% { top: -100%; }
+      100% { top: 200%; }
+    }
+
+    @keyframes gemRotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* ============================================
+       RESPONSIVE
+       ============================================ */
+    @media (max-width: 900px) {
+      .nav-container { padding: 0 20px; }
+      .nav-links { gap: 14px; }
+      .nav-links a { font-size: 10px; letter-spacing: 0.04em; }
+      .nav-actions { gap: 10px; }
+      .nav-trial {
+        height: 34px;
+        padding: 0 11px;
+        font-size: 9px;
+      }
+      .plugin-card { grid-template-columns: 1fr !important; }
+      .plugin-card:nth-child(even) .plugin-content { order: 1; }
+      .plugin-card:nth-child(even) .plugin-visual { order: 2; }
+      .plugin-visual { min-height: 240px; }
+      .plugin-content { padding: 44px 36px; }
+      .features-grid { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-inner { flex-direction: column; gap: 20px; text-align: center; }
+    }
+
+    @media (max-width: 700px) {
+      .nav-links { display: none; }
+    }
+
+    @media (max-width: 600px) {
+      .hero-cta { flex-direction: column; align-items: center; }
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+    /* ============================================
+       LIQUID GLASS SYSTEM (iOS 27-style)
+       ============================================ */
+    [data-theme="dark"] {
+      --glass-rgb: 255,255,255;
+      --glass-a-base: 0.06;
+      --glass-blur: 22px;
+      --glass-border: rgba(255,255,255,0.14);
+      --glass-border-hover: rgba(255,255,255,0.30);
+      --glass-edge-out: rgba(0,0,0,0.30);
+      --glass-rim: rgba(255,255,255,0.10);
+      --glass-spec: rgba(255,255,255,0.30);
+      --glass-shadow: 0 14px 44px rgba(0,0,0,0.30);
+      --border: rgba(255,255,255,0.10);
+      --border-strong: rgba(255,255,255,0.22);
+      --hero-overlay: rgba(0,0,0,0.10);
+    }
+
+    [data-theme="light"] {
+      --glass-rgb: 255,255,255;
+      --glass-a-base: 0.30;
+      --glass-blur: 22px;
+      --glass-border: rgba(255,255,255,0.75);
+      --glass-border-hover: rgba(255,255,255,0.98);
+      --glass-edge-out: rgba(70,50,20,0.10);
+      --glass-rim: rgba(255,255,255,0.60);
+      --glass-spec: rgba(255,255,255,1);
+      --glass-shadow: 0 12px 36px rgba(70,50,20,0.14);
+      --border: rgba(0,0,0,0.08);
+      --border-strong: rgba(0,0,0,0.18);
+      --hero-overlay: rgba(255,255,255,0.05);
+    }
+
+    [data-theme="dark"], [data-theme="light"] {
+      --glass-a: calc(var(--glass-a-base) * var(--glass-k, 1));
+      --bg-base:       rgba(var(--glass-rgb), calc(var(--glass-a) * 0.35));
+      --bg-surface:    rgba(var(--glass-rgb), calc(var(--glass-a) * 0.5));
+      --bg-card:       rgba(var(--glass-rgb), var(--glass-a));
+      --bg-card-hover: rgba(var(--glass-rgb), calc(var(--glass-a) * 1.7));
+      --nav-bg: transparent;
+    }
+
+    .bg-atmosphere .blob { opacity: 0.42; }
+    [data-theme="light"] .bg-atmosphere .blob { opacity: 0.5; }
+
+    /* ---- Glass surfaces ---- */
+    .plugin-card, .command-card, .pricing-card, .feature-item, .contact-item,
+    .video-wrapper, .theme-toggle, .glass-ui, .nav-container {
+      background:
+        radial-gradient(130% 90% at 0% 0%, rgba(255,255,255,0.09), transparent 55%),
+        var(--bg-card);
+      -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(190%) brightness(1.05);
+      backdrop-filter: blur(var(--glass-blur)) saturate(190%) brightness(1.05);
+      border: 1px solid var(--glass-border);
+      box-shadow:
+        inset 0 1px 0 var(--glass-spec),
+        inset 0 0 0 1px var(--glass-rim),
+        0 0 0 1px var(--glass-edge-out),
+        var(--glass-shadow);
+    }
+
+    .plugin-card:hover, .command-card:hover, .pricing-card:hover,
+    .feature-item:hover, .contact-item:hover {
+      background:
+        radial-gradient(130% 90% at 0% 0%, rgba(255,255,255,0.16), transparent 55%),
+        var(--bg-card-hover);
+      border-color: var(--glass-border-hover);
+      -webkit-backdrop-filter: blur(calc(var(--glass-blur) + 6px)) saturate(210%) brightness(1.08);
+      backdrop-filter: blur(calc(var(--glass-blur) + 6px)) saturate(210%) brightness(1.08);
+      transform: translateY(-4px);
+    }
+
+    .pricing-card.featured, .pricing-card.featured:hover {
+      background:
+        radial-gradient(130% 90% at 0% 0%, rgba(255,255,255,0.14), transparent 55%),
+        linear-gradient(180deg,
+          color-mix(in srgb, var(--accent-gold) 24%, transparent),
+          color-mix(in srgb, var(--accent-gold) 8%, transparent));
+      border-color: color-mix(in srgb, var(--accent-gold) 65%, transparent);
+    }
+
+    .pricing-badge {
+      background: color-mix(in srgb, var(--accent-gold) 45%, transparent);
+      color: var(--text-primary);
+      -webkit-backdrop-filter: blur(12px) saturate(190%);
+      backdrop-filter: blur(12px) saturate(190%);
+      border: 1px solid color-mix(in srgb, var(--accent-gold) 65%, transparent);
+      border-top: none;
+    }
+
+    /* ---- Glass buttons ---- */
+    .btn-gold, .btn-pricing, .nav-trial, .pricing-card.featured .btn-pricing {
+      background: linear-gradient(180deg,
+        color-mix(in srgb, var(--accent-gold) 46%, transparent),
+        color-mix(in srgb, var(--accent-gold) 20%, transparent));
+      color: var(--text-primary);
+      border: 1px solid color-mix(in srgb, var(--accent-gold) 65%, transparent);
+      -webkit-backdrop-filter: blur(16px) saturate(190%);
+      backdrop-filter: blur(16px) saturate(190%);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.45),
+        inset 0 -1px 0 rgba(0,0,0,0.12),
+        0 8px 24px color-mix(in srgb, var(--accent-gold) 20%, transparent);
+    }
+
+    .btn-gold:hover, .btn-pricing:hover, .nav-trial:hover,
+    .pricing-card.featured .btn-pricing:hover {
+      background: linear-gradient(180deg,
+        color-mix(in srgb, var(--accent-gold) 62%, transparent),
+        color-mix(in srgb, var(--accent-gold) 32%, transparent));
+      color: var(--text-primary);
+      border-color: var(--accent-gold-lt);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.55),
+        inset 0 -1px 0 rgba(0,0,0,0.12),
+        0 14px 34px color-mix(in srgb, var(--accent-gold) 34%, transparent);
+    }
+
+    .btn-outline {
+      background: linear-gradient(180deg,
+        rgba(var(--glass-rgb), calc(var(--glass-a) * 2)),
+        rgba(var(--glass-rgb), calc(var(--glass-a) * 0.8)));
+      color: var(--text-primary);
+      border: 1px solid var(--glass-border);
+      -webkit-backdrop-filter: blur(16px) saturate(190%);
+      backdrop-filter: blur(16px) saturate(190%);
+      box-shadow: inset 0 1px 0 var(--glass-spec), 0 8px 24px rgba(0,0,0,0.16);
+    }
+
+    .btn-outline:hover { border-color: var(--accent-gold); color: var(--accent-gold); }
+
+    /* ---- Floating glass nav ---- */
+    nav {
+      top: 12px;
+      left: 0; right: 0;
+      width: auto;
+      padding: 0 16px;
+      background: transparent;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+      border-bottom: none;
+      pointer-events: none;
+    }
+
+    .nav-container {
+      pointer-events: auto;
+      padding: 0 14px 0 22px;
+      border-radius: var(--radius-pill);
+    }
+
+    /* ---- Light-theme hero copy (was hard-coded white) ---- */
+    [data-theme="light"] .hero-title { color: var(--text-primary); }
+    [data-theme="light"] .hero-subtitle,
+    [data-theme="light"] .hero-desc { color: var(--text-secondary); }
+
+    /* ---- Translucent plugin visual panels ---- */
+    .vis-1 { background: linear-gradient(145deg, rgba(26,21,32,.35) 0%, rgba(45,31,61,.5) 50%, rgba(26,21,32,.35) 100%); }
+    .vis-2 { background: linear-gradient(145deg, rgba(16,26,32,.35) 0%, rgba(26,48,64,.5) 50%, rgba(16,26,32,.35) 100%); }
+    .vis-3 { background: linear-gradient(145deg, rgba(32,21,32,.35) 0%, rgba(61,31,53,.5) 50%, rgba(32,21,32,.35) 100%); }
+    .vis-4 { background: linear-gradient(145deg, rgba(32,26,16,.35) 0%, rgba(61,48,21,.5) 50%, rgba(32,26,16,.35) 100%); }
+    .vis-5 { background: linear-gradient(145deg, rgba(16,21,32,.35) 0%, rgba(31,45,64,.5) 50%, rgba(16,21,32,.35) 100%); }
+    [data-theme="light"] .vis-1 { background: linear-gradient(145deg, rgba(240,234,248,.45) 0%, rgba(224,208,240,.6) 50%, rgba(240,234,248,.45) 100%); }
+    [data-theme="light"] .vis-2 { background: linear-gradient(145deg, rgba(232,240,248,.45) 0%, rgba(208,228,245,.6) 50%, rgba(232,240,248,.45) 100%); }
+    [data-theme="light"] .vis-3 { background: linear-gradient(145deg, rgba(248,232,240,.45) 0%, rgba(240,208,228,.6) 50%, rgba(248,232,240,.45) 100%); }
+    [data-theme="light"] .vis-4 { background: linear-gradient(145deg, rgba(248,240,224,.45) 0%, rgba(245,232,192,.6) 50%, rgba(248,240,224,.45) 100%); }
+    [data-theme="light"] .vis-5 { background: linear-gradient(145deg, rgba(224,232,248,.45) 0%, rgba(200,216,245,.6) 50%, rgba(224,232,248,.45) 100%); }
+
+    /* ---- Refraction (Chromium only; class added by script) ---- */
+    html.has-refraction .nav-container,
+    html.has-refraction .plugin-card,
+    html.has-refraction .command-card,
+    html.has-refraction .pricing-card,
+    html.has-refraction .feature-item,
+    html.has-refraction .contact-item,
+    html.has-refraction .video-wrapper {
+      -webkit-backdrop-filter: url(#glass-refract) blur(var(--glass-blur)) saturate(190%) brightness(1.05);
+      backdrop-filter: url(#glass-refract) blur(var(--glass-blur)) saturate(190%) brightness(1.05);
+    }
+
+    /* ---- Glass transparency slider ---- */
+    .glass-ui {
+      position: fixed;
+      right: 20px; bottom: 20px;
+      z-index: 1001;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 18px;
+      border-radius: var(--radius-pill);
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+
+    .glass-ui input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 110px;
+      height: 4px;
+      border-radius: 4px;
+      background: var(--border-strong);
+      outline: none;
+      cursor: pointer;
+    }
+
+    .glass-ui input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #fff, var(--accent-gold-lt));
+      border: 1px solid rgba(255,255,255,0.7);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    .glass-ui input[type="range"]::-moz-range-thumb {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #fff, var(--accent-gold-lt));
+      border: 1px solid rgba(255,255,255,0.7);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    @media (max-width: 900px) {
+      .nav-container { padding: 0 10px 0 14px; }
+      .glass-ui { right: 12px; bottom: 12px; padding: 10px 14px; }
+      .glass-ui input[type="range"] { width: 80px; }
+    }
+
+    @media (prefers-reduced-transparency: reduce) {
+      html.has-refraction .nav-container,
+      html.has-refraction .plugin-card,
+      html.has-refraction .command-card,
+      html.has-refraction .pricing-card,
+      html.has-refraction .feature-item,
+      html.has-refraction .contact-item,
+      html.has-refraction .video-wrapper {
+        -webkit-backdrop-filter: blur(var(--glass-blur));
+        backdrop-filter: blur(var(--glass-blur));
+      }
+    }
+
+    /* ============================================
+       ADDITIONS: fill markers, new sections
+       ============================================ */
+    .fill { color: var(--accent-gold); outline: 1px dashed var(--accent-gold); outline-offset: 2px; border-radius: 4px; padding: 0 4px; }
+    .msh-section { padding: 120px 32px; background: var(--bg-base); transition: var(--transition-theme); }
+    .msh-section .section-header { text-align: center; margin-bottom: 64px; }
+    .msh-wrap { max-width: 1100px; margin: 0 auto; }
+    .msh-grid { display: grid; gap: 20px; }
+    .msh-grid.g3 { grid-template-columns: repeat(3, 1fr); }
+    .msh-grid.g2 { grid-template-columns: repeat(2, 1fr); }
+    .msh-card { background: var(--bg-card); backdrop-filter: blur(18px) saturate(180%); -webkit-backdrop-filter: blur(18px) saturate(180%); border: 1px solid var(--border); border-radius: var(--radius-md); box-shadow: var(--shadow-card); padding: 36px 32px; text-align: left; transition: border-color .3s var(--ease), transform .3s var(--ease); }
+    .msh-card:hover { border-color: var(--border-strong); transform: translateY(-4px); }
+    .msh-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 400; color: var(--text-primary); margin-bottom: 12px; }
+    .msh-card p, .msh-card li { font-size: 14px; color: var(--text-secondary); line-height: 1.75; }
+    .msh-card ul { list-style: none; }
+    .msh-card li { padding: 6px 0; border-bottom: 1px solid var(--border); }
+    .msh-card li:last-child { border-bottom: none; }
+    .msh-tag { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--accent-gold); margin-bottom: 14px; display: block; }
+    .step-num { font-family: 'Cormorant Garamond', serif; font-size: 44px; font-weight: 300; color: var(--accent-gold); line-height: 1; margin-bottom: 12px; display: block; }
+    .btn-dl { display: inline-flex; align-items: center; justify-content: center; padding: 12px 24px; margin: 6px 8px 0 0; border: 1px solid var(--accent-gold); border-radius: var(--radius-pill); color: var(--accent-gold); text-decoration: none; font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; transition: all .3s; }
+    .btn-dl:hover { background: var(--accent-gold); color: #0c0c0e; }
+    .stat-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 20px; text-align: center; }
+    .stat-num { font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 5vw, 56px); font-weight: 300; color: var(--text-primary); line-height: 1; }
+    .stat-label { font-size: 13px; color: var(--text-secondary); margin-top: 10px; }
+    .quote-text { font-size: 15px; font-style: italic; color: var(--text-primary); line-height: 1.75; margin-bottom: 18px; }
+    .quote-by { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: .1em; color: var(--text-secondary); }
+    .logo-row { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; margin-top: 32px; }
+    .logo-slot { min-width: 140px; padding: 16px 24px; text-align: center; border: 1px dashed var(--border-strong); border-radius: var(--radius-sm); font-size: 11px; color: var(--text-muted); letter-spacing: .1em; text-transform: uppercase; }
+    .changelog { margin-top: 20px; }
+    .faq-list { max-width: 820px; margin: 0 auto; }
+    .faq-list details { background: var(--bg-card); backdrop-filter: blur(18px) saturate(180%); -webkit-backdrop-filter: blur(18px) saturate(180%); border: 1px solid var(--border); border-radius: var(--radius-sm); margin-bottom: 12px; padding: 0 24px; transition: border-color .3s; }
+    .faq-list details[open] { border-color: var(--accent-gold); }
+    .faq-list summary { cursor: pointer; padding: 20px 0; font-size: 15px; color: var(--text-primary); list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+    .faq-list summary::-webkit-details-marker { display: none; }
+    .faq-list summary::after { content: '+'; color: var(--accent-gold); font-size: 20px; line-height: 1; }
+    .faq-list details[open] summary::after { content: '\2212'; }
+    .faq-list details p { padding: 0 0 20px; font-size: 14px; color: var(--text-secondary); line-height: 1.75; }
+    .faq-list a { color: var(--accent-gold); }
+    .pricing-note { text-align: center; max-width: 780px; margin: 32px auto 0; font-size: 13px; color: var(--text-secondary); line-height: 1.8; }
+    .pricing-note a { color: var(--accent-gold); }
+    .wa-btn { display: table; margin: 40px auto 0; }
+    .mobile-cta { display: none; }
+    @media (max-width: 900px) { .msh-grid.g3, .stat-strip { grid-template-columns: 1fr; } .msh-grid.g2 { grid-template-columns: 1fr; } .msh-section { padding: 90px 20px; } }
+    @media (max-width: 700px) {
+      .mobile-cta { display: inline-flex; position: fixed; left: 12px; bottom: 12px; z-index: 1001; height: 40px; padding: 0 18px; align-items: center; border-radius: var(--radius-pill); background: var(--accent-gold); color: #0c0c0e; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; box-shadow: 0 8px 24px rgba(0,0,0,.35); }
+      body { padding-bottom: 64px; }
+    }
+    html { scroll-padding-top: 80px; }
+  </style>
+</head>
+<body>
+
+  <div class="bg-atmosphere" aria-hidden="true">
+    <span class="blob blob-1"></span>
+    <span class="blob blob-2"></span>
+    <span class="blob blob-3"></span>
+  </div>
+
+  <img class="bg-serpent" id="bgSerpent" src="msh-serpent-logo.png" alt="" aria-hidden="true">
+  <img class="cursor-serpent" id="cursorSerpent" src="msh-serpent-logo.png" alt="" aria-hidden="true">
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <filter id="glass-refract" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.006 0.009" numOctaves="2" seed="4" result="n"/>
+      <feGaussianBlur in="n" stdDeviation="3" result="s"/>
+      <feDisplacementMap in="SourceGraphic" in2="s" scale="18" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </svg>
+
+  <div class="glass-ui" role="group" aria-label="Glass transparency">
+    <span>Clear</span>
+    <input type="range" id="glassSlider" min="5" max="90" value="30" aria-label="Glass transparency, clear to tinted">
+    <span>Tinted</span>
+  </div>
+
+  <!-- ================================================
+       NAVIGATION
+  ================================================ -->
+  <nav>
+    <div class="nav-container">
+      <a href="#" class="logo">
+        <img class="logo-mark" src="msh-serpent-logo.png" alt="MSH Studio">
+        <span class="logo-text">MSH Studio</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#plugins">Plugins</a></li>
+        <li><a href="#commands">Commands</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#download">Download</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="trial-license.html" class="nav-trial" data-track="start_trial_nav">Start Free Trial</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <!-- Sun -->
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3"/>
+            <line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/>
+            <line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+          <!-- Moon -->
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ================================================
+       HERO
+  ================================================ -->
+  <section class="hero">
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+      <p class="hero-eyebrow">Rhino 3D · The Professional Jewellery Suite</p>
+      <h1 class="hero-title">Design Jewellery<br><em>Faster &amp; Smarter</em></h1>
+      <p class="hero-subtitle">Speed of automation. Soul of a designer.</p>
+      <p class="hero-desc">The native command center for Rhino that understands jewellery. From gradient pavé and honeycomb cutters to 8K pro capture and automated metal reports — built by a working jewellery CAD designer over 12 years. Every tool solves a real problem.</p>
+      <div class="hero-cta">
+        <a href="#plugins" class="btn-gold">Explore the Suite</a>
+        <a href="#commands" class="btn-outline">View All Commands</a>
+      </div>
+    </div>
+
+    <div class="scroll-indicator">
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ================================================
+       PLUGINS SECTION
+  ================================================ -->
+  <section id="plugins" class="plugins-section">
+    <div class="section-header reveal">
+      <p class="section-label">Flagship Tools</p>
+      <h2 class="section-title">The MSH Suite</h2>
+      <div class="divider"></div>
+      <p class="section-subtitle">Five flagship tools that cover everything from stone placement to metal reporting — built to replace hours of manual work with seconds of precision.</p>
+    </div>
+
+    <div class="plugin-grid">
+
+      <!-- Azure Cutter Pro -->
+      <div class="plugin-card reveal">
+        <div class="plugin-content">
+          <div class="plugin-number">01 / 05</div>
+          <span class="plugin-tag">
+            <svg width="10" height="10" viewBox="0 0 12 12" fill="currentColor"><circle cx="6" cy="6" r="3"/></svg>
+            Hero Tool
+          </span>
+          <h3 class="plugin-name">Azure Cutter Pro</h3>
+          <p class="plugin-desc">The hidden hallmark of high jewellery — automated. Azure Cutter Pro reads your pavé layout and instantly generates honeycomb undercuts that reduce metal weight and flood every stone with light. What used to take hours of manual boolean operations is now a single command. Every cutter is sharp, clean, and casting-ready.</p>
+          <a href="azure-cutter-pro.html" class="plugin-link">Explore Plugin →</a>
+        </div>
+        <div class="plugin-visual vis-1">
+          <svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Honeycomb hex grid -->
+            <g opacity="0.85">
+              <polygon points="40,28 52,21 64,28 64,42 52,49 40,42" stroke="rgba(201,169,110,0.7)" stroke-width="1.2" fill="rgba(201,169,110,0.07)"/>
+              <polygon points="64,28 76,21 88,28 88,42 76,49 64,42" stroke="rgba(201,169,110,0.7)" stroke-width="1.2" fill="rgba(201,169,110,0.07)"/>
+              <polygon points="88,28 100,21 112,28 112,42 100,49 88,42" stroke="rgba(201,169,110,0.7)" stroke-width="1.2" fill="rgba(201,169,110,0.07)"/>
+              <polygon points="28,49 40,42 52,49 52,63 40,70 28,63" stroke="rgba(201,169,110,0.5)" stroke-width="1.2" fill="rgba(201,169,110,0.05)"/>
+              <polygon points="52,49 64,42 76,49 76,63 64,70 52,63" stroke="rgba(201,169,110,0.9)" stroke-width="1.5" fill="rgba(201,169,110,0.12)"/>
+              <polygon points="76,49 88,42 100,49 100,63 88,70 76,63" stroke="rgba(201,169,110,0.9)" stroke-width="1.5" fill="rgba(201,169,110,0.12)"/>
+              <polygon points="100,49 112,42 124,49 124,63 112,70 100,63" stroke="rgba(201,169,110,0.5)" stroke-width="1.2" fill="rgba(201,169,110,0.05)"/>
+              <polygon points="40,70 52,63 64,70 64,84 52,91 40,84" stroke="rgba(201,169,110,0.7)" stroke-width="1.2" fill="rgba(201,169,110,0.07)"/>
+              <polygon points="64,70 76,63 88,70 88,84 76,91 64,84" stroke="rgba(201,169,110,0.7)" stroke-width="1.2" fill="rgba(201,169,110,0.07)"/>
+              <polygon points="88,70 100,63 112,70 112,84 100,91 88,84" stroke="rgba(201,169,110,0.7)" stroke-width="1.2" fill="rgba(201,169,110,0.07)"/>
+              <polygon points="52,91 64,84 76,91 76,105 64,112 52,105" stroke="rgba(201,169,110,0.5)" stroke-width="1" fill="rgba(201,169,110,0.04)"/>
+              <polygon points="76,91 88,84 100,91 100,105 88,112 76,105" stroke="rgba(201,169,110,0.5)" stroke-width="1" fill="rgba(201,169,110,0.04)"/>
+            </g>
+            <text x="80" y="138" text-anchor="middle" font-size="9" fill="rgba(201,169,110,0.4)" font-family="monospace">MSH_Azure_Cutter_Pro</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Auto Pave Pro -->
+      <div class="plugin-card reveal">
+        <div class="plugin-content">
+          <div class="plugin-number">02 / 05</div>
+          <span class="plugin-tag">
+            <svg width="10" height="10" viewBox="0 0 12 12" fill="currentColor"><polygon points="6,1 11,11 1,11"/></svg>
+            Most Popular
+          </span>
+          <h3 class="plugin-name">Auto Pave Pro</h3>
+          <p class="plugin-desc">Two commands. Infinite possibilities. <strong>Auto Pave Gradient</strong> transitions stones from large to small across any surface with algorithmic precision. <strong>Auto Pave Scattered</strong> creates natural, organic pavé distributions that look handcrafted. Both place hundreds of surface-oriented stones in under 30 seconds — with full designer control over size, spacing, and count.</p>
+          <a href="pave_planner_page.html" class="plugin-link">Explore Plugin →</a><!-- FILL: Auto Pave Pro and Paveplanner Pro share this page. Give each its own page or anchor (e.g. pave_planner_page.html#auto-pave / #paveplanner) -->
+        </div>
+        <div class="plugin-visual vis-2">
+          <svg width="200" height="140" viewBox="0 0 200 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Gradient pave: large to small left-to-right -->
+            <g>
+              <!-- Row 1 -->
+              <polygon points="22,35 30,25 38,35 30,45" fill="rgba(201,169,110,0.75)" stroke="rgba(201,169,110,0.4)" stroke-width="0.5"/>
+              <polygon points="50,35 57,26 64,35 57,44" fill="rgba(201,169,110,0.7)" stroke="rgba(201,169,110,0.4)" stroke-width="0.5"/>
+              <polygon points="76,36 82,28 88,36 82,44" fill="rgba(201,169,110,0.65)" stroke="rgba(201,169,110,0.4)" stroke-width="0.5"/>
+              <polygon points="100,37 105,30 110,37 105,44" fill="rgba(201,169,110,0.6)" stroke="rgba(201,169,110,0.4)" stroke-width="0.5"/>
+              <polygon points="121,37 125,31 129,37 125,43" fill="rgba(201,169,110,0.55)" stroke="rgba(201,169,110,0.4)" stroke-width="0.5"/>
+              <polygon points="140,38 143,33 146,38 143,43" fill="rgba(201,169,110,0.45)" stroke="rgba(201,169,110,0.4)" stroke-width="0.5"/>
+              <polygon points="157,39 159,34 162,39 159,44" fill="rgba(201,169,110,0.35)" stroke="rgba(201,169,110,0.4)" stroke-width="0.5"/>
+              <polygon points="171,39 173,35 175,39 173,43" fill="rgba(201,169,110,0.25)" stroke="rgba(201,169,110,0.3)" stroke-width="0.5"/>
+              <!-- Row 2 -->
+              <polygon points="22,65 30,55 38,65 30,75" fill="rgba(201,169,110,0.75)" stroke="rgba(201,169,110,0.4)" stroke-width="0.5"/>
+              <polygon points="50,65 57,56 64,65 57,74" fill="rgba(201,169,110,0.7)" stroke="rgba(201,169,110,0.4)" stroke-width="0.5"/>
+              <polygon points="76,66 82,58 88,66 82,74" fill="rgba(201,169,110,0.65)" stroke="rgba(201,169,110,0.4)" stroke-width="0.5"/>
+              <polygon points="100,67 105,60 110,67 105,74" fill="rgba(201,169,110,0.6)" stroke="rgba(201,169,110,0.4)" stroke-width="0.5"/>
+              <polygon points="121,67 125,61 129,67 125,73" fill="rgba(201,169,110,0.55)" stroke="rgba(201,169,110,0.4)" stroke-width="0.5"/>
+              <polygon points="140,68 143,63 146,68 143,73" fill="rgba(201,169,110,0.45)" stroke="rgba(201,169,110,0.4)" stroke-width="0.5"/>
+              <polygon points="157,69 159,64 162,69 159,74" fill="rgba(201,169,110,0.35)" stroke="rgba(201,169,110,0.4)" stroke-width="0.5"/>
+              <!-- Row 3 -->
+              <polygon points="22,95 30,85 38,95 30,105" fill="rgba(201,169,110,0.75)" stroke="rgba(201,169,110,0.4)" stroke-width="0.5"/>
+              <polygon points="50,95 57,86 64,95 57,104" fill="rgba(201,169,110,0.7)" stroke="rgba(201,169,110,0.4)" stroke-width="0.5"/>
+              <polygon points="76,96 82,88 88,96 82,104" fill="rgba(201,169,110,0.65)" stroke="rgba(201,169,110,0.4)" stroke-width="0.5"/>
+              <polygon points="100,97 105,90 110,97 105,104" fill="rgba(201,169,110,0.6)" stroke="rgba(201,169,110,0.4)" stroke-width="0.5"/>
+              <polygon points="121,97 125,91 129,97 125,103" fill="rgba(201,169,110,0.55)" stroke="rgba(201,169,110,0.4)" stroke-width="0.5"/>
+            </g>
+            <!-- Gradient arrow label -->
+            <line x1="20" y1="125" x2="175" y2="125" stroke="rgba(201,169,110,0.25)" stroke-width="1" stroke-dasharray="3 2"/>
+            <text x="20" y="135" font-size="8" fill="rgba(201,169,110,0.4)" font-family="monospace">Large ——————————→ Small</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Pave Planner Pro -->
+      <div class="plugin-card reveal">
+        <div class="plugin-content">
+          <div class="plugin-number">03 / 05</div>
+          <span class="plugin-tag">
+            <svg width="10" height="10" viewBox="0 0 12 12" fill="currentColor"><rect x="2" y="2" width="8" height="8" rx="1"/></svg>
+            Advanced
+          </span>
+          <h3 class="plugin-name">Paveplanner Pro</h3>
+          <p class="plugin-desc">Plan and visualise your entire pavé layout before committing a single stone. MSH_Paveplanner_Pro gives you an interactive multi-zone planning interface — define areas, assign stone sizes, preview density, and control cutter depths. The planning stage that eliminates production surprises.</p>
+          <a href="pave_planner_page.html" class="plugin-link">Explore Plugin →</a><!-- FILL: Auto Pave Pro and Paveplanner Pro share this page. Give each its own page or anchor (e.g. pave_planner_page.html#auto-pave / #paveplanner) -->
+        </div>
+        <div class="plugin-visual vis-3">
+          <svg width="160" height="140" viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Zone boundaries -->
+            <rect x="20" y="20" width="55" height="100" stroke="rgba(201,169,110,0.35)" stroke-width="1" stroke-dasharray="4 3" fill="rgba(201,169,110,0.04)" rx="2"/>
+            <rect x="85" y="20" width="55" height="100" stroke="rgba(201,169,110,0.55)" stroke-width="1" stroke-dasharray="4 3" fill="rgba(201,169,110,0.07)" rx="2"/>
+            <text x="47" y="15" text-anchor="middle" font-size="7.5" fill="rgba(201,169,110,0.4)" font-family="monospace">Zone A</text>
+            <text x="112" y="15" text-anchor="middle" font-size="7.5" fill="rgba(201,169,110,0.6)" font-family="monospace">Zone B</text>
+            <!-- Zone A stones (small) -->
+            <circle cx="34" cy="38" r="5" stroke="rgba(201,169,110,0.5)" stroke-width="1" fill="rgba(201,169,110,0.12)"/>
+            <circle cx="52" cy="38" r="5" stroke="rgba(201,169,110,0.5)" stroke-width="1" fill="rgba(201,169,110,0.12)"/>
+            <circle cx="34" cy="56" r="5" stroke="rgba(201,169,110,0.5)" stroke-width="1" fill="rgba(201,169,110,0.12)"/>
+            <circle cx="52" cy="56" r="5" stroke="rgba(201,169,110,0.5)" stroke-width="1" fill="rgba(201,169,110,0.12)"/>
+            <circle cx="34" cy="74" r="5" stroke="rgba(201,169,110,0.5)" stroke-width="1" fill="rgba(201,169,110,0.12)"/>
+            <circle cx="52" cy="74" r="5" stroke="rgba(201,169,110,0.5)" stroke-width="1" fill="rgba(201,169,110,0.12)"/>
+            <!-- Zone B stones (larger) -->
+            <circle cx="101" cy="38" r="8" stroke="rgba(201,169,110,0.75)" stroke-width="1.5" fill="rgba(201,169,110,0.18)"/>
+            <circle cx="122" cy="38" r="8" stroke="rgba(201,169,110,0.75)" stroke-width="1.5" fill="rgba(201,169,110,0.18)"/>
+            <circle cx="101" cy="62" r="8" stroke="rgba(201,169,110,0.75)" stroke-width="1.5" fill="rgba(201,169,110,0.18)"/>
+            <circle cx="122" cy="62" r="8" stroke="rgba(201,169,110,0.75)" stroke-width="1.5" fill="rgba(201,169,110,0.18)"/>
+            <circle cx="101" cy="86" r="8" stroke="rgba(201,169,110,0.75)" stroke-width="1.5" fill="rgba(201,169,110,0.18)"/>
+            <circle cx="122" cy="86" r="8" stroke="rgba(201,169,110,0.75)" stroke-width="1.5" fill="rgba(201,169,110,0.18)"/>
+            <text x="80" y="132" text-anchor="middle" font-size="8" fill="rgba(201,169,110,0.35)" font-family="monospace">MSH_Paveplanner_Pro</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Super Smart Sweep -->
+      <div class="plugin-card reveal">
+        <div class="plugin-content">
+          <div class="plugin-number">04 / 05</div>
+          <span class="plugin-tag">
+            <svg width="10" height="10" viewBox="0 0 12 12" fill="currentColor"><path d="M6 1L11 6L6 11L1 6Z"/></svg>
+            Metal Work
+          </span>
+          <h3 class="plugin-name">Super Smart Sweep</h3>
+          <p class="plugin-desc">Perfect metal flow — automatically. <strong>Super Smart Sweep On Srf</strong> aligns your sweep sections directly to any surface with controllable twist steps and tapering — no manual placement of cross-sections needed. <strong>Smart Sweep</strong> handles standard rail sweeps with intelligent parameter control. Clean geometry, every time.</p>
+          <a href="super-smart-sweep.html" class="plugin-link">Explore Plugin →</a>
+        </div>
+        <div class="plugin-visual vis-4">
+          <svg width="200" height="120" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Surface wave -->
+            <path d="M20 80 Q60 20, 100 60 T180 40" stroke="rgba(201,169,110,0.55)" stroke-width="2" fill="none"/>
+            <!-- Cross sections along path -->
+            <ellipse cx="38" cy="72" rx="5" ry="12" stroke="rgba(201,169,110,0.7)" stroke-width="1.2" fill="rgba(201,169,110,0.1)" transform="rotate(-20,38,72)"/>
+            <ellipse cx="65" cy="44" rx="5" ry="12" stroke="rgba(201,169,110,0.7)" stroke-width="1.2" fill="rgba(201,169,110,0.1)" transform="rotate(10,65,44)"/>
+            <ellipse cx="100" cy="58" rx="5" ry="12" stroke="rgba(201,169,110,0.7)" stroke-width="1.2" fill="rgba(201,169,110,0.1)" transform="rotate(-5,100,58)"/>
+            <ellipse cx="138" cy="42" rx="5" ry="12" stroke="rgba(201,169,110,0.7)" stroke-width="1.2" fill="rgba(201,169,110,0.1)" transform="rotate(15,138,42)"/>
+            <ellipse cx="168" cy="46" rx="5" ry="12" stroke="rgba(201,169,110,0.7)" stroke-width="1.2" fill="rgba(201,169,110,0.1)" transform="rotate(5,168,46)"/>
+            <!-- Surface normal arrows -->
+            <line x1="38" y1="60" x2="38" y2="45" stroke="rgba(201,169,110,0.25)" stroke-width="0.8"/>
+            <line x1="100" y1="46" x2="100" y2="31" stroke="rgba(201,169,110,0.25)" stroke-width="0.8"/>
+            <line x1="168" y1="34" x2="168" y2="19" stroke="rgba(201,169,110,0.25)" stroke-width="0.8"/>
+            <text x="100" y="110" text-anchor="middle" font-size="8" fill="rgba(201,169,110,0.35)" font-family="monospace">MSH_Super_Smart_Sweep_On_Srf</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Metal Reports -->
+      <div class="plugin-card reveal">
+        <div class="plugin-content">
+          <div class="plugin-number">05 / 05</div>
+          <span class="plugin-tag">
+            <svg width="10" height="10" viewBox="0 0 12 12" fill="currentColor"><line x1="1" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="2"/></svg>
+            Production
+          </span>
+          <h3 class="plugin-name">Metal Reports & Pro Capture</h3>
+          <p class="plugin-desc">The business end of the suite. <strong>Metal Weight Calc</strong> calculates precise casting weights by metal type. <strong>Multi Metal Calc</strong> compares costs across alloys in one command. <strong>Diamond Report By Circles</strong> auto-generates stone count reports. <strong>Pro Capture</strong> captures 8K viewport images and sends them directly to PowerPoint — client-ready in seconds.</p>
+          <a href="metal-reports.html" class="plugin-link">Explore Plugin →</a>
+        </div>
+        <div class="plugin-visual vis-5">
+          <svg width="200" height="130" viewBox="0 0 200 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Report document -->
+            <rect x="30" y="15" width="80" height="100" rx="2" stroke="rgba(201,169,110,0.4)" stroke-width="1" fill="rgba(201,169,110,0.04)"/>
+            <line x1="42" y1="35" x2="98" y2="35" stroke="rgba(201,169,110,0.5)" stroke-width="1"/>
+            <line x1="42" y1="48" x2="88" y2="48" stroke="rgba(201,169,110,0.25)" stroke-width="0.8"/>
+            <line x1="42" y1="58" x2="94" y2="58" stroke="rgba(201,169,110,0.25)" stroke-width="0.8"/>
+            <line x1="42" y1="68" x2="80" y2="68" stroke="rgba(201,169,110,0.25)" stroke-width="0.8"/>
+            <!-- Gold vs Platinum bars -->
+            <rect x="42" y="80" width="30" height="8" fill="rgba(201,169,110,0.6)" rx="1"/>
+            <rect x="42" y="93" width="46" height="8" fill="rgba(201,169,110,0.3)" rx="1"/>
+            <text x="76" y="87" font-size="7" fill="rgba(201,169,110,0.7)" font-family="monospace">18K</text>
+            <text x="92" y="100" font-size="7" fill="rgba(201,169,110,0.4)" font-family="monospace">Pt</text>
+            <!-- Camera icon -->
+            <rect x="130" y="40" width="50" height="38" rx="3" stroke="rgba(201,169,110,0.5)" stroke-width="1.2" fill="rgba(201,169,110,0.06)"/>
+            <circle cx="155" cy="59" r="10" stroke="rgba(201,169,110,0.65)" stroke-width="1.2" fill="rgba(201,169,110,0.1)"/>
+            <circle cx="155" cy="59" r="4" fill="rgba(201,169,110,0.5)"/>
+            <rect x="138" y="35" width="14" height="7" rx="1" stroke="rgba(201,169,110,0.4)" stroke-width="1" fill="rgba(201,169,110,0.08)"/>
+            <text x="155" y="96" text-anchor="middle" font-size="7.5" fill="rgba(201,169,110,0.4)" font-family="monospace">8K Export</text>
+          </svg>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================================================
+       COMMAND HUB
+  ================================================ -->
+  <section id="commands" class="command-section">
+    <div class="section-header reveal">
+      <p class="section-label">Command Reference</p>
+      <h2 class="section-title">Command Hub</h2>
+      <div class="divider"></div>
+      <p class="section-subtitle">Every professional command across 3 categories — all in one native F6 panel, no heavy install, no lag.</p>
+    </div>
+
+    <div class="command-categories">
+
+      <!-- Category 1: Gem Setting & Pave -->
+      <div class="category-block reveal">
+        <div class="category-header">
+          <div class="category-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+            </svg>
+          </div>
+          <span class="category-name">Gem Setting & Pavé</span>
+          <span class="category-count">09 commands</span>
+        </div>
+        <div class="commands-grid">
+
+          <div class="command-card reveal reveal-delay-1">
+            <div class="command-icon-wrap">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+            </div>
+            <div class="command-info">
+              <div class="command-name">Auto Pave Gradient</div>
+              <div class="command-desc">Algorithmically transitions stone sizes from large to small across any surface. Hundreds of perfectly oriented stones placed in seconds.</div>
+              <span class="command-badge">Auto Placement</span>
+            </div>
+          </div>
+
+          <div class="command-card reveal reveal-delay-2">
+            <div class="command-icon-wrap">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="5" cy="8" r="2"/><circle cx="14" cy="5" r="2"/><circle cx="19" cy="13" r="2"/><circle cx="9" cy="17" r="2"/><circle cx="18" cy="19" r="2"/></svg>
+            </div>
+            <div class="command-info">
+              <div class="command-name">Auto Pave Scattered</div>
+              <div class="command-desc">Creates organic, natural-looking scattered pavé distributions that mimic handcrafted layouts — algorithmically perfect every time.</div>
+              <span class="command-badge">Auto Placement</span>
+            </div>
+          </div>
+
+          <div class="command-card reveal reveal-delay-3">
+            <div class="command-icon-wrap">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9"/></svg>
+            </div>
+            <div class="command-info">
+              <div class="command-name">Azure Cutter Pro</div>
+              <div class="command-desc">Generates honeycomb undercuts from your pavé layout instantly — reducing metal weight and maximising stone brilliance. Casting-ready geometry.</div>
+              <span class="command-badge">Cutter Gen</span>
+            </div>
+          </div>
+
+          <div class="command-card reveal reveal-delay-1">
+            <div class="command-icon-wrap">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+            <div class="command-info">
+              <div class="command-name">Circles to Diamonds</div>
+              <div class="command-desc">Converts circle objects in your scene into placed diamond stones — the fastest way to go from layout planning to a real pavé setup.</div>
+              <span class="command-badge">Conversion</span>
+            </div>
+          </div>
+
+          <div class="command-card reveal reveal-delay-2">
+            <div class="command-icon-wrap">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12 Q8 4, 12 12 T21 12"/><circle cx="12" cy="12" r="2"/></svg>
+            </div>
+            <div class="command-info">
+              <div class="command-name">Diamond by Crv on Srf</div>
+              <div class="command-desc">Places diamonds along a curve that is draped over a 3D surface — stones orient perfectly to the surface normal at every point along the path.</div>
+              <span class="command-badge">Surface Setting</span>
+            </div>
+          </div>
+
+          <div class="command-card reveal reveal-delay-3">
+            <div class="command-icon-wrap">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="12" y2="17"/></svg>
+            </div>
+            <div class="command-info">
+              <div class="command-name">Diamond Report By Circles</div>
+              <div class="command-desc">Selects circular regions and auto-generates a full stone count report — exported to Excel, ready for production or client presentation.</div>
+              <span class="command-badge">Report</span>
+            </div>
+          </div>
+
+          <div class="command-card reveal reveal-delay-1">
+            <div class="command-icon-wrap">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12 Q7 6 12 12 Q17 18 21 12"/><circle cx="7" cy="10" r="2.5"/><circle cx="17" cy="14" r="2.5"/></svg>
+            </div>
+            <div class="command-info">
+              <div class="command-name">Diamond Setting Between 2 Crvs</div>
+              <div class="command-desc">Distributes diamonds uniformly in the space between two guide curves — perfect for channel and bead settings with complex geometry.</div>
+              <span class="command-badge">Channel Setting</span>
+            </div>
+          </div>
+
+          <div class="command-card reveal reveal-delay-2">
+            <div class="command-icon-wrap">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7H4a2 2 0 00-2 2v6a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><circle cx="8" cy="12" r="2"/><circle cx="16" cy="12" r="2"/></svg>
+            </div>
+            <div class="command-info">
+              <div class="command-name">Gem Loader</div>
+              <div class="command-desc">Loads your gem library directly into the workflow — quickly access and place standard or custom gem profiles without navigating file directories.</div>
+              <span class="command-badge">Library</span>
+            </div>
+          </div>
+
+          <div class="command-card reveal reveal-delay-3">
+            <div class="command-icon-wrap">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+            </div>
+            <div class="command-info">
+              <div class="command-name">Paveplanner Pro</div>
+              <div class="command-desc">Interactive multi-zone pave planning interface — define areas, assign stone sizes, preview density and cutter depth before executing. Plan before you commit.</div>
+              <span class="command-badge">Planning UI</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Category 2: Metal, Sweep & Reporting -->
+      <div class="category-block reveal">
+        <div class="category-header">
+          <div class="category-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 2v20M2 12h20M6.34 6.34l11.32 11.32M17.66 6.34L6.34 17.66"/>
+            </svg>
+          </div>
+          <span class="category-name">Metal, Sweep & Reporting</span>
+          <span class="category-count">05 commands</span>
+        </div>
+        <div class="commands-grid">
+
+          <div class="command-card reveal reveal-delay-1">
+            <div class="command-icon-wrap">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>
+            </div>
+            <div class="command-info">
+              <div class="command-name">Metal Weight Calc</div>
+              <div class="command-desc">Calculates precise casting weight for any Rhino geometry by metal type — 18K gold, platinum, silver and more. Production-accurate, no manual math.</div>
+              <span class="command-badge">Calculation</span>
+            </div>
+          </div>
+
+          <div class="command-card reveal reveal-delay-2">
+            <div class="command-icon-wrap">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg>
+            </div>
+            <div class="command-info">
+              <div class="command-name">Multi Metal Calc</div>
+              <div class="command-desc">Compares weight and estimated cost across multiple metal alloys simultaneously — give clients and production teams an instant cost breakdown.</div>
+              <span class="command-badge">Comparison</span>
+            </div>
+          </div>
+
+          <div class="command-card reveal reveal-delay-3">
+            <div class="command-icon-wrap">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+            <div class="command-info">
+              <div class="command-name">Smart Sweep</div>
+              <div class="command-desc">Intelligent rail sweep with automated section placement and parameter control — cleaner metal profiles with far less manual intervention.</div>
+              <span class="command-badge">Metal Form</span>
+            </div>
+          </div>
+
+          <div class="command-card reveal reveal-delay-1">
+            <div class="command-icon-wrap">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6 Q8 2 12 6 T21 6"/><path d="M3 12 Q8 8 12 12 T21 12"/><path d="M3 18 Q8 14 12 18 T21 18"/></svg>
+            </div>
+            <div class="command-info">
+              <div class="command-name">Super Smart Sweep On Srf</div>
+              <div class="command-desc">Surface-aware sweeping — sections align to the surface automatically with controllable twist steps and tapering. Perfect metal flow along complex shank geometries.</div>
+              <span class="command-badge">Surface Sweep</span>
+            </div>
+          </div>
+
+          <div class="command-card reveal reveal-delay-2">
+            <div class="command-icon-wrap">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="14" rx="2"/><circle cx="12" cy="10" r="3"/><path d="M7 21h10"/></svg>
+            </div>
+            <div class="command-info">
+              <div class="command-name">Pro Capture</div>
+              <div class="command-desc">One-click 8K high-fidelity viewport capture — export directly to PowerPoint for instant client-ready presentations. No renderer needed.</div>
+              <span class="command-badge">8K Capture</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Category 3: Layer Management, Display & Utility -->
+      <div class="category-block reveal">
+        <div class="category-header">
+          <div class="category-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/>
+              <line x1="12" y1="2" x2="12" y2="22"/>
+              <path d="M2 8.5l10 7 10-7"/>
+            </svg>
+          </div>
+          <span class="category-name">Layer Management, Display & Utility</span>
+          <span class="category-count">05 commands</span>
+        </div>
+        <div class="commands-grid">
+
+          <div class="command-card reveal reveal-delay-1">
+            <div class="command-icon-wrap">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="4" rx="1"/><rect x="3" y="10" width="18" height="4" rx="1"/><rect x="3" y="17" width="18" height="4" rx="1"/></svg>
+            </div>
+            <div class="command-info">
+              <div class="command-name">Layer Utility</div>
+              <div class="command-desc">Full layer management toolkit — load jewellery-specific layer templates, randomise colours for visual clarity, sync object colours to layers, and export layer reports to Excel.</div>
+              <span class="command-badge">Layer Suite</span>
+            </div>
+          </div>
+
+          <div class="command-card reveal reveal-delay-2">
+            <div class="command-icon-wrap">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M2 12h2M20 12h2M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+            </div>
+            <div class="command-info">
+              <div class="command-name">Switch Display</div>
+              <div class="command-desc">Rapidly cycles between Rhino display modes — Rendered, Shaded, Ghosted, Wireframe — without opening any menu. One keystroke, instant clarity.</div>
+              <span class="command-badge">Display</span>
+            </div>
+          </div>
+
+          <div class="command-card reveal reveal-delay-3">
+            <div class="command-icon-wrap">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20a8 8 0 0116 0"/></svg>
+            </div>
+            <div class="command-info">
+              <div class="command-name">ID Rail</div>
+              <div class="command-desc">Generates ring rails for any region or custom size chart — Indian, European, US, or fully bespoke. Supports sizes 1–30 with verified real-world dimensions.</div>
+              <span class="command-badge">Ring Sizing</span>
+            </div>
+          </div>
+
+          <div class="command-card reveal reveal-delay-1">
+            <div class="command-icon-wrap">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4z"/><path d="M14 17h6M17 14v6"/></svg>
+            </div>
+            <div class="command-info">
+              <div class="command-name">Rhino Version Convert</div>
+              <div class="command-desc">Converts Rhino files across versions 5, 6, 7, and 8 — enabling seamless collaboration between team members on different software versions. No more roadblocks.</div>
+              <span class="command-badge">Compatibility</span>
+            </div>
+          </div>
+
+          <div class="command-card reveal reveal-delay-2">
+            <div class="command-icon-wrap">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2z"/><path d="M12 2v10l6 3"/></svg>
+            </div>
+            <div class="command-info">
+              <div class="command-name">MSH</div>
+              <div class="command-desc">Opens the main MSH command panel — your single F6 access point for the entire suite. Lightweight, fast, and always at hand inside Rhino.</div>
+              <span class="command-badge">Command Panel</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="features" class="features-section">
+    <div class="section-header reveal">
+      <p class="section-label">Why MSH</p>
+      <h2 class="section-title">Built by a Designer.<br>For Designers.</h2>
+      <div class="divider"></div>
+      <p class="section-subtitle">12 years of real-world jewellery CAD experience. Not made by a software team — made by someone who felt every one of these frustrations.</p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-item reveal reveal-delay-1">
+        <svg class="feature-icon" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M26 8 L32 24 L48 26 L36 38 L39 54 L26 47 L13 54 L16 38 L4 26 L20 24 Z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+          <circle cx="26" cy="26" r="8" stroke="currentColor" stroke-width="1" fill="none" opacity="0.4"/>
+        </svg>
+        <h3 class="feature-title">Speed Without Compromise</h3>
+        <p class="feature-text">What takes hours manually — gradient pavé, azure cutters, metal reports — MSH does in seconds. But you keep full control of every parameter. Automation handles the tedium. You direct the output.</p>
+      </div>
+      <div class="feature-item reveal reveal-delay-2">
+        <svg class="feature-icon" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="26" cy="26" r="20" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="26" cy="26" r="14" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+          <circle cx="26" cy="26" r="8" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+          <circle cx="26" cy="26" r="3" fill="currentColor"/>
+        </svg>
+        <h3 class="feature-title">Production Accuracy</h3>
+        <p class="feature-text">Every MSH output is production-ready — casting-correct geometry, verified metal weights, accurate stone counts. The business side of your design is as precise as the art. Zero manual errors.</p>
+      </div>
+      <div class="feature-item reveal reveal-delay-3">
+        <svg class="feature-icon" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="8" width="16" height="16" stroke="currentColor" stroke-width="1.5"/>
+          <rect x="28" y="8" width="16" height="16" stroke="currentColor" stroke-width="1.5"/>
+          <rect x="8" y="28" width="16" height="16" stroke="currentColor" stroke-width="1.5"/>
+          <rect x="28" y="28" width="16" height="16" stroke="currentColor" stroke-width="1.5"/>
+        </svg>
+        <h3 class="feature-title">One Panel. Endless Evolution.</h3>
+        <p class="feature-text">Everything lives in the native F6 MSH panel — lightweight, no lag, no heavy install. And MSH is a living product: custom tools can be engineered for your studio's specific signature workflow or product category.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================
+       PRICING SECTION
+  ================================================ -->
+  <section id="pricing" class="pricing-section">
+    <div class="section-header reveal">
+      <p class="section-label">Investment</p>
+      <h2 class="section-title">Simple Pricing</h2>
+      <div class="divider"></div>
+      <p class="section-subtitle">Choose the subscription that fits your studio's workflow.</p>
+    </div>
+
+    <div class="pricing-grid">
+      <div class="pricing-card reveal">
+        <p class="pricing-period">Quarterly</p>
+        <div class="pricing-amount">₹14,999</div>
+        <p class="pricing-duration">per quarter · single user</p>
+        <ul class="pricing-features">
+          <li>All plugins included</li>
+          <li>Regular updates</li>
+          <li>Email support</li>
+          <li>Commercial license</li>
+        </ul>
+        <a href="mailto:msh3dstudio@gmail.com?subject=MSH%20Quarterly%20Subscription" class="btn-pricing" data-pay="" data-track="subscribe_quarterly">Subscribe</a><!-- FILL: put your Quarterly payment link in data-pay="" (Razorpay/Stripe). Blank = falls back to email -->
+      </div>
+      <div class="pricing-card reveal">
+        <p class="pricing-period">Half-Yearly</p>
+        <div class="pricing-amount">₹29,999</div>
+        <p class="pricing-duration">per 6 months · single user · save 8%</p>
+        <ul class="pricing-features">
+          <li>All plugins included</li>
+          <li>Regular updates</li>
+          <li>Email support</li>
+          <li>Commercial license</li>
+        </ul>
+        <a href="mailto:msh3dstudio@gmail.com?subject=MSH%20HalfYearly%20Subscription" class="btn-pricing" data-pay="" data-track="subscribe_halfyearly">Subscribe</a><!-- FILL: put your HalfYearly payment link in data-pay="" (Razorpay/Stripe). Blank = falls back to email -->
+      </div>
+<!-- CHECK: 2 x Quarterly = ₹29,998, so "save 8%" is not accurate. Edit price or remove claim -->
+      <div class="pricing-card featured reveal">
+        <div class="pricing-badge">Best Value</div>
+        <p class="pricing-period">Annual</p>
+        <div class="pricing-amount">₹49,999</div>
+        <p class="pricing-duration">per year · single user · save 11%</p>
+        <ul class="pricing-features">
+          <li>All plugins included</li>
+          <li>Priority support</li>
+          <li>Regular updates</li>
+          <li>Email support</li>
+          <li>Commercial license</li>
+        </ul>
+        <a href="mailto:msh3dstudio@gmail.com?subject=MSH%20Annual%20Subscription" class="btn-pricing" data-pay="" data-track="subscribe_annual">Subscribe</a><!-- FILL: put your Annual payment link in data-pay="" (Razorpay/Stripe). Blank = falls back to email -->
+      </div>
+<!-- CHECK: 4 x Quarterly = ₹59,996, so annual saving is ~17%, not 11% -->
+    </div>
+
+    <p class="pricing-note">
+      Prices in INR, <span class="fill">FILL: GST included / extra</span>. GST invoice provided on request.
+      International buyers: <span class="fill">FILL: USD price or "contact us for USD pricing"</span>.
+      <a href="trial-license.html">Try free first</a> · <a href="refund.html">Refund policy</a> · <a href="eula.html">License terms</a>
+    </p>
+  </section>
+
+
+  <!-- ================================================
+       RESULTS / SOCIAL PROOF  (fill blanks)
+  ================================================ -->
+  <section id="results" class="msh-section">
+    <div class="section-header reveal">
+      <p class="section-label">Results</p>
+      <h2 class="section-title">Trusted in the Workshop</h2>
+      <div class="divider"></div>
+      <p class="section-subtitle">Real time saved on real production files.</p>
+    </div>
+    <div class="msh-wrap">
+      <div class="stat-strip reveal">
+        <div><div class="stat-num"><span class="fill">FILL: 30 sec</span></div><div class="stat-label">Pavé layout with MSH <span class="fill">FILL: vs 40 min manual</span></div></div>
+        <div><div class="stat-num"><span class="fill">FILL: 00</span></div><div class="stat-label"><span class="fill">FILL: designers / studios using MSH</span></div></div>
+        <div><div class="stat-num"><span class="fill">FILL: 00%</span></div><div class="stat-label"><span class="fill">FILL: metal weight saved with Azure Cutter</span></div></div>
+      </div>
+      <div class="msh-grid g3">
+        <div class="msh-card reveal"><p class="quote-text"><span class="fill">FILL: testimonial 1</span></p><p class="quote-by"><span class="fill">FILL: Name, role, company</span></p></div>
+        <div class="msh-card reveal"><p class="quote-text"><span class="fill">FILL: testimonial 2</span></p><p class="quote-by"><span class="fill">FILL: Name, role, company</span></p></div>
+        <div class="msh-card reveal"><p class="quote-text"><span class="fill">FILL: testimonial 3</span></p><p class="quote-by"><span class="fill">FILL: Name, role, company</span></p></div>
+      </div>
+      <div class="logo-row reveal">
+        <div class="logo-slot">FILL: client logo</div><div class="logo-slot">FILL: client logo</div><div class="logo-slot">FILL: client logo</div><div class="logo-slot">FILL: client logo</div>
+      </div>
+      <!-- FILL: also add before/after images or short GIFs per tool inside each plugin page -->
+    </div>
+  </section>
+
+  <!-- ================================================
+       DOWNLOAD / REQUIREMENTS / INSTALL
+  ================================================ -->
+  <section id="download" class="msh-section">
+    <div class="section-header reveal">
+      <p class="section-label">Get Started</p>
+      <h2 class="section-title">Download &amp; Install</h2>
+      <div class="divider"></div>
+      <p class="section-subtitle">Current version <strong>6.0.5</strong> · Released <span class="fill">FILL: date</span></p>
+    </div>
+    <div class="msh-wrap">
+      <div class="msh-grid g3">
+        <div class="msh-card reveal">
+          <span class="msh-tag">Requirements</span>
+          <ul>
+            <li>Rhino 8 · <span class="fill">FILL: Windows / Mac support</span></li>
+            <li>Windows <span class="fill">FILL: 10 / 11</span></li>
+            <li>RAM / GPU: <span class="fill">FILL: recommended</span></li>
+            <li>Internet for license activation: <span class="fill">FILL: yes / offline option</span></li>
+          </ul>
+        </div>
+        <div class="msh-card reveal">
+          <span class="msh-tag">Install</span>
+          <ul>
+            <li><b>1.</b> Start a free trial or subscribe</li>
+            <li><b>2.</b> Download the installer <span class="fill">FILL: or use Yak</span></li>
+            <li><b>3.</b> Open Rhino, type <code>MSH</code> or press F6</li>
+            <li><b>4.</b> Activate: <span class="fill">FILL: license steps</span></li>
+          </ul>
+        </div>
+        <div class="msh-card reveal">
+          <span class="msh-tag">Download</span>
+          <a class="btn-dl" href="trial-license.html" data-track="start_trial">Free Trial</a>
+          <a class="btn-dl" href="#" data-dl="installer" data-track="dl_installer">Direct Installer</a><!-- FILL: installer URL in href -->
+          <a class="btn-dl" href="#" data-dl="foodforrhino" data-track="dl_food4rhino">Food4Rhino</a><!-- FILL: Food4Rhino listing URL -->
+          <p style="margin-top:14px">Yak: <code class="fill">FILL: yak install package-name</code></p>
+          <p style="margin-top:8px"><a class="btn-dl" href="#" data-dl="docs" data-track="docs">Documentation</a><!-- FILL: docs/tutorial URL --></p>
+        </div>
+      </div>
+      <div class="msh-card changelog reveal">
+        <span class="msh-tag">Changelog</span>
+        <ul>
+          <li><b>6.0.5</b> · <span class="fill">FILL: date</span> · <span class="fill">FILL: what changed</span></li>
+          <li><b>6.0.4</b> · <span class="fill">FILL: date</span> · <span class="fill">FILL: what changed</span></li>
+          <li><b>6.0.3</b> · <span class="fill">FILL: date</span> · <span class="fill">FILL: what changed</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================
+       FAQ
+  ================================================ -->
+  <section id="faq" class="msh-section">
+    <div class="section-header reveal">
+      <p class="section-label">FAQ</p>
+      <h2 class="section-title">Common Questions</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="faq-list reveal">
+      <details><summary>What does the free trial include?</summary><p>Trial period: <span class="fill">FILL: days</span>. Limits: <span class="fill">FILL: features or limits</span>. To prevent misuse, trial requests are verified against your Rhino serial number. <a href="trial-license.html">Request a trial</a>.</p></details>
+      <details><summary>Which Rhino versions and operating systems are supported?</summary><p>MSH is built for Rhino 8. <span class="fill">FILL: Windows / Mac and any older-version note</span></p></details>
+      <details><summary>How does licensing work? Can I move it to another computer?</summary><p>Each license is bound to one machine. To move it, email <a href="mailto:msh3dstudio@gmail.com?subject=MSH%20License%20Transfer">msh3dstudio@gmail.com</a> with your license details. Transfers allowed: <span class="fill">FILL: number per term</span>.</p></details>
+      <details><summary>I reinstalled Windows or changed hardware. What now?</summary><p>Email <a href="mailto:msh3dstudio@gmail.com?subject=MSH%20License%20Recovery">us</a> your license key and new machine details. Response time: within 24 hours. <span class="fill">FILL: any extra proof required</span></p></details>
+      <details><summary>What happens when my subscription ends?</summary><p><span class="fill">FILL: plugins stop working / grace period / renewal reminder policy</span></p></details>
+      <details><summary>Refunds and cancellations?</summary><p>See the <a href="refund.html">refund policy</a>. <span class="fill">FILL: one-line summary</span></p></details>
+      <details><summary>Can I get a GST invoice, team licenses or a custom tool?</summary><p>Yes, GST invoices are available on request. For multi-seat pricing (<span class="fill">FILL: multi-user rule</span>) or studio-specific tools, use the <a href="customisation-request.html">customisation request</a>.</p></details>
+      <details><summary>How do I get support?</summary><p>Email or WhatsApp, reply within 24 hours. <span class="fill">FILL: support hours / priority support details</span></p></details>
+    </div>
+  </section>
+
+  <!-- ================================================
+       VIDEO SHOWCASE SECTION
+  ================================================ -->
+  <section class="video-section">
+    <div class="section-header reveal">
+      <p class="section-label">Studio Showcase</p>
+      <h2 class="section-title">See It in Action</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="video-wrapper reveal">
+      <iframe src="https://www.youtube.com/embed/8-JXkEX41_4?autoplay=1&mute=1&loop=1&playlist=8-JXkEX41_4&rel=0&modestbranding=1"
+              title="Modelling Studio HUB Demo" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+  </section>
+
+  <!-- ================================================
+       CONTACT SECTION
+  ================================================ -->
+  <section id="contact" class="contact-section">
+    <div class="section-header reveal">
+      <p class="section-label">Studio Contact</p>
+      <h2 class="section-title">Get in Touch</h2>
+      <div class="divider"></div>
+      <p class="section-subtitle">We're here for any questions about our tools or customisations.</p>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-item reveal reveal-delay-1">
+        <svg class="contact-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="9" width="28" height="18" rx="2" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M4 12L18 21L32 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <div class="contact-label">Email</div>
+        <div class="contact-value"><a href="mailto:msh3dstudio@gmail.com">msh3dstudio@gmail.com</a></div>
+      </div>
+
+      <div class="contact-item reveal reveal-delay-2">
+        <svg class="contact-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 4C8 4 7 5 7 6V30C7 31 8 32 9 32H27C28 32 29 31 29 30V6C29 5 28 4 27 4H9Z" stroke="currentColor" stroke-width="1.5"/>
+          <rect x="14" y="26" width="8" height="2" rx="1" fill="currentColor" opacity="0.5"/>
+        </svg>
+        <div class="contact-label">Phone</div>
+        <div class="contact-value"><a href="tel:+918286452818">+91 8286 452 818</a></div>
+      </div>
+
+      <div class="contact-item reveal reveal-delay-3">
+        <svg class="contact-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="18" cy="18" r="14" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M18 9V18L22 22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <div class="contact-label">Response Time</div>
+        <div class="contact-value">Within 24 hours</div>
+      </div>
+
+      <div class="contact-item reveal reveal-delay-4">
+        <svg class="contact-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 4L28 10V22L18 28L8 22V10L18 4Z" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="18" cy="16" r="5" stroke="currentColor" stroke-width="1.5"/>
+        </svg>
+        <div class="contact-label">Customisation</div>
+        <div class="contact-value"><a href="customisation-request.html">Request Customisation →</a></div>
+      </div>
+    </div>
+    <a class="btn-dl wa-btn" href="https://wa.me/918286452818?text=Hi%20MSH%20Studio%2C%20I%20have%20a%20question" target="_blank" rel="noopener" data-track="whatsapp">Chat on WhatsApp</a><!-- CHECK: confirm this number is on WhatsApp -->
+  </section>
+
+  <!-- ================================================
+       FOOTER
+  ================================================ -->
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-logo">Modelling Studio HUB</span>
+      <span class="footer-text">© <span id="yr">2026</span> Modelling Studio HUB. Designed for 3D professionals worldwide.</span>
+      <ul class="footer-links">
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="terms.html">Terms of Service</a></li>
+        <li><a href="refund.html">Refund Policy</a></li>
+        <li><a href="eula.html">EULA</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <a class="mobile-cta" href="trial-license.html" data-track="start_trial_mobile">Free Trial</a>
+
+  <!-- ================================================
+       JAVASCRIPT
+  ================================================ -->
+  <script>
+    /* ----- THEME ENGINE ----- */
+    const html = document.documentElement;
+    const themeBtn = document.getElementById('themeToggle');
+
+    const savedTheme = localStorage.getItem('msh-theme') || 'dark';
+    html.setAttribute('data-theme', savedTheme);
+
+    themeBtn.addEventListener('click', () => {
+      const current = html.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('msh-theme', next);
+    });
+
+    /* ----- SCROLL REVEAL ----- */
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    /* ----- NAV SHADOW ON SCROLL ----- */
+    const nav = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 20) {
+        nav.style.borderBottomColor = 'var(--border-strong)';
+      } else {
+        nav.style.borderBottomColor = 'var(--border)';
+      }
+    });
+
+    /* ----- ROTATING BACKGROUND LOGO ----- */
+    const bgSerpent = document.getElementById('bgSerpent');
+    if (bgSerpent) {
+      let serpentTicking = false;
+      const degreesPerPixel = 0.12; // increase for a faster spin, decrease for slower
+
+      function updateSerpentRotation() {
+        const angle = window.scrollY * degreesPerPixel;
+        bgSerpent.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
+        serpentTicking = false;
+      }
+
+      window.addEventListener('scroll', () => {
+        if (!serpentTicking) {
+          requestAnimationFrame(updateSerpentRotation);
+          serpentTicking = true;
+        }
+      });
+    }
+
+    /* ----- CURSOR SERPENT ----- */
+    const cursorSerpent = document.getElementById('cursorSerpent');
+    if (cursorSerpent
+        && window.matchMedia('(hover: hover) and (pointer: fine)').matches
+        && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      let mx = 0, my = 0, cx = 0, cy = 0;
+      let angle = 0, scale = 1, targetScale = 1;
+      let lastScroll = window.scrollY, seen = false;
+
+      window.addEventListener('mousemove', (e) => {
+        mx = e.clientX; my = e.clientY;
+        if (!seen) {
+          cx = mx; cy = my; seen = true;
+          cursorSerpent.style.opacity = '0.9';
+        }
+        targetScale = e.target.closest('a, button, input, textarea, select, label') ? 1.5 : 1;
+      }, { passive: true });
+
+      document.documentElement.addEventListener('mouseleave', () => { cursorSerpent.style.opacity = '0'; });
+      document.documentElement.addEventListener('mouseenter', () => { if (seen) cursorSerpent.style.opacity = '0.9'; });
+
+      (function tickCursorSerpent() {
+        const dx = mx - cx, dy = my - cy;
+        cx += dx * 0.18;
+        cy += dy * 0.18;
+
+        const sy = window.scrollY;
+        const scrollDelta = sy - lastScroll;
+        lastScroll = sy;
+
+        // slow idle drift + spin from pointer travel + spin from scrolling
+        angle += 0.15 + Math.hypot(dx, dy) * 0.25 + scrollDelta * 0.5;
+        scale += (targetScale - scale) * 0.15;
+
+        cursorSerpent.style.transform =
+          `translate3d(${cx}px, ${cy}px, 0) translate(-50%, -50%) rotate(${angle}deg) scale(${scale})`;
+        requestAnimationFrame(tickCursorSerpent);
+      })();
+    }
+
+    /* ----- GLASS SLIDER + REFRACTION ----- */
+    (function () {
+      const root = document.documentElement;
+      const slider = document.getElementById('glassSlider');
+      const reduced = window.matchMedia('(prefers-reduced-transparency: reduce)').matches;
+
+      if (/Chrome\//.test(navigator.userAgent) && !reduced) root.classList.add('has-refraction');
+
+      let v = reduced ? 90 : 30;
+      try {
+        const saved = localStorage.getItem('mshGlass');
+        if (saved !== null && !isNaN(Number(saved))) v = Number(saved);
+      } catch (e) {}
+
+      const apply = (val) => root.style.setProperty('--glass-k', (val / 30).toFixed(3));
+      apply(v);
+
+      if (slider) {
+        slider.value = v;
+        slider.addEventListener('input', () => {
+          apply(slider.value);
+          try { localStorage.setItem('mshGlass', slider.value); } catch (e) {}
+        });
+      }
+    })();
+
+
+    /* ----- PAYMENT LINKS / DOWNLOAD LINKS (fill data-pay in HTML) ----- */
+    document.querySelectorAll('[data-pay]').forEach(a => {
+      const u = a.getAttribute('data-pay');
+      if (u) { a.href = u; a.target = '_blank'; a.rel = 'noopener'; }
+    });
+    document.getElementById('yr').textContent = new Date().getFullYear();
+
+    /* ----- ANALYTICS (paste GA4 ID to enable, e.g. 'G-XXXXXXXXXX') ----- */
+    const GA_ID = ''; // FILL
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    if (GA_ID) {
+      const s = document.createElement('script');
+      s.async = true; s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+      document.head.appendChild(s);
+      gtag('js', new Date()); gtag('config', GA_ID);
+    }
+    document.addEventListener('click', e => {
+      const t = e.target.closest('[data-track]');
+      if (t && GA_ID) gtag('event', t.getAttribute('data-track'));
+    });
+
+    /* ----- SMOOTH ANCHOR SCROLL ----- */
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const h = a.getAttribute('href');
+        if (h.length < 2) { e.preventDefault(); return; }
+        const target = document.querySelector(h);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
