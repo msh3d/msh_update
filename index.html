@@ -173,23 +173,6 @@
     }
 
     /* ============================================
-       ROTATING BACKGROUND LOGO
-       ============================================ */
-    .bg-serpent {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      width: 560px;
-      max-width: none;
-      height: auto;
-      transform: translate(-50%, -50%) rotate(0deg);
-      opacity: 0.1;
-      pointer-events: none;
-      z-index: -2;
-      will-change: transform;
-    }
-
-    /* ============================================
        NAVIGATION
        ============================================ */
     nav {
@@ -219,13 +202,6 @@
       align-items: center;
       gap: 10px;
       text-decoration: none;
-    }
-
-    .logo-mark {
-      width: 28px;
-      height: 28px;
-      object-fit: contain;
-      display: block;
     }
 
     .logo-text {
@@ -263,7 +239,6 @@
       gap: 16px;
     }
 
-    /* Trial License CTA */
     .nav-trial {
       display: inline-flex;
       align-items: center;
@@ -288,7 +263,6 @@
       box-shadow: 0 8px 24px rgba(201,169,110,0.18);
     }
 
-    /* Theme Toggle */
     .theme-toggle {
       width: 40px;
       height: 40px;
@@ -322,11 +296,11 @@
     [data-theme="light"] .icon-moon { opacity: 0; transform: rotate(90deg) scale(0.5); }
 
     /* ============================================
-       HERO
+       HERO & SECTIONS
        ============================================ */
     .hero {
       margin-top: 56px;
-      min-height: 95vh;
+      min-height: 85vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -334,20 +308,6 @@
       text-align: center;
       padding: 100px 32px 80px;
       position: relative;
-      overflow: hidden;
-    }
-
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: var(--hero-overlay);
-      z-index: 1;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      max-width: 900px;
     }
 
     .hero-eyebrow {
@@ -357,75 +317,35 @@
       text-transform: uppercase;
       color: var(--accent-gold);
       margin-bottom: 24px;
-      opacity: 0;
-      animation: fadeSlideUp 0.8s ease 0.2s forwards;
     }
 
     .hero-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(52px, 8vw, 96px);
+      font-size: clamp(48px, 7vw, 88px);
       font-weight: 300;
-      line-height: 1.0;
-      letter-spacing: -0.02em;
-      color: #ffffff;
-      margin-bottom: 8px;
-      opacity: 0;
-      animation: fadeSlideUp 0.9s ease 0.35s forwards;
+      line-height: 1.05;
+      color: var(--text-primary);
+      margin-bottom: 16px;
     }
 
     .hero-title em {
       font-style: italic;
-      color: var(--accent-gold-lt);
+      color: var(--accent-gold);
     }
 
     .hero-subtitle {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(20px, 3vw, 28px);
+      font-size: 18px;
+      color: var(--text-secondary);
+      max-width: 640px;
+      margin-bottom: 40px;
       font-weight: 300;
-      font-style: italic;
-      color: rgba(255,255,255,0.6);
-      margin-bottom: 28px;
-      letter-spacing: 0.02em;
-      opacity: 0;
-      animation: fadeSlideUp 0.9s ease 0.5s forwards;
-    }
-
-    .hero-desc {
-      font-size: 16px;
-      color: rgba(255,255,255,0.65);
-      line-height: 1.8;
-      max-width: 600px;
-      margin: 0 auto 48px;
-      font-weight: 300;
-      opacity: 0;
-      animation: fadeSlideUp 0.9s ease 0.65s forwards;
     }
 
     .hero-cta {
       display: flex;
       gap: 16px;
       justify-content: center;
-      opacity: 0;
-      animation: fadeSlideUp 0.9s ease 0.8s forwards;
     }
-
-    .btn-gold, .btn-outline {
-      position: relative;
-      overflow: hidden;
-    }
-
-    .btn-gold::before, .btn-outline::before {
-      content: '';
-      position: absolute;
-      top: 0; left: -75%;
-      width: 50%; height: 100%;
-      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.4), transparent);
-      transform: skewX(-20deg);
-      transition: left 0.6s var(--ease);
-      pointer-events: none;
-    }
-
-    .btn-gold:hover::before, .btn-outline:hover::before { left: 125%; }
 
     .btn-gold {
       background: var(--accent-gold);
@@ -449,10 +369,8 @@
     }
 
     .btn-outline {
-      background: rgba(255,255,255,0.06);
-      backdrop-filter: blur(12px) saturate(180%);
-      -webkit-backdrop-filter: blur(12px) saturate(180%);
-      color: rgba(255,255,255,0.85);
+      background: transparent;
+      color: var(--text-primary);
       padding: 14px 36px;
       border-radius: var(--radius-pill);
       text-decoration: none;
@@ -460,7 +378,7 @@
       font-weight: 500;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      border: 1px solid rgba(255,255,255,0.3);
+      border: 1px solid var(--border-strong);
       transition: all 0.3s var(--ease);
     }
 
@@ -470,56 +388,6 @@
       transform: translateY(-2px);
     }
 
-    /* Scroll indicator */
-    .scroll-indicator {
-      position: absolute;
-      bottom: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      opacity: 0;
-      animation: fadeIn 1s ease 1.4s forwards;
-    }
-
-    .scroll-line {
-      width: 1px;
-      height: 48px;
-      background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.3));
-      position: relative;
-      overflow: hidden;
-    }
-
-    .scroll-line::after {
-      content: '';
-      position: absolute;
-      top: -100%;
-      width: 100%;
-      height: 100%;
-      background: var(--accent-gold);
-      animation: scrollDrop 2s ease-in-out infinite;
-    }
-
-    @keyframes fadeSlideUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes fadeIn {
-      to { opacity: 1; }
-    }
-
-    @keyframes scrollDrop {
-      0% { top: -100%; }
-      50%, 100% { top: 100%; }
-    }
-
-    /* ============================================
-       SECTION COMMONS
-       ============================================ */
     .section-label {
       font-family: 'DM Mono', monospace;
       font-size: 10px;
@@ -533,14 +401,13 @@
       font-family: 'Cormorant Garamond', serif;
       font-size: clamp(36px, 5vw, 56px);
       font-weight: 300;
-      letter-spacing: -0.01em;
       line-height: 1.1;
       color: var(--text-primary);
       margin-bottom: 16px;
     }
 
     .section-subtitle {
-      font-size: 17px;
+      font-size: 16px;
       color: var(--text-secondary);
       font-weight: 300;
       line-height: 1.7;
@@ -554,146 +421,56 @@
       opacity: 0.5;
     }
 
-    /* ============================================
-       VIDEO SECTION
-       ============================================ */
-    .video-section {
-      background: var(--bg-surface);
-      padding: 120px 32px;
-      text-align: center;
-      transition: var(--transition-theme);
-    }
-
-    .video-section .section-header {
-      margin-bottom: 60px;
-    }
-
-    .video-wrapper {
-      max-width: 1000px;
-      margin: 0 auto;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      box-shadow: var(--shadow-card);
-      position: relative;
-    }
-
-    .video-wrapper::before {
-      content: '';
-      position: absolute;
-      inset: -1px;
-      padding: 1px;
-      background: linear-gradient(135deg, var(--accent-gold) 0%, transparent 50%, var(--accent-gold) 100%);
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-      opacity: 0.25;
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    .video-wrapper iframe,
-    .video-wrapper video {
-      width: 100%;
-      aspect-ratio: 16/9;
-      border: none;
-      display: block;
-      object-fit: cover;
-    }
-
-    /* ============================================
-       PLUGINS SECTION
-       ============================================ */
+    /* Plugins Section */
     .plugins-section {
-      padding: 140px 32px;
+      padding: 100px 32px;
       max-width: 1200px;
       margin: 0 auto;
     }
 
     .plugins-section .section-header {
       text-align: center;
-      margin-bottom: 80px;
+      margin-bottom: 60px;
     }
 
     .plugin-grid {
       display: grid;
-      gap: 32px;
+      gap: 24px;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     }
 
     .plugin-card {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
       background: var(--bg-card);
-      backdrop-filter: blur(18px) saturate(180%);
-      -webkit-backdrop-filter: blur(18px) saturate(180%);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
-      overflow: hidden;
-      box-shadow: var(--shadow-card);
-      transition: transform 0.4s var(--ease), border-color 0.4s var(--ease), box-shadow 0.4s var(--ease);
-      position: relative;
-    }
-
-    .plugin-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, var(--accent-glow), transparent);
-      opacity: 0;
-      transition: opacity 0.5s;
+      padding: 36px;
+      transition: all 0.3s var(--ease);
     }
 
     .plugin-card:hover {
-      border-color: var(--border-strong);
+      border-color: var(--accent-gold);
       box-shadow: var(--shadow-glow);
-      z-index: 1;
-    }
-
-    .plugin-card:hover::before { opacity: 1; }
-
-    .plugin-card:nth-child(even) .plugin-content { order: 2; }
-    .plugin-card:nth-child(even) .plugin-visual { order: 1; }
-
-    .plugin-content {
-      padding: 64px 60px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      position: relative;
-      z-index: 1;
-    }
-
-    .plugin-number {
-      font-family: 'DM Mono', monospace;
-      font-size: 11px;
-      color: var(--text-muted);
-      letter-spacing: 0.15em;
-      margin-bottom: 20px;
+      transform: translateY(-4px);
     }
 
     .plugin-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+      display: inline-block;
       background: var(--tag-bg);
       color: var(--tag-color);
       padding: 4px 12px;
       border-radius: var(--radius-pill);
-      font-size: 10px;
+      font-size: 11px;
       font-weight: 600;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       margin-bottom: 16px;
-      width: fit-content;
     }
 
     .plugin-name {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(28px, 3.5vw, 44px);
+      font-size: 28px;
       font-weight: 400;
-      letter-spacing: -0.01em;
-      line-height: 1.1;
-      margin-bottom: 18px;
+      margin-bottom: 12px;
       color: var(--text-primary);
     }
 
@@ -703,21 +480,19 @@
       line-height: 1.75;
     }
 
-    .plugin-visual {
-      background: color-mix(in srgb, var(--text-primary) 3%, transparent);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 40px;
-      border-left: 1px solid var(--border);
+    /* Commands Section */
+    .commands-section {
+      padding: 100px 32px;
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
-    .plugin-card:nth-child(even) .plugin-visual {
-      border-left: none;
-      border-right: 1px solid var(--border);
+    .commands-section .section-header {
+      text-align: center;
+      margin-bottom: 48px;
     }
 
-    /* ---------- Jewelry Toolkit ---------- */
+    /* ---------- Jewelry Toolkit (PART 1) ---------- */
     .tk-section{padding:96px 16px;max-width:1040px;margin:0 auto}
     .tk-section .section-header{text-align:center;margin-bottom:44px}
     .tk-glass{
@@ -785,62 +560,34 @@
       #tkPrintRoot .tk-printhead p{font-size:13px;margin:0}
       #tkPrintRoot .tk-cs tr.total td{color:#000!important;border-top:2px solid #000!important}
     }
-
-    /* ============================================
-       COMMANDS SECTION
-       ============================================ */
-    .commands-section {
-      padding: 120px 32px;
-      background: var(--bg-surface);
-      border-top: 1px solid var(--border);
-    }
-    .commands-container {
-      max-width: 1040px;
-      margin: 0 auto;
-    }
   </style>
 </head>
 <body>
 
-  <!-- Ambient Background Atmosphere -->
+  <!-- Ambient Background Blobs -->
   <div class="bg-atmosphere">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
     <div class="blob blob-3"></div>
   </div>
 
-  <!-- Rotating Background Emblem -->
-  <svg class="bg-serpent" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="100" cy="100" r="90" stroke="currentColor" stroke-width="1" opacity="0.15" />
-    <circle cx="100" cy="100" r="70" stroke="currentColor" stroke-width="1" stroke-dasharray="4 4" opacity="0.2" />
-    <path d="M100 10 L190 100 L100 190 L10 100 Z" stroke="currentColor" stroke-width="1" opacity="0.12" />
-  </svg>
-
-  <!-- Navigation Bar -->
+  <!-- Navigation -->
   <nav>
     <div class="nav-container">
       <a href="#" class="logo">
-        <svg class="logo-mark" viewBox="0 0 64 64">
-          <rect width="64" height="64" rx="10" fill="#0c0c0e"/>
-          <polygon points="32,5 56,18 56,46 32,59 8,46 8,18" fill="none" stroke="#c9a96e" stroke-width="3"/>
-          <polygon points="32,18 44,24 44,40 32,46 20,40 20,24" fill="none" stroke="#c9a96e" stroke-width="2" opacity=".65"/>
-          <circle cx="32" cy="32" r="4.5" fill="#c9a96e"/>
-        </svg>
         <span class="logo-text">Modelling Studio HUB</span>
       </a>
-
       <ul class="nav-links">
-        <li><a href="#video">Demo</a></li>
         <li><a href="#plugins">Plugins</a></li>
+        <!-- PART 3: NAV -->
         <li><a href="#toolkit">Toolkit</a></li>
         <li><a href="#commands">Commands</a></li>
       </ul>
-
       <div class="nav-actions">
         <a href="#trial" class="nav-trial">Free Trial</a>
-        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme">
           <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         </button>
       </div>
     </div>
@@ -848,82 +595,38 @@
 
   <!-- Hero Section -->
   <section class="hero">
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <p class="hero-eyebrow">Precision Jewelry CAD Suite</p>
-      <h1 class="hero-title">Elevate Your <em>Jewelry Craft</em></h1>
-      <p class="hero-subtitle">Next-Generation Rhino 8 Plugins & Parametric Tools</p>
-      <p class="hero-desc">Streamline your 3D jewelry manufacturing workflow with custom-engineered plugins, parametric cutters, mesh converters, and real-time bench tools.</p>
-      <div class="hero-cta">
-        <a href="#plugins" class="btn-gold">Explore Plugins</a>
-        <a href="#toolkit" class="btn-outline">Open Toolkit</a>
-      </div>
-    </div>
-    <div class="scroll-indicator">
-      <div class="scroll-line"></div>
-    </div>
-  </section>
-
-  <!-- Video Demo Section -->
-  <section id="video" class="video-section">
-    <div class="section-header">
-      <p class="section-label">See It In Action</p>
-      <h2 class="section-title">Workflow Demonstration</h2>
-      <div class="divider"></div>
-      <p class="section-subtitle">Watch how MSH Plugins accelerate design and production in Rhinoceros 8.</p>
-    </div>
-    <div class="video-wrapper">
-      <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="MSH Jewelry Suite Demo" allowfullscreen></iframe>
+    <div class="hero-eyebrow">Rhino 8 Jewelry Suite</div>
+    <h1 class="hero-title">Precision Tools for <em>Master Jewelers</em></h1>
+    <p class="hero-subtitle">Parametric workflows, mesh conversion, and bench tools directly inside Rhinoceros 3D.</p>
+    <div class="hero-cta">
+      <a href="#plugins" class="btn-gold">Explore Suite</a>
+      <a href="#toolkit" class="btn-outline">Open Toolkit</a>
     </div>
   </section>
 
   <!-- Plugins Section -->
   <section id="plugins" class="plugins-section">
     <div class="section-header">
-      <p class="section-label">Rhino 8 Plugins</p>
-      <h2 class="section-title">Production Software Suite</h2>
+      <p class="section-label">Parametric Suite</p>
+      <h2 class="section-title">Rhino 8 Plugins</h2>
       <div class="divider"></div>
-      <p class="section-subtitle">Engineered specifically for fine jewelry CAD designers and high-volume manufacturing teams.</p>
+      <p class="section-subtitle">Accelerate CAD design and production preparation in Rhino 8.</p>
     </div>
-
     <div class="plugin-grid">
-      <!-- Plugin 1 -->
       <div class="plugin-card">
-        <div class="plugin-content">
-          <span class="plugin-number">01 / PLUGIN</span>
-          <span class="plugin-tag">Gem Cutting & Seats</span>
-          <h3 class="plugin-name">AzureCutterPro</h3>
-          <p class="plugin-desc">Automated parametric cutters with precise seats, girdles, and seat clearance controls designed for smooth stone setting and clean casting booleans.</p>
-        </div>
-        <div class="plugin-visual">
-          <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="var(--accent-gold)" stroke-width="1.2">
-            <polygon points="12 2 2 7 12 12 22 7 12 2"/>
-            <polyline points="2 17 12 22 22 17"/>
-            <polyline points="2 12 12 17 22 12"/>
-          </svg>
-        </div>
+        <span class="plugin-tag">Automation</span>
+        <h3 class="plugin-name">ConvertMeshToGem</h3>
+        <p class="plugin-desc">Converts faceted mesh diamonds into editable Matrix block gems instantly with intact orientation and accurate dimensions.</p>
       </div>
-
-      <!-- Plugin 2 -->
       <div class="plugin-card">
-        <div class="plugin-content">
-          <span class="plugin-number">02 / PLUGIN</span>
-          <span class="plugin-tag">Mesh Automation</span>
-          <h3 class="plugin-name">ConvertMeshToGem</h3>
-          <p class="plugin-desc">Instant conversion of imported mesh diamonds into native Matrix block gems and parametric objects with full dimensional data preservation.</p>
-        </div>
-        <div class="plugin-visual">
-          <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="var(--accent-gold)" stroke-width="1.2">
-            <path d="M6 3h12l4 6-10 12L2 9z"/>
-            <path d="M11 3v18"/>
-            <path d="M2 9h20"/>
-          </svg>
-        </div>
+        <span class="plugin-tag">Parametric</span>
+        <h3 class="plugin-name">AzureCutterPro</h3>
+        <p class="plugin-desc">Generate parametric stone cutters, prongs, and bezels with precise tolerances for casting and micro-pave setting.</p>
       </div>
     </div>
   </section>
 
-  <!-- Toolkit Section -->
+  <!-- ============================ PART 2: HTML ============================ -->
   <section id="toolkit" class="tk-section">
     <div class="section-header reveal">
       <p class="section-label">Bench Calculators</p>
@@ -1005,31 +708,25 @@
 
   <!-- Commands Section -->
   <section id="commands" class="commands-section">
-    <div class="commands-container">
-      <div class="section-header" style="text-align: center; margin-bottom: 40px;">
-        <p class="section-label">Documentation</p>
-        <h2 class="section-title">Command Reference</h2>
-        <div class="divider"></div>
-        <p class="section-subtitle">Quick reference list for MSH Rhinoceros command line aliases.</p>
-      </div>
+    <div class="section-header">
+      <p class="section-label">Documentation</p>
+      <h2 class="section-title">Command Reference</h2>
+      <div class="divider"></div>
+      <p class="section-subtitle">Type these command names in the Rhino 8 command line.</p>
     </div>
   </section>
 
-  <!-- JavaScript Engines -->
+  <!-- ============================ PART 4: JS ============================ -->
   <script>
-    /* ---------- Theme Toggle & UI Mechanics ---------- */
-    (function() {
-      const toggleBtn = document.getElementById('themeToggle');
-      const html = document.documentElement;
+    /* ---------- Theme Toggle Engine ---------- */
+    const themeToggleBtn = document.getElementById('themeToggle');
+    themeToggleBtn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const target = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', target);
+    });
 
-      // Theme toggle
-      toggleBtn.addEventListener('click', () => {
-        const nextTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-        html.setAttribute('data-theme', nextTheme);
-      });
-    })();
-
-    /* ---------- Jewelry Toolkit ---------- */
+    /* ---------- Jewelry Toolkit (PART 4) ---------- */
     (function () {
       const $ = id => document.getElementById(id);
       const PI = Math.PI;
@@ -1041,7 +738,7 @@
         if (a < 1e-6 || a >= 1e12) return n.toExponential(4);
         return (+n.toPrecision(7)).toLocaleString('en-US', { maximumFractionDigits: 10 });
       };
-      const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+      const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
       const tile = (label, value, hl) => `<div class="tk-tile${hl ? ' hl' : ''}"><small>${label}</small><b>${value}</b></div>`;
 
       /* ---------- Tabs ---------- */
@@ -1103,7 +800,7 @@
         us:   { l: 'US / Canada',            ph: '7',       toC: s => PI * (11.63 + .8128 * s), rep: c => nf(Math.round((c / PI - 11.63) / .8128 * 4) / 4, 2) },
         uk:   { l: 'UK / Australia',         ph: 'N or N½', toC: null,                          rep: ukFmt },
         eu:   { l: 'EU (ISO circumference)', ph: '54.4',    toC: s => s,                        rep: c => nf(c, 1) },
-        'in': { l: 'India',                  ph: '14',      toC: s => s + 40,                   rep: c => nf(c - 40, 1) },
+        'in': { l: 'India',                  ph: '14',      toC: s => s + 40,                   rep: c => nf(s, 1) },
         jp:   { l: 'Japan',                  ph: '14',      toC: s => PI * (s + 38) / 3,        rep: c => String(Math.round(3 * c / PI - 38)) },
         dia:  { l: 'Inner diameter (mm)',    ph: '17.3',    toC: d => PI * d,                   rep: c => nf(c / PI, 2) },
         circ: { l: 'Inner circumference (mm)', ph: '54.4',  toC: c => c,                        rep: c => nf(c, 2) }
