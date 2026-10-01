@@ -503,6 +503,20 @@
       animation: scrollDrop 2s ease-in-out infinite;
     }
 
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    @keyframes scrollDrop {
+      0% { top: -100%; }
+      50%, 100% { top: 100%; }
+    }
+
     /* ============================================
        SECTION COMMONS
        ============================================ */
@@ -598,12 +612,12 @@
 
     .plugins-section .section-header {
       text-align: center;
-      margin-bottom: 100px;
+      margin-bottom: 80px;
     }
 
     .plugin-grid {
       display: grid;
-      gap: 20px;
+      gap: 32px;
     }
 
     .plugin-card {
@@ -687,1578 +701,529 @@
       font-size: 15px;
       color: var(--text-secondary);
       line-height: 1.75;
-      margin-bottom: 32px;
-      font-weight: 300;
     }
-
-    .plugin-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--accent-gold);
-      text-decoration: none;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      transition: all 0.3s;
-      position: relative;
-    }
-
-    .plugin-link::after {
-      content: '';
-      position: absolute;
-      bottom: -2px;
-      left: 0;
-      width: 0;
-      height: 1px;
-      background: var(--accent-gold);
-      transition: width 0.3s;
-    }
-
-    .plugin-link:hover::after { width: 100%; }
-    .plugin-link:hover { gap: 14px; }
 
     .plugin-visual {
-      position: relative;
-      overflow: hidden;
-      min-height: 400px;
+      background: color-mix(in srgb, var(--text-primary) 3%, transparent);
       display: flex;
       align-items: center;
       justify-content: center;
+      padding: 40px;
+      border-left: 1px solid var(--border);
     }
 
-    .plugin-visual svg { position: relative; z-index: 1; }
-
-    /* Visual gradients */
-    .vis-1 { background: linear-gradient(145deg, #1a1520 0%, #2d1f3d 50%, #1a1520 100%); }
-    .vis-2 { background: linear-gradient(145deg, #101a20 0%, #1a3040 50%, #101a20 100%); }
-    .vis-3 { background: linear-gradient(145deg, #201520 0%, #3d1f35 50%, #201520 100%); }
-    .vis-4 { background: linear-gradient(145deg, #201a10 0%, #3d3015 50%, #201a10 100%); }
-    .vis-5 { background: linear-gradient(145deg, #101520 0%, #1f2d40 50%, #101520 100%); }
-
-    [data-theme="light"] .vis-1 { background: linear-gradient(145deg, #f0eaf8 0%, #e0d0f0 50%, #f0eaf8 100%); }
-    [data-theme="light"] .vis-2 { background: linear-gradient(145deg, #e8f0f8 0%, #d0e4f5 50%, #e8f0f8 100%); }
-    [data-theme="light"] .vis-3 { background: linear-gradient(145deg, #f8e8f0 0%, #f0d0e4 50%, #f8e8f0 100%); }
-    [data-theme="light"] .vis-4 { background: linear-gradient(145deg, #f8f0e0 0%, #f5e8c0 50%, #f8f0e0 100%); }
-    [data-theme="light"] .vis-5 { background: linear-gradient(145deg, #e0e8f8 0%, #c8d8f5 50%, #e0e8f8 100%); }
-
-    /* ============================================
-       COMMAND HUB SECTION
-       ============================================ */
-    .command-section {
-      padding: 140px 32px;
-      background: var(--bg-surface);
-      transition: var(--transition-theme);
+    .plugin-card:nth-child(even) .plugin-visual {
+      border-left: none;
+      border-right: 1px solid var(--border);
     }
 
-    .command-section .section-header {
-      text-align: center;
-      max-width: 700px;
-      margin: 0 auto 80px;
+    /* ---------- Jewelry Toolkit ---------- */
+    .tk-section{padding:96px 16px;max-width:1040px;margin:0 auto}
+    .tk-section .section-header{text-align:center;margin-bottom:44px}
+    .tk-glass{
+      background:radial-gradient(130% 90% at 0% 0%,rgba(255,255,255,.09),transparent 55%),var(--bg-card);
+      -webkit-backdrop-filter:blur(var(--glass-blur,22px)) saturate(190%);
+      backdrop-filter:blur(var(--glass-blur,22px)) saturate(190%);
+      border:1px solid var(--glass-border,var(--border));
+      box-shadow:inset 0 1px 0 var(--glass-spec,transparent),var(--glass-shadow,var(--shadow-card));
     }
-
-    .command-categories {
-      max-width: 1200px;
-      margin: 0 auto;
+    .tk-tabs{display:flex;gap:4px;padding:5px;border-radius:var(--radius-pill);overflow-x:auto;scrollbar-width:none;width:fit-content;max-width:100%;margin:0 auto 16px}
+    .tk-tabs::-webkit-scrollbar{display:none}
+    .tk-tab{border:0;background:transparent;color:var(--text-secondary);font:500 13px 'DM Sans',sans-serif;padding:11px 18px;border-radius:var(--radius-pill);cursor:pointer;white-space:nowrap;transition:background .25s,color .25s}
+    .tk-tab:hover{color:var(--text-primary)}
+    .tk-tab.active{color:var(--text-primary);background:color-mix(in srgb,var(--accent-gold) 28%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent-gold) 55%,transparent)}
+    .tk-tab:focus-visible,.tk-f input:focus-visible,.tk-f select:focus-visible{outline:2px solid var(--accent-gold);outline-offset:2px}
+    .tk-panel{border-radius:var(--radius-lg);padding:20px}
+    .tk-panel[hidden]{display:none}
+    .tk-grid{display:grid;gap:14px;grid-template-columns:1fr;margin-bottom:20px}
+    .tk-f{display:flex;flex-direction:column;gap:6px;min-width:0}
+    .tk-f[hidden]{display:none}
+    .tk-f>span{font-size:12px;font-weight:500;color:var(--text-secondary)}
+    .tk-f>span i{font-style:normal;color:var(--accent-gold);margin-left:6px}
+    .tk-f input,.tk-f select{width:100%;min-height:46px;padding:0 14px;font:400 16px 'DM Sans',sans-serif;color:var(--text-primary);background:color-mix(in srgb,var(--text-primary) 5%,transparent);border:1px solid var(--border-strong);border-radius:var(--radius-sm);transition:border-color .2s,box-shadow .2s;color-scheme:dark}
+    [data-theme="light"] .tk-f input,[data-theme="light"] .tk-f select{color-scheme:light}
+    .tk-f input:focus,.tk-f select:focus{border-color:var(--accent-gold);box-shadow:0 0 0 3px var(--accent-glow)}
+    .tk-f select option,.tk-f select optgroup{background:var(--bg-base-solid);color:var(--text-primary)}
+    .tk-res{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:8px}
+    .tk-tile{padding:14px 16px;border-radius:var(--radius-sm);background:color-mix(in srgb,var(--text-primary) 4%,transparent);border:1px solid var(--border);min-width:0}
+    .tk-tile small{display:block;font-size:12px;color:var(--text-secondary);margin-bottom:4px}
+    .tk-tile b{display:block;font:400 26px/1.15 'Cormorant Garamond',serif;color:var(--text-primary);overflow-wrap:anywhere}
+    .tk-tile.hl b{color:var(--accent-gold)}
+    .tk-note{font-size:12.5px;line-height:1.65;color:var(--text-secondary);margin-top:10px}
+    .tk-h{font:500 15px 'DM Sans',sans-serif;color:var(--text-primary);margin:22px 0 10px}
+    .tk-tblwrap{max-height:340px;overflow:auto;border:1px solid var(--border);border-radius:var(--radius-sm)}
+    .tk-tbl{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+    .tk-tbl th{position:sticky;top:0;background:var(--bg-base-solid);font-weight:500;font-size:12px;color:var(--text-secondary);text-align:right;padding:9px 12px;white-space:nowrap}
+    .tk-tbl td{padding:8px 12px;text-align:right;border-top:1px solid var(--border);white-space:nowrap}
+    .tk-tbl th:first-child,.tk-tbl td:first-child{text-align:left}
+    .tk-tbl tr.hit td{background:color-mix(in srgb,var(--accent-gold) 20%,transparent);font-weight:600}
+    .tk-cs{width:100%;border-collapse:collapse;font-size:15px}
+    .tk-cs td{padding:11px 4px;border-top:1px solid var(--border);vertical-align:top}
+    .tk-cs td:last-child{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+    .tk-cs small{display:block;font-size:12px;color:var(--text-secondary);margin-top:2px;white-space:normal}
+    .tk-cs tr.sub td{font-weight:600}
+    .tk-cs tr.total td{font:400 28px 'Cormorant Garamond',serif;color:var(--accent-gold);border-top:2px solid var(--accent-gold);padding-top:16px}
+    .tk-printhead{display:none}
+    .tk-actions{display:flex;flex-wrap:wrap;gap:10px;margin:4px 0 18px}
+    .tk-actions .btn-gold,.tk-actions .btn-outline{padding:12px 24px;cursor:pointer;font-family:inherit}
+    #tkPrintRoot{display:none}
+    @media (min-width:700px){
+      .tk-section{padding:140px 32px}
+      .tk-panel{padding:36px}
+      .tk-grid.c2{grid-template-columns:repeat(2,1fr)}
+      .tk-grid.c3{grid-template-columns:repeat(3,1fr)}
+      .tk-res{grid-template-columns:repeat(3,1fr)}
     }
-
-    .category-block {
-      margin-bottom: 60px;
-    }
-
-    .category-header {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 24px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .category-icon {
-      width: 36px;
-      height: 36px;
-      border: 1px solid var(--border-strong);
-      border-radius: var(--radius-sm);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--accent-gold);
-      flex-shrink: 0;
-    }
-
-    .category-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 22px;
-      font-weight: 400;
-      letter-spacing: 0.02em;
-      color: var(--text-primary);
-    }
-
-    .category-count {
-      font-family: 'DM Mono', monospace;
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-left: auto;
-    }
-
-    .commands-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 12px;
-    }
-
-    .command-card {
-      background: var(--bg-card);
-      backdrop-filter: blur(18px) saturate(180%);
-      -webkit-backdrop-filter: blur(18px) saturate(180%);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 20px 24px;
-      display: flex;
-      align-items: flex-start;
-      gap: 16px;
-      transition: all 0.3s;
-      cursor: default;
-    }
-
-    .command-card:hover {
-      border-color: var(--border-strong);
-      background: var(--bg-card-hover);
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-card);
-    }
-
-    .command-icon-wrap {
-      width: 36px;
-      height: 36px;
-      background: var(--tag-bg);
-      border-radius: var(--radius-sm);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      color: var(--accent-gold);
-    }
-
-    .command-info { flex: 1; }
-
-    .command-name {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text-primary);
-      margin-bottom: 4px;
-      line-height: 1.3;
-    }
-
-    .command-desc {
-      font-size: 12px;
-      color: var(--text-muted);
-      line-height: 1.5;
-    }
-
-    .command-badge {
-      font-family: 'DM Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 0.1em;
-      color: var(--accent-gold);
-      background: var(--tag-bg);
-      padding: 2px 6px;
-      border-radius: var(--radius-pill);
-      text-transform: uppercase;
-      margin-top: 8px;
-      display: inline-block;
+    @media print{
+      html.tk-printing body>*:not(#tkPrintRoot){display:none!important}
+      html.tk-printing body,html.tk-printing{background:#fff!important}
+      html.tk-printing body::before{display:none}
+      html.tk-printing #tkPrintRoot{display:block;padding:24px;font-family:'DM Sans',sans-serif}
+      #tkPrintRoot,#tkPrintRoot *{color:#000!important;background:none!important;border-color:#bbb!important;box-shadow:none!important}
+      #tkPrintRoot .tk-printhead{display:block;margin-bottom:16px}
+      #tkPrintRoot .tk-printhead h3{font:600 22px 'Cormorant Garamond',serif;margin:0 0 4px}
+      #tkPrintRoot .tk-printhead p{font-size:13px;margin:0}
+      #tkPrintRoot .tk-cs tr.total td{color:#000!important;border-top:2px solid #000!important}
     }
 
     /* ============================================
-       FEATURES SECTION
+       COMMANDS SECTION
        ============================================ */
-    .features-section {
-      padding: 140px 32px;
-      background: var(--bg-base);
-      transition: var(--transition-theme);
-    }
-
-    .features-section .section-header {
-      text-align: center;
-      margin-bottom: 80px;
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .feature-item {
-      background: var(--bg-base);
-      backdrop-filter: blur(14px) saturate(180%);
-      -webkit-backdrop-filter: blur(14px) saturate(180%);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      box-shadow: var(--shadow-card);
-      padding: 56px 48px;
-      text-align: center;
-      position: relative;
-      transition: background 0.3s var(--ease), border-color 0.3s var(--ease), transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
-    }
-
-    .feature-item:hover {
-      background: var(--bg-card);
-      border-color: var(--border-strong);
-      transform: translateY(-4px);
-    }
-
-    .feature-icon {
-      width: 52px;
-      height: 52px;
-      margin: 0 auto 24px;
-      color: var(--accent-gold);
-    }
-
-    .feature-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 22px;
-      font-weight: 400;
-      color: var(--text-primary);
-      margin-bottom: 12px;
-      letter-spacing: 0.02em;
-    }
-
-    .feature-text {
-      font-size: 14px;
-      color: var(--text-secondary);
-      line-height: 1.75;
-      font-weight: 300;
-    }
-
-    /* ============================================
-       PRICING SECTION
-       ============================================ */
-    .pricing-section {
-      padding: 140px 32px;
-      background: var(--bg-surface);
-      transition: var(--transition-theme);
-    }
-
-    .pricing-section .section-header {
-      text-align: center;
-      margin-bottom: 80px;
-    }
-
-    .pricing-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .pricing-card {
-      background: var(--bg-card);
-      backdrop-filter: blur(18px) saturate(180%);
-      -webkit-backdrop-filter: blur(18px) saturate(180%);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-card);
-      padding: 56px 44px;
-      text-align: center;
-      position: relative;
-      transition: border-color 0.4s var(--ease), box-shadow 0.4s var(--ease), transform 0.4s var(--ease), background 0.4s var(--ease);
-    }
-
-    .pricing-card:hover {
-      border-color: var(--border-strong);
-      box-shadow: 0 16px 48px rgba(0,0,0,0.35);
-      transform: translateY(-6px);
-    }
-
-    .pricing-card.featured {
-      border-color: var(--accent-gold);
-      background: var(--bg-card-hover);
-    }
-
-    .pricing-badge {
-      position: absolute;
-      top: -1px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--accent-gold);
-      color: #0c0c0e;
-      padding: 5px 20px;
-      border-radius: 0 0 var(--radius-sm) var(--radius-sm);
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-
-    .pricing-period {
-      font-family: 'DM Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 20px;
-    }
-
-    .pricing-amount {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 52px;
-      font-weight: 300;
-      color: var(--text-primary);
-      letter-spacing: -0.02em;
-      line-height: 1;
-      margin-bottom: 8px;
-    }
-
-    .pricing-duration {
-      font-size: 13px;
-      color: var(--text-muted);
-      margin-bottom: 40px;
-      font-weight: 300;
-    }
-
-    .pricing-features {
-      list-style: none;
-      margin-bottom: 44px;
-      text-align: left;
-    }
-
-    .pricing-features li {
-      padding: 10px 0;
-      font-size: 14px;
-      color: var(--text-secondary);
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .pricing-features li:last-child { border-bottom: none; }
-
-    .pricing-features li::before {
-      content: '';
-      width: 4px;
-      height: 4px;
-      background: var(--accent-gold);
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-
-    .btn-pricing {
-      display: block;
-      text-align: center;
-      padding: 14px 32px;
-      background: transparent;
-      border: 1px solid var(--accent-gold);
-      color: var(--accent-gold);
-      text-decoration: none;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      transition: all 0.3s;
-    }
-
-    .btn-pricing:hover,
-    .pricing-card.featured .btn-pricing {
-      background: var(--accent-gold);
-      color: #0c0c0e;
-    }
-
-    .pricing-card.featured .btn-pricing:hover {
-      background: var(--accent-gold-lt);
-      border-color: var(--accent-gold-lt);
-    }
-
-    /* ============================================
-       CONTACT SECTION
-       ============================================ */
-    .contact-section {
-      padding: 140px 32px;
-      background: var(--bg-base);
-      transition: var(--transition-theme);
-    }
-
-    .contact-section .section-header {
-      text-align: center;
-      margin-bottom: 80px;
-    }
-
-    .contact-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .contact-item {
-      background: var(--bg-base);
-      backdrop-filter: blur(14px) saturate(180%);
-      -webkit-backdrop-filter: blur(14px) saturate(180%);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      box-shadow: var(--shadow-card);
-      padding: 48px 36px;
-      text-align: center;
-      transition: background 0.3s var(--ease), border-color 0.3s var(--ease), transform 0.3s var(--ease);
-    }
-
-    .contact-item:hover {
-      background: var(--bg-card);
-      border-color: var(--border-strong);
-      transform: translateY(-4px);
-    }
-
-    .contact-icon {
-      width: 36px;
-      height: 36px;
-      margin: 0 auto 20px;
-      color: var(--accent-gold);
-    }
-
-    .contact-label {
-      font-family: 'DM Mono', monospace;
-      font-size: 10px;
-      color: var(--text-muted);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-
-    .contact-value {
-      font-size: 15px;
-      font-weight: 400;
-      color: var(--text-primary);
-    }
-
-    .contact-value a {
-      color: var(--accent-gold);
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-
-    .contact-value a:hover { color: var(--accent-gold-lt); }
-
-    /* ============================================
-       FOOTER
-       ============================================ */
-    footer {
+    .commands-section {
+      padding: 120px 32px;
       background: var(--bg-surface);
       border-top: 1px solid var(--border);
-      padding: 48px 32px;
-      transition: var(--transition-theme);
     }
-
-    .footer-inner {
-      max-width: 1200px;
+    .commands-container {
+      max-width: 1040px;
       margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .footer-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--text-secondary);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    .footer-text {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 24px;
-      list-style: none;
-    }
-
-    .footer-links a {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 12px;
-      letter-spacing: 0.05em;
-      transition: color 0.3s;
-    }
-
-    .footer-links a:hover { color: var(--accent-gold); }
-
-    /* ============================================
-       SCROLL REVEAL ANIMATIONS
-       ============================================ */
-    .reveal {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .reveal-delay-1 { transition-delay: 0.1s; }
-    .reveal-delay-2 { transition-delay: 0.2s; }
-    .reveal-delay-3 { transition-delay: 0.3s; }
-    .reveal-delay-4 { transition-delay: 0.4s; }
-
-    /* ============================================
-       KEYFRAMES
-       ============================================ */
-    @keyframes fadeSlideUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @keyframes scrollDrop {
-      0% { top: -100%; }
-      100% { top: 200%; }
-    }
-
-    @keyframes gemRotate {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    /* ============================================
-       RESPONSIVE
-       ============================================ */
-    @media (max-width: 900px) {
-      .nav-container { padding: 0 20px; }
-      .nav-links { gap: 14px; }
-      .nav-links a { font-size: 10px; letter-spacing: 0.04em; }
-      .nav-actions { gap: 10px; }
-      .nav-trial {
-        height: 34px;
-        padding: 0 11px;
-        font-size: 9px;
-      }
-      .plugin-card { grid-template-columns: 1fr !important; }
-      .plugin-card:nth-child(even) .plugin-content { order: 1; }
-      .plugin-card:nth-child(even) .plugin-visual { order: 2; }
-      .plugin-visual { min-height: 240px; }
-      .plugin-content { padding: 44px 36px; }
-      .features-grid { grid-template-columns: 1fr; }
-      .pricing-grid { grid-template-columns: 1fr; }
-      .contact-grid { grid-template-columns: repeat(2, 1fr); }
-      .footer-inner { flex-direction: column; gap: 20px; text-align: center; }
-    }
-
-    @media (max-width: 700px) {
-      .nav-links { display: none; }
-    }
-
-    @media (max-width: 600px) {
-      .hero-cta { flex-direction: column; align-items: center; }
-      .contact-grid { grid-template-columns: 1fr; }
-    }
-
-    /* ============================================
-       LIQUID GLASS SYSTEM (iOS 27-style)
-       ============================================ */
-    [data-theme="dark"] {
-      --glass-rgb: 255,255,255;
-      --glass-a-base: 0.06;
-      --glass-blur: 22px;
-      --glass-border: rgba(255,255,255,0.14);
-      --glass-border-hover: rgba(255,255,255,0.30);
-      --glass-edge-out: rgba(0,0,0,0.30);
-      --glass-rim: rgba(255,255,255,0.10);
-      --glass-spec: rgba(255,255,255,0.30);
-      --glass-shadow: 0 14px 44px rgba(0,0,0,0.30);
-      --border: rgba(255,255,255,0.10);
-      --border-strong: rgba(255,255,255,0.22);
-      --hero-overlay: rgba(0,0,0,0.10);
-    }
-
-    [data-theme="light"] {
-      --glass-rgb: 255,255,255;
-      --glass-a-base: 0.30;
-      --glass-blur: 22px;
-      --glass-border: rgba(255,255,255,0.75);
-      --glass-border-hover: rgba(255,255,255,0.98);
-      --glass-edge-out: rgba(70,50,20,0.10);
-      --glass-rim: rgba(255,255,255,0.60);
-      --glass-spec: rgba(255,255,255,1);
-      --glass-shadow: 0 12px 36px rgba(70,50,20,0.14);
-      --border: rgba(0,0,0,0.08);
-      --border-strong: rgba(0,0,0,0.18);
-      --hero-overlay: rgba(255,255,255,0.05);
-    }
-
-    [data-theme="dark"], [data-theme="light"] {
-      --glass-a: calc(var(--glass-a-base) * var(--glass-k, 1));
-      --bg-base:       rgba(var(--glass-rgb), calc(var(--glass-a) * 0.35));
-      --bg-surface:    rgba(var(--glass-rgb), calc(var(--glass-a) * 0.5));
-      --bg-card:       rgba(var(--glass-rgb), var(--glass-a));
-      --bg-card-hover: rgba(var(--glass-rgb), calc(var(--glass-a) * 1.7));
-      --nav-bg: transparent;
-    }
-
-    .bg-atmosphere .blob { opacity: 0.42; }
-    [data-theme="light"] .bg-atmosphere .blob { opacity: 0.5; }
-
-    /* ---- Glass surfaces ---- */
-    .plugin-card, .command-card, .pricing-card, .feature-item, .contact-item,
-    .video-wrapper, .theme-toggle, .glass-ui, .nav-container {
-      background:
-        radial-gradient(130% 90% at 0% 0%, rgba(255,255,255,0.09), transparent 55%),
-        var(--bg-card);
-      -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(190%) brightness(1.05);
-      backdrop-filter: blur(var(--glass-blur)) saturate(190%) brightness(1.05);
-      border: 1px solid var(--glass-border);
-      box-shadow:
-        inset 0 1px 0 var(--glass-spec),
-        inset 0 0 0 1px var(--glass-rim),
-        0 0 0 1px var(--glass-edge-out),
-        var(--glass-shadow);
-    }
-
-    .plugin-card:hover, .command-card:hover, .pricing-card:hover,
-    .feature-item:hover, .contact-item:hover {
-      background:
-        radial-gradient(130% 90% at 0% 0%, rgba(255,255,255,0.16), transparent 55%),
-        var(--bg-card-hover);
-      border-color: var(--glass-border-hover);
-      -webkit-backdrop-filter: blur(calc(var(--glass-blur) + 6px)) saturate(210%) brightness(1.08);
-      backdrop-filter: blur(calc(var(--glass-blur) + 6px)) saturate(210%) brightness(1.08);
-      transform: translateY(-4px);
-    }
-
-    .pricing-card.featured, .pricing-card.featured:hover {
-      background:
-        radial-gradient(130% 90% at 0% 0%, rgba(255,255,255,0.14), transparent 55%),
-        linear-gradient(180deg,
-          color-mix(in srgb, var(--accent-gold) 24%, transparent),
-          color-mix(in srgb, var(--accent-gold) 8%, transparent));
-      border-color: color-mix(in srgb, var(--accent-gold) 65%, transparent);
-    }
-
-    .pricing-badge {
-      background: color-mix(in srgb, var(--accent-gold) 45%, transparent);
-      color: var(--text-primary);
-      -webkit-backdrop-filter: blur(12px) saturate(190%);
-      backdrop-filter: blur(12px) saturate(190%);
-      border: 1px solid color-mix(in srgb, var(--accent-gold) 65%, transparent);
-      border-top: none;
-    }
-
-    /* ---- Glass buttons ---- */
-    .btn-gold, .btn-pricing, .nav-trial, .pricing-card.featured .btn-pricing {
-      background: linear-gradient(180deg,
-        color-mix(in srgb, var(--accent-gold) 46%, transparent),
-        color-mix(in srgb, var(--accent-gold) 20%, transparent));
-      color: var(--text-primary);
-      border: 1px solid color-mix(in srgb, var(--accent-gold) 65%, transparent);
-      -webkit-backdrop-filter: blur(16px) saturate(190%);
-      backdrop-filter: blur(16px) saturate(190%);
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.45),
-        inset 0 -1px 0 rgba(0,0,0,0.12),
-        0 8px 24px color-mix(in srgb, var(--accent-gold) 20%, transparent);
-    }
-
-    .btn-gold:hover, .btn-pricing:hover, .nav-trial:hover,
-    .pricing-card.featured .btn-pricing:hover {
-      background: linear-gradient(180deg,
-        color-mix(in srgb, var(--accent-gold) 62%, transparent),
-        color-mix(in srgb, var(--accent-gold) 32%, transparent));
-      color: var(--text-primary);
-      border-color: var(--accent-gold-lt);
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.55),
-        inset 0 -1px 0 rgba(0,0,0,0.12),
-        0 14px 34px color-mix(in srgb, var(--accent-gold) 34%, transparent);
-    }
-
-    .btn-outline {
-      background: linear-gradient(180deg,
-        rgba(var(--glass-rgb), calc(var(--glass-a) * 2)),
-        rgba(var(--glass-rgb), calc(var(--glass-a) * 0.8)));
-      color: var(--text-primary);
-      border: 1px solid var(--glass-border);
-      -webkit-backdrop-filter: blur(16px) saturate(190%);
-      backdrop-filter: blur(16px) saturate(190%);
-      box-shadow: inset 0 1px 0 var(--glass-spec), 0 8px 24px rgba(0,0,0,0.16);
-    }
-
-    .btn-outline:hover { border-color: var(--accent-gold); color: var(--accent-gold); }
-
-    /* ---- Floating glass nav ---- */
-    nav {
-      top: 12px;
-      left: 0; right: 0;
-      width: auto;
-      padding: 0 16px;
-      background: transparent;
-      -webkit-backdrop-filter: none;
-      backdrop-filter: none;
-      border-bottom: none;
-      pointer-events: none;
-    }
-
-    .nav-container {
-      pointer-events: auto;
-      padding: 0 14px 0 22px;
-      border-radius: var(--radius-pill);
-    }
-
-    /* ---- Light-theme hero copy ---- */
-    [data-theme="light"] .hero-title { color: var(--text-primary); }
-    [data-theme="light"] .hero-subtitle,
-    [data-theme="light"] .hero-desc { color: var(--text-secondary); }
-
-    /* ---- Translucent plugin visual panels ---- */
-    .vis-1 { background: linear-gradient(145deg, rgba(26,21,32,.35) 0%, rgba(45,31,61,.5) 50%, rgba(26,21,32,.35) 100%); }
-    .vis-2 { background: linear-gradient(145deg, rgba(16,26,32,.35) 0%, rgba(26,48,64,.5) 50%, rgba(16,26,32,.35) 100%); }
-    .vis-3 { background: linear-gradient(145deg, rgba(32,21,32,.35) 0%, rgba(61,31,53,.5) 50%, rgba(32,21,32,.35) 100%); }
-    .vis-4 { background: linear-gradient(145deg, rgba(32,26,16,.35) 0%, rgba(61,48,21,.5) 50%, rgba(32,26,16,.35) 100%); }
-    .vis-5 { background: linear-gradient(145deg, rgba(16,21,32,.35) 0%, rgba(31,45,64,.5) 50%, rgba(16,21,32,.35) 100%); }
-    [data-theme="light"] .vis-1 { background: linear-gradient(145deg, rgba(240,234,248,.45) 0%, rgba(224,208,240,.6) 50%, rgba(240,234,248,.45) 100%); }
-    [data-theme="light"] .vis-2 { background: linear-gradient(145deg, rgba(232,240,248,.45) 0%, rgba(208,228,245,.6) 50%, rgba(232,240,248,.45) 100%); }
-    [data-theme="light"] .vis-3 { background: linear-gradient(145deg, rgba(248,232,240,.45) 0%, rgba(240,208,228,.6) 50%, rgba(248,232,240,.45) 100%); }
-    [data-theme="light"] .vis-4 { background: linear-gradient(145deg, rgba(248,240,224,.45) 0%, rgba(245,232,192,.6) 50%, rgba(248,240,224,.45) 100%); }
-    [data-theme="light"] .vis-5 { background: linear-gradient(145deg, rgba(224,232,248,.45) 0%, rgba(200,216,245,.6) 50%, rgba(224,232,248,.45) 100%); }
-
-    /* ---- Refraction ---- */
-    html.has-refraction .nav-container,
-    html.has-refraction .plugin-card,
-    html.has-refraction .command-card,
-    html.has-refraction .pricing-card,
-    html.has-refraction .feature-item,
-    html.has-refraction .contact-item,
-    html.has-refraction .video-wrapper {
-      -webkit-backdrop-filter: url(#glass-refract) blur(var(--glass-blur)) saturate(190%) brightness(1.05);
-      backdrop-filter: url(#glass-refract) blur(var(--glass-blur)) saturate(190%) brightness(1.05);
-    }
-
-    /* ---- Glass transparency slider ---- */
-    .glass-ui {
-      position: fixed;
-      right: 20px; bottom: 20px;
-      z-index: 1001;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 18px;
-      border-radius: var(--radius-pill);
-      font-family: 'DM Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--text-secondary);
-    }
-
-    .glass-ui input[type="range"] {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 110px;
-      height: 4px;
-      border-radius: 4px;
-      background: var(--border-strong);
-      outline: none;
-      cursor: pointer;
-    }
-
-    .glass-ui input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: 18px; height: 18px;
-      border-radius: 50%;
-      background: linear-gradient(180deg, #fff, var(--accent-gold-lt));
-      border: 1px solid rgba(255,255,255,0.7);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-    }
-
-    .glass-ui input[type="range"]::-moz-range-thumb {
-      width: 18px; height: 18px;
-      border-radius: 50%;
-      background: linear-gradient(180deg, #fff, var(--accent-gold-lt));
-      border: 1px solid rgba(255,255,255,0.7);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-    }
-
-    @media (max-width: 900px) {
-      .nav-container { padding: 0 10px 0 14px; }
-      .glass-ui { right: 12px; bottom: 12px; padding: 10px 14px; }
-      .glass-ui input[type="range"] { width: 80px; }
-    }
-
-    @media (prefers-reduced-transparency: reduce) {
-      html.has-refraction .nav-container,
-      html.has-refraction .plugin-card,
-      html.has-refraction .command-card,
-      html.has-refraction .pricing-card,
-      html.has-refraction .feature-item,
-      html.has-refraction .contact-item,
-      html.has-refraction .video-wrapper {
-        -webkit-backdrop-filter: blur(var(--glass-blur));
-        backdrop-filter: blur(var(--glass-blur));
-      }
     }
   </style>
 </head>
 <body>
 
-  <div class="bg-atmosphere" aria-hidden="true">
-    <span class="blob blob-1"></span>
-    <span class="blob blob-2"></span>
-    <span class="blob blob-3"></span>
+  <!-- Ambient Background Atmosphere -->
+  <div class="bg-atmosphere">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <img class="bg-serpent" id="bgSerpent" src="msh-serpent-logo.png" alt="" aria-hidden="true">
-  <img class="cursor-serpent" id="cursorSerpent" src="msh-serpent-logo.png" alt="" aria-hidden="true">
-
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-    <filter id="glass-refract" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="sRGB">
-      <feTurbulence type="fractalNoise" baseFrequency="0.006 0.009" numOctaves="2" seed="4" result="n"/>
-      <feGaussianBlur in="n" stdDeviation="3" result="s"/>
-      <feDisplacementMap in="SourceGraphic" in2="s" scale="18" xChannelSelector="R" yChannelSelector="G"/>
-    </filter>
+  <!-- Rotating Background Emblem -->
+  <svg class="bg-serpent" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="100" cy="100" r="90" stroke="currentColor" stroke-width="1" opacity="0.15" />
+    <circle cx="100" cy="100" r="70" stroke="currentColor" stroke-width="1" stroke-dasharray="4 4" opacity="0.2" />
+    <path d="M100 10 L190 100 L100 190 L10 100 Z" stroke="currentColor" stroke-width="1" opacity="0.12" />
   </svg>
 
-  <div class="glass-ui" role="group" aria-label="Glass transparency">
-    <span>Clear</span>
-    <input type="range" id="glassSlider" min="5" max="90" value="30" aria-label="Glass transparency, clear to tinted">
-    <span>Tinted</span>
-  </div>
-
-  <!-- ================================================
-       NAVIGATION
-  ================================================ -->
+  <!-- Navigation Bar -->
   <nav>
     <div class="nav-container">
       <a href="#" class="logo">
-        <img class="logo-mark" src="msh-serpent-logo.png" alt="MSH Studio">
-        <span class="logo-text">MSH Studio</span>
+        <svg class="logo-mark" viewBox="0 0 64 64">
+          <rect width="64" height="64" rx="10" fill="#0c0c0e"/>
+          <polygon points="32,5 56,18 56,46 32,59 8,46 8,18" fill="none" stroke="#c9a96e" stroke-width="3"/>
+          <polygon points="32,18 44,24 44,40 32,46 20,40 20,24" fill="none" stroke="#c9a96e" stroke-width="2" opacity=".65"/>
+          <circle cx="32" cy="32" r="4.5" fill="#c9a96e"/>
+        </svg>
+        <span class="logo-text">Modelling Studio HUB</span>
       </a>
 
       <ul class="nav-links">
+        <li><a href="#video">Demo</a></li>
         <li><a href="#plugins">Plugins</a></li>
+        <li><a href="#toolkit">Toolkit</a></li>
         <li><a href="#commands">Commands</a></li>
-        <li><a href="#features">Features</a></li>
-        <li><a href="#pricing">Pricing</a></li>
-        <li><a href="#contact">Contact</a></li>
       </ul>
 
       <div class="nav-actions">
-        <a href="trial-license.html" class="nav-trial">Start Free Trial</a>
+        <a href="#trial" class="nav-trial">Free Trial</a>
         <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-          <!-- Sun -->
-          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="5"/>
-            <line x1="12" y1="1" x2="12" y2="3"/>
-            <line x1="12" y1="21" x2="12" y2="23"/>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-            <line x1="1" y1="12" x2="3" y2="12"/>
-            <line x1="21" y1="12" x2="23" y2="12"/>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-          </svg>
-          <!-- Moon -->
-          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-          </svg>
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
         </button>
       </div>
     </div>
   </nav>
 
-  <!-- ================================================
-       HERO
-  ================================================ -->
+  <!-- Hero Section -->
   <section class="hero">
     <div class="hero-overlay"></div>
-
     <div class="hero-content">
-      <p class="hero-eyebrow">Rhino 3D · The Professional Jewellery Suite</p>
-      <h1 class="hero-title">Design Jewellery<br><em>Faster &amp; Smarter</em></h1>
-      <p class="hero-subtitle">Speed of automation. Soul of a designer.</p>
-      <p class="hero-desc">The native command center for Rhino that understands jewellery. From gradient pavé and honeycomb cutters to 8K pro capture and automated metal reports — built by a working jewellery CAD designer over 12 years. Every tool solves a real problem.</p>
+      <p class="hero-eyebrow">Precision Jewelry CAD Suite</p>
+      <h1 class="hero-title">Elevate Your <em>Jewelry Craft</em></h1>
+      <p class="hero-subtitle">Next-Generation Rhino 8 Plugins & Parametric Tools</p>
+      <p class="hero-desc">Streamline your 3D jewelry manufacturing workflow with custom-engineered plugins, parametric cutters, mesh converters, and real-time bench tools.</p>
       <div class="hero-cta">
-        <a href="#plugins" class="btn-gold">Explore the Suite</a>
-        <a href="#commands" class="btn-outline">View All Commands</a>
+        <a href="#plugins" class="btn-gold">Explore Plugins</a>
+        <a href="#toolkit" class="btn-outline">Open Toolkit</a>
       </div>
     </div>
-
     <div class="scroll-indicator">
       <div class="scroll-line"></div>
     </div>
   </section>
 
-  <!-- ================================================
-       PLUGINS SECTION
-  ================================================ -->
-  <section id="plugins" class="plugins-section">
-    <div class="section-header reveal">
-      <p class="section-label">Flagship Tools</p>
-      <h2 class="section-title">The MSH Suite</h2>
+  <!-- Video Demo Section -->
+  <section id="video" class="video-section">
+    <div class="section-header">
+      <p class="section-label">See It In Action</p>
+      <h2 class="section-title">Workflow Demonstration</h2>
       <div class="divider"></div>
-      <p class="section-subtitle">Five flagship tools that cover everything from stone placement to metal reporting — built to replace hours of manual work with seconds of precision.</p>
+      <p class="section-subtitle">Watch how MSH Plugins accelerate design and production in Rhinoceros 8.</p>
+    </div>
+    <div class="video-wrapper">
+      <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="MSH Jewelry Suite Demo" allowfullscreen></iframe>
+    </div>
+  </section>
+
+  <!-- Plugins Section -->
+  <section id="plugins" class="plugins-section">
+    <div class="section-header">
+      <p class="section-label">Rhino 8 Plugins</p>
+      <h2 class="section-title">Production Software Suite</h2>
+      <div class="divider"></div>
+      <p class="section-subtitle">Engineered specifically for fine jewelry CAD designers and high-volume manufacturing teams.</p>
     </div>
 
     <div class="plugin-grid">
-
-      <!-- Azure Cutter Pro -->
-      <div class="plugin-card reveal">
+      <!-- Plugin 1 -->
+      <div class="plugin-card">
         <div class="plugin-content">
-          <div class="plugin-number">01 / 05</div>
-          <span class="plugin-tag">
-            <svg width="10" height="10" viewBox="0 0 12 12" fill="currentColor"><circle cx="6" cy="6" r="3"/></svg>
-            Hero Tool
-          </span>
-          <h3 class="plugin-name">Azure Cutter Pro</h3>
-          <p class="plugin-desc">The hidden hallmark of high jewellery — automated. Azure Cutter Pro reads your pavé layout and instantly generates honeycomb undercuts that reduce metal weight and flood every stone with light. What used to take hours of manual boolean operations is now a single command. Every cutter is sharp, clean, and casting-ready.</p>
-          <a href="azure-cutter-pro.html" class="plugin-link">Explore Plugin →</a>
+          <span class="plugin-number">01 / PLUGIN</span>
+          <span class="plugin-tag">Gem Cutting & Seats</span>
+          <h3 class="plugin-name">AzureCutterPro</h3>
+          <p class="plugin-desc">Automated parametric cutters with precise seats, girdles, and seat clearance controls designed for smooth stone setting and clean casting booleans.</p>
         </div>
-        <div class="plugin-visual vis-1">
-          <svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <!-- Honeycomb hex grid -->
-            <g opacity="0.85">
-              <polygon points="40,28 52,21 64,28 64,42 52,49 40,42" stroke="rgba(201,169,110,0.7)" stroke-width="1.2" fill="rgba(201,169,110,0.07)"/>
-              <polygon points="64,28 76,21 88,28 88,42 76,49 64,42" stroke="rgba(201,169,110,0.7)" stroke-width="1.2" fill="rgba(201,169,110,0.07)"/>
-              <polygon points="88,28 100,21 112,28 112,42 100,49 88,42" stroke="rgba(201,169,110,0.7)" stroke-width="1.2" fill="rgba(201,169,110,0.07)"/>
-              <polygon points="28,49 40,42 52,49 52,63 40,70 28,63" stroke="rgba(201,169,110,0.5)" stroke-width="1.2" fill="rgba(201,169,110,0.05)"/>
-              <polygon points="52,49 64,42 76,49 76,63 64,70 52,63" stroke="rgba(201,169,110,0.9)" stroke-width="1.5" fill="rgba(201,169,110,0.12)"/>
-              <polygon points="76,49 88,42 100,49 100,63 88,70 76,63" stroke="rgba(201,169,110,0.9)" stroke-width="1.5" fill="rgba(201,169,110,0.12)"/>
-              <polygon points="100,49 112,42 124,49 124,63 112,70 100,63" stroke="rgba(201,169,110,0.5)" stroke-width="1.2" fill="rgba(201,169,110,0.05)"/>
-              <polygon points="40,70 52,63 64,70 64,84 52,91 40,84" stroke="rgba(201,169,110,0.7)" stroke-width="1.2" fill="rgba(201,169,110,0.07)"/>
-              <polygon points="64,70 76,63 88,70 88,84 76,91 64,84" stroke="rgba(201,169,110,0.7)" stroke-width="1.2" fill="rgba(201,169,110,0.07)"/>
-              <polygon points="88,70 100,63 112,70 112,84 100,91 88,84" stroke="rgba(201,169,110,0.7)" stroke-width="1.2" fill="rgba(201,169,110,0.07)"/>
-              <polygon points="52,91 64,84 76,91 76,105 64,112 52,105" stroke="rgba(201,169,110,0.5)" stroke-width="1" fill="rgba(201,169,110,0.04)"/>
-              <polygon points="76,91 88,84 100,91 100,105 88,112 76,105" stroke="rgba(201,169,110,0.5)" stroke-width="1" fill="rgba(201,169,110,0.04)"/>
-            </g>
-            <text x="80" y="138" text-anchor="middle" font-size="9" fill="rgba(201,169,110,0.4)" font-family="monospace">MSH_Azure_Cutter_Pro</text>
+        <div class="plugin-visual">
+          <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="var(--accent-gold)" stroke-width="1.2">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+            <polyline points="2 17 12 22 22 17"/>
+            <polyline points="2 12 12 17 22 12"/>
           </svg>
         </div>
       </div>
 
-      <!-- Auto Pave Pro -->
-      <div class="plugin-card reveal">
+      <!-- Plugin 2 -->
+      <div class="plugin-card">
         <div class="plugin-content">
-          <div class="plugin-number">02 / 05</div>
-          <span class="plugin-tag">
-            <svg width="10" height="10" viewBox="0 0 12 12" fill="currentColor"><polygon points="6,1 11,11 1,11"/></svg>
-            Most Popular
-          </span>
-          <h3 class="plugin-name">Auto Pave Pro</h3>
-          <p class="plugin-desc">Two commands. Infinite possibilities. <strong>Auto Pave Gradient</strong> transitions stones from large to small across any surface with algorithmic precision. <strong>Auto Pave Scattered</strong> creates natural, organic pavé distributions that look handcrafted. Both place hundreds of surface-oriented stones in under 30 seconds — with full designer control over size, spacing, and count.</p>
-          <a href="pave_planner_page.html" class="plugin-link">Explore Plugin →</a>
+          <span class="plugin-number">02 / PLUGIN</span>
+          <span class="plugin-tag">Mesh Automation</span>
+          <h3 class="plugin-name">ConvertMeshToGem</h3>
+          <p class="plugin-desc">Instant conversion of imported mesh diamonds into native Matrix block gems and parametric objects with full dimensional data preservation.</p>
         </div>
-        <div class="plugin-visual vis-2">
-          <svg width="200" height="140" viewBox="0 0 200 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g>
-              <polygon points="22,35 30,25 38,35 30,45" fill="rgba(201,169,110,0.75)" stroke="rgba(201,169,110,0.4)" stroke-width="0.5"/>
-              <polygon points="50,35 57,26 64,35 57,44" fill="rgba(201,169,110,0.7)" stroke="rgba(201,169,110,0.4)" stroke-width="0.5"/>
-              <polygon points="76,36 82,28 88,36 82,44" fill="rgba(201,169,110,0.65)" stroke="rgba(201,169,110,0.4)" stroke-width="0.5"/>
-              <polygon points="100,37 105,30 110,37 105,44" fill="rgba(201,169,110,0.6)" stroke="rgba(201,169,110,0.4)" stroke-width="0.5"/>
-              <polygon points="121,37 125,31 129,37 125,43" fill="rgba(201,169,110,0.55)" stroke="rgba(201,169,110,0.4)" stroke-width="0.5"/>
-              <polygon points="140,38 143,33 146,38 143,43" fill="rgba(201,169,110,0.45)" stroke="rgba(201,169,110,0.4)" stroke-width="0.5"/>
-              <polygon points="157,39 159,34 162,39 159,44" fill="rgba(201,169,110,0.35)" stroke="rgba(201,169,110,0.4)" stroke-width="0.5"/>
-              <polygon points="171,39 173,35 175,39 173,43" fill="rgba(201,169,110,0.25)" stroke="rgba(201,169,110,0.3)" stroke-width="0.5"/>
-              <polygon points="22,65 30,55 38,65 30,75" fill="rgba(201,169,110,0.75)" stroke="rgba(201,169,110,0.4)" stroke-width="0.5"/>
-              <polygon points="50,65 57,56 64,65 57,74" fill="rgba(201,169,110,0.7)" stroke="rgba(201,169,110,0.4)" stroke-width="0.5"/>
-              <polygon points="76,66 82,58 88,66 82,74" fill="rgba(201,169,110,0.65)" stroke="rgba(201,169,110,0.4)" stroke-width="0.5"/>
-              <polygon points="100,67 105,60 110,67 105,74" fill="rgba(201,169,110,0.6)" stroke="rgba(201,169,110,0.4)" stroke-width="0.5"/>
-              <polygon points="121,67 125,61 129,67 125,73" fill="rgba(201,169,110,0.55)" stroke="rgba(201,169,110,0.4)" stroke-width="0.5"/>
-              <polygon points="140,68 143,63 146,68 143,73" fill="rgba(201,169,110,0.45)" stroke="rgba(201,169,110,0.4)" stroke-width="0.5"/>
-              <polygon points="157,69 159,64 162,69 159,74" fill="rgba(201,169,110,0.35)" stroke="rgba(201,169,110,0.4)" stroke-width="0.5"/>
-              <polygon points="22,95 30,85 38,95 30,105" fill="rgba(201,169,110,0.75)" stroke="rgba(201,169,110,0.4)" stroke-width="0.5"/>
-              <polygon points="50,95 57,86 64,95 57,104" fill="rgba(201,169,110,0.7)" stroke="rgba(201,169,110,0.4)" stroke-width="0.5"/>
-              <polygon points="76,96 82,88 88,96 82,104" fill="rgba(201,169,110,0.65)" stroke="rgba(201,169,110,0.4)" stroke-width="0.5"/>
-              <polygon points="100,97 105,90 110,97 105,104" fill="rgba(201,169,110,0.6)" stroke="rgba(201,169,110,0.4)" stroke-width="0.5"/>
-              <polygon points="121,97 125,91 129,97 125,103" fill="rgba(201,169,110,0.55)" stroke="rgba(201,169,110,0.4)" stroke-width="0.5"/>
-            </g>
-            <line x1="20" y1="125" x2="175" y2="125" stroke="rgba(201,169,110,0.25)" stroke-width="1" stroke-dasharray="3 2"/>
-            <text x="20" y="135" font-size="8" fill="rgba(201,169,110,0.4)" font-family="monospace">Large ——————————→ Small</text>
+        <div class="plugin-visual">
+          <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="var(--accent-gold)" stroke-width="1.2">
+            <path d="M6 3h12l4 6-10 12L2 9z"/>
+            <path d="M11 3v18"/>
+            <path d="M2 9h20"/>
           </svg>
         </div>
       </div>
-
-      <!-- Pave Planner Pro -->
-      <div class="plugin-card reveal">
-        <div class="plugin-content">
-          <div class="plugin-number">03 / 05</div>
-          <span class="plugin-tag">
-            <svg width="10" height="10" viewBox="0 0 12 12" fill="currentColor"><rect x="2" y="2" width="8" height="8" rx="1"/></svg>
-            Advanced
-          </span>
-          <h3 class="plugin-name">Paveplanner Pro</h3>
-          <p class="plugin-desc">Plan and visualise your entire pavé layout before committing a single stone. MSH_Paveplanner_Pro gives you an interactive multi-zone planning interface — define areas, assign stone sizes, preview density, and control cutter depths. The planning stage that eliminates production surprises.</p>
-          <a href="pave_planner_page.html" class="plugin-link">Explore Plugin →</a>
-        </div>
-        <div class="plugin-visual vis-3">
-          <svg width="160" height="140" viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="20" y="20" width="55" height="100" stroke="rgba(201,169,110,0.35)" stroke-width="1" stroke-dasharray="4 3" fill="rgba(201,169,110,0.04)" rx="2"/>
-            <rect x="85" y="20" width="55" height="100" stroke="rgba(201,169,110,0.55)" stroke-width="1" stroke-dasharray="4 3" fill="rgba(201,169,110,0.07)" rx="2"/>
-            <text x="47" y="15" text-anchor="middle" font-size="7.5" fill="rgba(201,169,110,0.4)" font-family="monospace">Zone A</text>
-            <text x="112" y="15" text-anchor="middle" font-size="7.5" fill="rgba(201,169,110,0.6)" font-family="monospace">Zone B</text>
-            <circle cx="34" cy="38" r="5" stroke="rgba(201,169,110,0.5)" stroke-width="1" fill="rgba(201,169,110,0.12)"/>
-            <circle cx="52" cy="38" r="5" stroke="rgba(201,169,110,0.5)" stroke-width="1" fill="rgba(201,169,110,0.12)"/>
-            <circle cx="34" cy="56" r="5" stroke="rgba(201,169,110,0.5)" stroke-width="1" fill="rgba(201,169,110,0.12)"/>
-            <circle cx="52" cy="56" r="5" stroke="rgba(201,169,110,0.5)" stroke-width="1" fill="rgba(201,169,110,0.12)"/>
-            <circle cx="34" cy="74" r="5" stroke="rgba(201,169,110,0.5)" stroke-width="1" fill="rgba(201,169,110,0.12)"/>
-            <circle cx="52" cy="74" r="5" stroke="rgba(201,169,110,0.5)" stroke-width="1" fill="rgba(201,169,110,0.12)"/>
-            <circle cx="101" cy="38" r="8" stroke="rgba(201,169,110,0.75)" stroke-width="1.5" fill="rgba(201,169,110,0.18)"/>
-            <circle cx="122" cy="38" r="8" stroke="rgba(201,169,110,0.75)" stroke-width="1.5" fill="rgba(201,169,110,0.18)"/>
-            <circle cx="101" cy="62" r="8" stroke="rgba(201,169,110,0.75)" stroke-width="1.5" fill="rgba(201,169,110,0.18)"/>
-            <circle cx="122" cy="62" r="8" stroke="rgba(201,169,110,0.75)" stroke-width="1.5" fill="rgba(201,169,110,0.18)"/>
-            <circle cx="101" cy="86" r="8" stroke="rgba(201,169,110,0.75)" stroke-width="1.5" fill="rgba(201,169,110,0.18)"/>
-            <circle cx="122" cy="86" r="8" stroke="rgba(201,169,110,0.75)" stroke-width="1.5" fill="rgba(201,169,110,0.18)"/>
-            <text x="80" y="132" text-anchor="middle" font-size="8" fill="rgba(201,169,110,0.35)" font-family="monospace">MSH_Paveplanner_Pro</text>
-          </svg>
-        </div>
-      </div>
-
-      <!-- Super Smart Sweep -->
-      <div class="plugin-card reveal">
-        <div class="plugin-content">
-          <div class="plugin-number">04 / 05</div>
-          <span class="plugin-tag">
-            <svg width="10" height="10" viewBox="0 0 12 12" fill="currentColor"><path d="M6 1L11 6L6 11L1 6Z"/></svg>
-            Metal Work
-          </span>
-          <h3 class="plugin-name">Super Smart Sweep</h3>
-          <p class="plugin-desc">Perfect metal flow — automatically. <strong>Super Smart Sweep On Srf</strong> aligns your sweep sections directly to any surface with controllable twist steps and tapering — no manual placement of cross-sections needed. <strong>Smart Sweep</strong> handles standard rail sweeps with intelligent parameter control. Clean geometry, every time.</p>
-          <a href="super-smart-sweep.html" class="plugin-link">Explore Plugin →</a>
-        </div>
-        <div class="plugin-visual vis-4">
-          <svg width="200" height="120" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M20 80 Q60 20, 100 60 T180 40" stroke="rgba(201,169,110,0.55)" stroke-width="2" fill="none"/>
-            <ellipse cx="38" cy="72" rx="5" ry="12" stroke="rgba(201,169,110,0.7)" stroke-width="1.2" fill="rgba(201,169,110,0.1)" transform="rotate(-20 38 72)"/>
-            <ellipse cx="78" cy="46" rx="6" ry="14" stroke="rgba(201,169,110,0.85)" stroke-width="1.2" fill="rgba(201,169,110,0.15)" transform="rotate(15 78 46)"/>
-            <ellipse cx="120" cy="58" rx="5" ry="11" stroke="rgba(201,169,110,0.7)" stroke-width="1.2" fill="rgba(201,169,110,0.1)" transform="rotate(-10 120 58)"/>
-            <ellipse cx="162" cy="44" rx="4" ry="9" stroke="rgba(201,169,110,0.5)" stroke-width="1.2" fill="rgba(201,169,110,0.08)" transform="rotate(5 162 44)"/>
-            <text x="100" y="110" text-anchor="middle" font-size="8" fill="rgba(201,169,110,0.35)" font-family="monospace">MSH_Super_Smart_Sweep</text>
-          </svg>
-        </div>
-      </div>
-
-      <!-- Command Hub & Utilities -->
-      <div class="plugin-card reveal">
-        <div class="plugin-content">
-          <div class="plugin-number">05 / 05</div>
-          <span class="plugin-tag">
-            <svg width="10" height="10" viewBox="0 0 12 12" fill="currentColor"><circle cx="6" cy="6" r="5" stroke="currentColor" fill="none"/></svg>
-            Utilities
-          </span>
-          <h3 class="plugin-name">Studio Command Hub</h3>
-          <p class="plugin-desc">A complete ecosystem of 18+ precision utilities for everyday CAD workflow. Instant metal density reports, automated 8K view captures, matrix block gem conversion, curve cleanups, and dynamic bounding boxes. The invisible force multiplier behind your daily modeling speed.</p>
-          <a href="#commands" class="plugin-link">Explore Commands →</a>
-        </div>
-        <div class="plugin-visual vis-5">
-          <svg width="160" height="140" viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="30" y="25" width="100" height="90" rx="6" stroke="rgba(201,169,110,0.4)" stroke-width="1" fill="rgba(201,169,110,0.03)"/>
-            <line x1="30" y1="45" x2="130" y2="45" stroke="rgba(201,169,110,0.3)" stroke-width="1"/>
-            <circle cx="42" cy="35" r="3" fill="rgba(201,169,110,0.5)"/>
-            <circle cx="52" cy="35" r="3" fill="rgba(201,169,110,0.3)"/>
-            <circle cx="62" cy="35" r="3" fill="rgba(201,169,110,0.3)"/>
-            <rect x="42" y="58" width="35" height="20" rx="3" fill="rgba(201,169,110,0.12)" stroke="rgba(201,169,110,0.3)" stroke-width="1"/>
-            <rect x="83" y="58" width="35" height="20" rx="3" fill="rgba(201,169,110,0.12)" stroke="rgba(201,169,110,0.3)" stroke-width="1"/>
-            <rect x="42" y="84" width="76" height="18" rx="3" fill="rgba(201,169,110,0.08)" stroke="rgba(201,169,110,0.2)" stroke-width="1"/>
-            <text x="80" y="130" text-anchor="middle" font-size="8" fill="rgba(201,169,110,0.35)" font-family="monospace">MSH_Toolkit_Ecosystem</text>
-          </svg>
-        </div>
-      </div>
-
     </div>
   </section>
 
-  <!-- ================================================
-       COMMAND HUB SECTION
-  ================================================ -->
-  <section id="commands" class="command-section">
+  <!-- Toolkit Section -->
+  <section id="toolkit" class="tk-section">
     <div class="section-header reveal">
-      <p class="section-label">Complete Toolkit</p>
-      <h2 class="section-title">18 Native Rhino Commands</h2>
+      <p class="section-label">Bench Calculators</p>
+      <h2 class="section-title">Jewelry Toolkit</h2>
       <div class="divider"></div>
-      <p class="section-subtitle">Every command is built directly into Rhino's native engine — zero learning curve, full command-line support, and instant execution.</p>
+      <p class="section-subtitle">Convert units, check ring sizes, estimate metal weight and price a piece. Everything runs in your browser.</p>
     </div>
 
-    <div class="command-categories">
-      <!-- Category 1: Gem & Stone Tools -->
-      <div class="category-block reveal">
-        <div class="category-header">
-          <div class="category-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="12 2 2 7 12 22 22 7 12 2"/></svg>
-          </div>
-          <h3 class="category-name">Gems &amp; Stone Placement</h3>
-          <span class="category-count">6 Commands</span>
-        </div>
-        <div class="commands-grid">
-          <div class="command-card">
-            <div class="command-icon-wrap">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg>
-            </div>
-            <div class="command-info">
-              <div class="command-name">MSH_AutoPave_Gradient</div>
-              <div class="command-desc">Algorithmic stone sizing &amp; placement across complex surfaces</div>
-              <span class="command-badge">Auto Pave Pro</span>
-            </div>
-          </div>
-          <div class="command-card">
-            <div class="command-icon-wrap">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="7" cy="7" r="3"/><circle cx="17" cy="9" r="2"/><circle cx="11" cy="17" r="4"/></svg>
-            </div>
-            <div class="command-info">
-              <div class="command-name">MSH_AutoPave_Scattered</div>
-              <div class="command-desc">Organic, random-distribution pavé layouts with collision avoidance</div>
-              <span class="command-badge">Auto Pave Pro</span>
-            </div>
-          </div>
-          <div class="command-card">
-            <div class="command-icon-wrap">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="12" y1="3" x2="12" y2="21"/></svg>
-            </div>
-            <div class="command-info">
-              <div class="command-name">MSH_Paveplanner_Pro</div>
-              <div class="command-desc">Multi-zone pavé map planner with density preview and stone counts</div>
-              <span class="command-badge">Paveplanner</span>
-            </div>
-          </div>
-          <div class="command-card">
-            <div class="command-icon-wrap">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-            </div>
-            <div class="command-info">
-              <div class="command-name">MSH_ConvertMeshToGem</div>
-              <div class="command-desc">Converts raw 3D mesh stones into native Matrix/Rhino block gems</div>
-              <span class="command-badge">Gem Engine</span>
-            </div>
-          </div>
-          <div class="command-card">
-            <div class="command-icon-wrap">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="2" x2="12" y2="22"/></svg>
-            </div>
-            <div class="command-info">
-              <div class="command-name">MSH_GemBezelBuilder</div>
-              <div class="command-desc">Generates parametric bezels, collets, and seats tuned to gem profile</div>
-              <span class="command-badge">Gem Engine</span>
-            </div>
-          </div>
-          <div class="command-card">
-            <div class="command-icon-wrap">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg>
-            </div>
-            <div class="command-info">
-              <div class="command-name">MSH_ProngGenerator</div>
-              <div class="command-desc">Auto-places prongs around selected gem contours with height control</div>
-              <span class="command-badge">Gem Engine</span>
-            </div>
-          </div>
-        </div>
+    <div class="tk-wrap">
+      <div class="tk-tabs tk-glass" role="tablist" aria-label="Jewelry toolkit">
+        <button class="tk-tab active" role="tab" id="tkt-units" data-tab="units" aria-selected="true" aria-controls="tkp-units">Units</button>
+        <button class="tk-tab" role="tab" id="tkt-ring" data-tab="ring" aria-selected="false" aria-controls="tkp-ring" tabindex="-1">Ring Size</button>
+        <button class="tk-tab" role="tab" id="tkt-metal" data-tab="metal" aria-selected="false" aria-controls="tkp-metal" tabindex="-1">Metal Weight</button>
+        <button class="tk-tab" role="tab" id="tkt-cost" data-tab="cost" aria-selected="false" aria-controls="tkp-cost" tabindex="-1">Cost Sheet</button>
       </div>
 
-      <!-- Category 2: Cutters & Undercuts -->
-      <div class="category-block reveal">
-        <div class="category-header">
-          <div class="category-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/></svg>
-          </div>
-          <h3 class="category-name">Cutters &amp; Undercuts</h3>
-          <span class="category-count">4 Commands</span>
+      <!-- TAB 1: UNITS -->
+      <div id="tkp-units" class="tk-panel tk-glass" role="tabpanel" aria-labelledby="tkt-units">
+        <div class="tk-grid c2">
+          <label class="tk-f"><span>Value</span><input id="uVal" type="number" inputmode="decimal" step="any" value="1"></label>
+          <label class="tk-f"><span>Convert from</span><select id="uFrom"></select></label>
         </div>
-        <div class="commands-grid">
-          <div class="command-card">
-            <div class="command-icon-wrap">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/></svg>
-            </div>
-            <div class="command-info">
-              <div class="command-name">MSH_Azure_Cutter_Pro</div>
-              <div class="command-desc">Automated honeycomb undercuts with custom wall angles and lip depth</div>
-              <span class="command-badge">Azure Pro</span>
-            </div>
-          </div>
-          <div class="command-card">
-            <div class="command-icon-wrap">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12l4 6-10 12L2 9z"/></svg>
-            </div>
-            <div class="command-info">
-              <div class="command-name">MSH_ChannelCutter</div>
-              <div class="command-desc">Generates seamless channel cutters following any guide curve</div>
-              <span class="command-badge">Cutter Engine</span>
-            </div>
-          </div>
-          <div class="command-card">
-            <div class="command-icon-wrap">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 4v16M4 12h16"/></svg>
-            </div>
-            <div class="command-info">
-              <div class="command-name">MSH_SeatCutter</div>
-              <div class="command-desc">Precision seat and girdle cutters with adjustable bearing angle</div>
-              <span class="command-badge">Cutter Engine</span>
-            </div>
-          </div>
-          <div class="command-card">
-            <div class="command-icon-wrap">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
-            </div>
-            <div class="command-info">
-              <div class="command-name">MSH_BooleanSuite</div>
-              <div class="command-desc">Batch boolean operations optimized for complex multi-cutter geometry</div>
-              <span class="command-badge">Cutter Engine</span>
-            </div>
-          </div>
-        </div>
+        <div class="tk-res" id="uOut"></div>
+        <p class="tk-note">1 ct = 0.2 g · 1 ozt = 31.1035 g · 1 dwt = 1.55517 g · 1 tola = 11.6638 g · 1 in = 25.4 mm. Weight units convert to weight units, length to length.</p>
       </div>
 
-      <!-- Category 3: Metal & Surfaces -->
-      <div class="category-block reveal">
-        <div class="category-header">
-          <div class="category-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
-          </div>
-          <h3 class="category-name">Metal Modeling &amp; Surfaces</h3>
-          <span class="category-count">4 Commands</span>
+      <!-- TAB 2: RING SIZE -->
+      <div id="tkp-ring" class="tk-panel tk-glass" role="tabpanel" aria-labelledby="tkt-ring" hidden>
+        <div class="tk-grid c2">
+          <label class="tk-f"><span>Size system</span><select id="rSys"></select></label>
+          <label class="tk-f"><span>Size</span><input id="rVal" type="text" inputmode="decimal" autocomplete="off" value="7"></label>
         </div>
-        <div class="commands-grid">
-          <div class="command-card">
-            <div class="command-icon-wrap">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12c0-4.4 3.6-8 8-8s8 3.6 8 8-3.6 8-8 8-8-3.6-8-8z"/><path d="M12 4v16"/></svg>
-            </div>
-            <div class="command-info">
-              <div class="command-name">MSH_Super_Smart_Sweep_On_Srf</div>
-              <div class="command-desc">Surface-aligned profile sweeps with twist control &amp; auto-taper</div>
-              <span class="command-badge">Smart Sweep</span>
-            </div>
-          </div>
-          <div class="command-card">
-            <div class="command-icon-wrap">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
-            </div>
-            <div class="command-info">
-              <div class="command-name">MSH_Smart_Sweep</div>
-              <div class="command-desc">Parametric rail sweeps with profile blending and live preview</div>
-              <span class="command-badge">Smart Sweep</span>
-            </div>
-          </div>
-          <div class="command-card">
-            <div class="command-icon-wrap">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            </div>
-            <div class="command-info">
-              <div class="command-name">MSH_ShankBuilder</div>
-              <div class="command-desc">Parametric ring shank generator — comfort fit, knife-edge, cathedral</div>
-              <span class="command-badge">Metal Studio</span>
-            </div>
-          </div>
-          <div class="command-card">
-            <div class="command-icon-wrap">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-            </div>
-            <div class="command-info">
-              <div class="command-name">MSH_WeightCalculator</div>
-              <div class="command-desc">Instant metal weight in 18K, 14K, Platinum, Silver with casting allowance</div>
-              <span class="command-badge">Metal Studio</span>
-            </div>
-          </div>
-        </div>
+        <div class="tk-res" id="rOut"></div>
+        <h4 class="tk-h">Conversion table used</h4>
+        <div class="tk-tblwrap" id="rTbl"></div>
+        <p class="tk-note">Everything is derived from the ISO 8653 inner circumference (C). US: inner diameter = 11.63 + 0.8128 × size, C = π × diameter. EU = C in mm. UK: C = 37.5 + 1.25 × letter steps (A = 0, half sizes allowed; type N, N½ or Z+1). Japan: size = 3C/π − 38. India: size = C − 40, an approximation, so confirm with your vendor. Sizes are rounded for display.</p>
       </div>
 
-      <!-- Category 4: Production & Studio Utilities -->
-      <div class="category-block reveal">
-        <div class="category-header">
-          <div class="category-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          </div>
-          <h3 class="category-name">Production &amp; Studio Utilities</h3>
-          <span class="category-count">4 Commands</span>
+      <!-- TAB 3: METAL WEIGHT -->
+      <div id="tkp-metal" class="tk-panel tk-glass" role="tabpanel" aria-labelledby="tkt-metal" hidden>
+        <div class="tk-grid c2">
+          <label class="tk-f"><span>Input type</span>
+            <select id="mMode"><option value="vol">Volume (cc)</option><option value="wax">Wax weight (g)</option></select></label>
+          <label class="tk-f"><span id="mAmtL">Volume (cc)</span><input id="mAmt" type="number" inputmode="decimal" step="any" min="0" value="1"></label>
+          <label class="tk-f"><span>Metal / alloy</span><select id="mMetal"></select></label>
+          <label class="tk-f"><span>Density (g/cc)<i id="mDenNote"></i></span><input id="mDen" type="number" inputmode="decimal" step="any" min="0"></label>
+          <label class="tk-f" id="mWaxW" hidden><span>Wax density (g/cc)</span><input id="mWax" type="number" inputmode="decimal" step="any" min="0" value="0.95"></label>
+          <label class="tk-f"><span>Wastage %</span><input id="mWaste" type="number" inputmode="decimal" step="any" min="0" value="8"></label>
         </div>
-        <div class="commands-grid">
-          <div class="command-card">
-            <div class="command-icon-wrap">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-            </div>
-            <div class="command-info">
-              <div class="command-name">MSH_CapturePro</div>
-              <div class="command-desc">8K studio renders with transparent background &amp; preset viewports</div>
-              <span class="command-badge">Pro Studio</span>
-            </div>
-          </div>
-          <div class="command-card">
-            <div class="command-icon-wrap">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-            </div>
-            <div class="command-info">
-              <div class="command-name">MSH_ReportGenerator</div>
-              <div class="command-desc">Automated PDF tech sheets with stone count, metal weight &amp; dimensions</div>
-              <span class="command-badge">Pro Studio</span>
-            </div>
-          </div>
-          <div class="command-card">
-            <div class="command-icon-wrap">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-            </div>
-            <div class="command-info">
-              <div class="command-name">MSH_CleanUpTools</div>
-              <div class="command-desc">One-click curve rebuild, duplicate remover &amp; mesh repair engine</div>
-              <span class="command-badge">Utility</span>
-            </div>
-          </div>
-          <div class="command-card">
-            <div class="command-icon-wrap">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
-            </div>
-            <div class="command-info">
-              <div class="command-name">MSH_BoundingBox_Dynamic</div>
-              <div class="command-desc">Oriented bounding box calculation for accurate stone &amp; casting volume</div>
-              <span class="command-badge">Utility</span>
-            </div>
-          </div>
+        <div class="tk-res" id="mOut"></div>
+        <p class="tk-note">Alloy density varies by recipe (copper, silver, zinc and palladium content), so 22K, 18K and 14K values are approximations. Edit the density to match your alloy. Wax mode: metal weight = wax weight × metal density ÷ wax density. Casting wax is roughly 0.9–1.0 g/cc; castable resins are often 1.1–1.2.</p>
+      </div>
+
+      <!-- TAB 4: COST SHEET -->
+      <div id="tkp-cost" class="tk-panel tk-glass" role="tabpanel" aria-labelledby="tkt-cost" hidden>
+        <div class="tk-grid c3">
+          <label class="tk-f"><span>Item / reference</span><input id="cName" type="text" placeholder="e.g. Ring R-1042" autocomplete="off"></label>
+          <label class="tk-f"><span>Currency symbol</span><input id="cCur" type="text" value="₹" maxlength="4"></label>
+          <label class="tk-f"><span>Metal weight (g)</span><input id="cWt" type="number" inputmode="decimal" step="any" min="0" value="5"></label>
+          <label class="tk-f"><span>Wastage %</span><input id="cWaste" type="number" inputmode="decimal" step="any" min="0" value="8"></label>
+          <label class="tk-f"><span>Metal rate per gram</span><input id="cRate" type="number" inputmode="decimal" step="any" min="0" placeholder="0"></label>
+          <label class="tk-f"><span>Making charge type</span>
+            <select id="cMkT"><option value="g">Per gram</option><option value="f">Flat amount</option></select></label>
+          <label class="tk-f"><span>Making charge</span><input id="cMk" type="number" inputmode="decimal" step="any" min="0" placeholder="0"></label>
+          <label class="tk-f"><span>Stone cost</span><input id="cStone" type="number" inputmode="decimal" step="any" min="0" placeholder="0"></label>
+          <label class="tk-f"><span>Other cost</span><input id="cOther" type="number" inputmode="decimal" step="any" min="0" placeholder="0"></label>
+          <label class="tk-f"><span>Markup %</span><input id="cMarkup" type="number" inputmode="decimal" step="any" min="0" value="15"></label>
+          <label class="tk-f"><span>GST %</span><input id="cGst" type="number" inputmode="decimal" step="any" min="0" value="3"></label>
         </div>
+        <div class="tk-actions">
+          <button type="button" class="btn-outline" id="cFromMetal">Use Metal Weight tab values</button>
+          <button type="button" class="btn-gold" id="cPrint">Print / Save PDF</button>
+        </div>
+        <div id="csPrint"></div>
+        <p class="tk-note">Metal cost uses weight plus wastage. Per-gram making charge is applied to the net weight. Markup is applied to the subtotal and GST to the marked-up value. If your making charges are taxed at a different rate than metal, adjust the GST % to suit. In the print dialog, choose "Save as PDF" to export.</p>
       </div>
     </div>
   </section>
 
-  <!-- ================================================
-       FEATURES SECTION
-  ================================================ -->
-  <section id="features" class="features-section">
-    <div class="section-header reveal">
-      <p class="section-label">Built for Precision</p>
-      <h2 class="section-title">Why MSH Studio?</h2>
-      <div class="divider"></div>
-      <p class="section-subtitle">Designed from the bench up. Every tool addresses a friction point experienced in professional CAD departments.</p>
-    </div>
-
-    <div class="features-grid">
-      <div class="feature-item reveal">
-        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-        <h3 class="feature-title">Lightning Speed</h3>
-        <p class="feature-text">Operations that take 45+ minutes manually complete in under 5 seconds. Multiply your daily output without sacrificing craftsmanship quality.</p>
-      </div>
-
-      <div class="feature-item reveal reveal-delay-1">
-        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        <h3 class="feature-title">Casting Guaranteed</h3>
-        <p class="feature-text">Every generated mesh is watertight, manifold, and validated against minimum wall tolerances. Zero STL errors at the 3D printer.</p>
-      </div>
-
-      <div class="feature-item reveal reveal-delay-2">
-        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
-        <h3 class="feature-title">Rhino Native</h3>
-        <p class="feature-text">Runs as a lightweight native plugin in Rhino 7 &amp; 8. No external dependencies, no complex installations — works right inside your existing workflow.</p>
+  <!-- Commands Section -->
+  <section id="commands" class="commands-section">
+    <div class="commands-container">
+      <div class="section-header" style="text-align: center; margin-bottom: 40px;">
+        <p class="section-label">Documentation</p>
+        <h2 class="section-title">Command Reference</h2>
+        <div class="divider"></div>
+        <p class="section-subtitle">Quick reference list for MSH Rhinoceros command line aliases.</p>
       </div>
     </div>
   </section>
 
-  <!-- ================================================
-       PRICING SECTION
-  ================================================ -->
-  <section id="pricing" class="pricing-section">
-    <div class="section-header reveal">
-      <p class="section-label">Simple Pricing</p>
-      <h2 class="section-title">Invest in Your Productivity</h2>
-      <div class="divider"></div>
-      <p class="section-subtitle">Choose the plan that fits your design studio. Every tier includes all 18 commands and free lifetime updates.</p>
-    </div>
-
-    <div class="pricing-grid">
-      <!-- Solo Designer -->
-      <div class="pricing-card reveal">
-        <p class="pricing-period">Solo Designer</p>
-        <div class="pricing-amount">$19</div>
-        <p class="pricing-duration">per month / billed annually</p>
-        <ul class="pricing-features">
-          <li>1 License Seat (Rhino 7 &amp; 8)</li>
-          <li>All 18 MSH Commands</li>
-          <li>Azure Cutter Pro Included</li>
-          <li>Auto Pave Pro Included</li>
-          <li>Email Support</li>
-          <li>Free Minor Updates</li>
-        </ul>
-        <a href="trial-license.html" class="btn-pricing">Start 14-Day Free Trial</a>
-      </div>
-
-      <!-- Pro Studio (Featured) -->
-      <div class="pricing-card featured reveal reveal-delay-1">
-        <span class="pricing-badge">Most Popular</span>
-        <p class="pricing-period">Pro Studio</p>
-        <div class="pricing-amount">$39</div>
-        <p class="pricing-duration">per month / billed annually</p>
-        <ul class="pricing-features">
-          <li>3 License Seats</li>
-          <li>All 18 MSH Commands</li>
-          <li>Full Flagship Plugin Suite</li>
-          <li>Cloud Zoo License Management</li>
-          <li>Priority 24/7 Support</li>
-          <li>Free Major &amp; Minor Updates</li>
-        </ul>
-        <a href="trial-license.html" class="btn-pricing">Start 14-Day Free Trial</a>
-      </div>
-
-      <!-- Enterprise -->
-      <div class="pricing-card reveal reveal-delay-2">
-        <p class="pricing-period">Enterprise</p>
-        <div class="pricing-amount">$89</div>
-        <p class="pricing-duration">per month / custom seat pool</p>
-        <ul class="pricing-features">
-          <li>Unlimited Team Seats</li>
-          <li>Custom Command Scripting</li>
-          <li>Dedicated Integration Manager</li>
-          <li>Custom Metal &amp; Gem Databases</li>
-          <li>On-site / Video CAD Training</li>
-          <li>SLA Guaranteed Uptime</li>
-        </ul>
-        <a href="#contact" class="btn-pricing">Contact Sales</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================================================
-       CONTACT SECTION
-  ================================================ -->
-  <section id="contact" class="contact-section">
-    <div class="section-header reveal">
-      <p class="section-label">Get in Touch</p>
-      <h2 class="section-title">Direct Studio Support</h2>
-      <div class="divider"></div>
-      <p class="section-subtitle">Have questions about compatibility, custom script requests, or enterprise licensing?</p>
-    </div>
-
-    <div class="contact-grid">
-      <div class="contact-item reveal">
-        <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        <div class="contact-label">Email Support</div>
-        <div class="contact-value"><a href="mailto:support@modellingstudiohub.com">support@modellingstudiohub.com</a></div>
-      </div>
-
-      <div class="contact-item reveal reveal-delay-1">
-        <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-        <div class="contact-label">WhatsApp CAD Line</div>
-        <div class="contact-value"><a href="#">+91 (Studio Support)</a></div>
-      </div>
-
-      <div class="contact-item reveal reveal-delay-2">
-        <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-        <div class="contact-label">McNeel Package Hub</div>
-        <div class="contact-value">Yak Package Distribution</div>
-      </div>
-
-      <div class="contact-item reveal reveal-delay-3">
-        <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        <div class="contact-label">Location</div>
-        <div class="contact-value">Mumbai, Maharashtra, India</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================================================
-       FOOTER
-  ================================================ -->
-  <footer>
-    <div class="footer-inner">
-      <div class="footer-logo">Modelling Studio HUB</div>
-      <div class="footer-text">&copy; 2026 MSH3DSTUDIO. Built for Jewellery CAD Designers Worldwide.</div>
-      <ul class="footer-links">
-        <li><a href="#plugins">Plugins</a></li>
-        <li><a href="#commands">Commands</a></li>
-        <li><a href="trial-license.html">Trial License</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </div>
-  </footer>
-
-  <!-- ================================================
-       INTERACTIVE SCRIPTS
-  ================================================ -->
+  <!-- JavaScript Engines -->
   <script>
-    // ----------------------------------------------------
-    // 1. Theme Engine Toggle
-    // ----------------------------------------------------
-    const themeToggleBtn = document.getElementById('themeToggle');
-    const htmlElement = document.documentElement;
+    /* ---------- Theme Toggle & UI Mechanics ---------- */
+    (function() {
+      const toggleBtn = document.getElementById('themeToggle');
+      const html = document.documentElement;
 
-    themeToggleBtn.addEventListener('click', () => {
-      const currentTheme = htmlElement.getAttribute('data-theme');
-      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      htmlElement.setAttribute('data-theme', newTheme);
-    });
-
-    // ----------------------------------------------------
-    // 2. Cursor Serpent Following Engine
-    // ----------------------------------------------------
-    const cursorSerpent = document.getElementById('cursorSerpent');
-    let mouseX = window.innerWidth / 2;
-    let mouseY = window.innerHeight / 2;
-    let serpentX = mouseX;
-    let serpentY = mouseY;
-
-    window.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      cursorSerpent.style.opacity = '1';
-    });
-
-    window.addEventListener('mouseleave', () => {
-      cursorSerpent.style.opacity = '0';
-    });
-
-    function animateCursor() {
-      serpentX += (mouseX - serpentX) * 0.12;
-      serpentY += (mouseY - serpentY) * 0.12;
-      cursorSerpent.style.transform = `translate3d(${serpentX - 22}px, ${serpentY - 22}px, 0)`;
-      requestAnimationFrame(animateCursor);
-    }
-    animateCursor();
-
-    // ----------------------------------------------------
-    // 3. Rotating Background Logo on Scroll
-    // ----------------------------------------------------
-    const bgSerpent = document.getElementById('bgSerpent');
-    window.addEventListener('scroll', () => {
-      const scrollY = window.scrollY;
-      bgSerpent.style.transform = `translate(-50%, -50%) rotate(${scrollY * 0.08}deg)`;
-    });
-
-    // ----------------------------------------------------
-    // 4. Liquid Glass Transparency Slider
-    // ----------------------------------------------------
-    const glassSlider = document.getElementById('glassSlider');
-    glassSlider.addEventListener('input', (e) => {
-      const val = e.target.value / 30; // Normalized factor around 1.0 default
-      htmlElement.style.setProperty('--glass-k', val);
-    });
-
-    // ----------------------------------------------------
-    // 5. Chromium Refraction Detection
-    // ----------------------------------------------------
-    if (window.chrome || (navigator.userAgent.indexOf("Chrome") !== -1)) {
-      htmlElement.classList.add('has-refraction');
-    }
-
-    // ----------------------------------------------------
-    // 6. Intersection Observer Scroll Reveal
-    // ----------------------------------------------------
-    const revealElements = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
+      // Theme toggle
+      toggleBtn.addEventListener('click', () => {
+        const nextTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', nextTheme);
       });
-    }, {
-      threshold: 0.15,
-      rootMargin: "0px 0px -50px 0px"
-    });
+    })();
 
-    revealElements.forEach(el => observer.observe(el));
+    /* ---------- Jewelry Toolkit ---------- */
+    (function () {
+      const $ = id => document.getElementById(id);
+      const PI = Math.PI;
+      const nf = (n, d = 2) => isFinite(n) ? (+n.toFixed(d)).toLocaleString('en-US', { maximumFractionDigits: d }) : '—';
+      const sig = n => {
+        if (!isFinite(n)) return '—';
+        if (n === 0) return '0';
+        const a = Math.abs(n);
+        if (a < 1e-6 || a >= 1e12) return n.toExponential(4);
+        return (+n.toPrecision(7)).toLocaleString('en-US', { maximumFractionDigits: 10 });
+      };
+      const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+      const tile = (label, value, hl) => `<div class="tk-tile${hl ? ' hl' : ''}"><small>${label}</small><b>${value}</b></div>`;
+
+      /* ---------- Tabs ---------- */
+      const tabs = [...document.querySelectorAll('.tk-tab')];
+      const panels = [...document.querySelectorAll('.tk-panel')];
+      function show(t) {
+        tabs.forEach(b => {
+          const on = b === t;
+          b.classList.toggle('active', on);
+          b.setAttribute('aria-selected', on);
+          b.tabIndex = on ? 0 : -1;
+        });
+        panels.forEach(p => p.hidden = p.id !== 'tkp-' + t.dataset.tab);
+      }
+      tabs.forEach((b, i) => {
+        b.addEventListener('click', () => show(b));
+        b.addEventListener('keydown', e => {
+          if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+          const n = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+          n.focus(); show(n);
+        });
+      });
+
+      /* ---------- 1. Units ---------- */
+      const U = {
+        g:    { n: 'Gram',        s: 'g',    f: 1,       c: 'w' },
+        kg:   { n: 'Kilogram',    s: 'kg',   f: 1000,    c: 'w' },
+        ct:   { n: 'Carat',       s: 'ct',   f: 0.2,     c: 'w' },
+        ozt:  { n: 'Troy ounce',  s: 'ozt',  f: 31.1035, c: 'w' },
+        dwt:  { n: 'Pennyweight', s: 'dwt',  f: 1.55517, c: 'w' },
+        tola: { n: 'Tola',        s: 'tola', f: 11.6638, c: 'w' },
+        mm:   { n: 'Millimetre',  s: 'mm',   f: 1,       c: 'l' },
+        'in': { n: 'Inch',        s: 'in',   f: 25.4,    c: 'l' }
+      };
+      const uOpts = c => Object.entries(U).filter(([, o]) => o.c === c).map(([k, o]) => `<option value="${k}">${o.n} (${o.s})</option>`).join('');
+      $('uFrom').innerHTML = `<optgroup label="Weight">${uOpts('w')}</optgroup><optgroup label="Length">${uOpts('l')}</optgroup>`;
+      function units() {
+        const v = parseFloat($('uVal').value), k =$('uFrom').value, u = U[k];
+        if (isNaN(v)) { $('uOut').innerHTML = '<p class="tk-note">Enter a value to convert.</p>'; return; }
+        $('uOut').innerHTML = Object.entries(U)
+          .filter(([x, o]) => o.c === u.c && x !== k)
+          .map(([, o]) => tile(`${o.n} (${o.s})`, sig(v * u.f / o.f)))
+          .join('');
+      }
+
+      /* ---------- 2. Ring size (all via ISO circumference, mm) ---------- */
+      const ukFmt = c => {
+        const i = Math.round((c - 37.5) / 1.25 * 2) / 2;
+        if (i < 0) return '< A';
+        const w = Math.floor(i), half = i - w ? '½' : '';
+        return (w <= 25 ? String.fromCharCode(65 + w) : 'Z+' + (w - 25)) + half;
+      };
+      const ukParse = t => {
+        const m = t.trim().toUpperCase().replace(/\s+/g, '').match(/^([A-Z])(?:\+(\d+))?(½|\.5|1\/2)?$/);
+        if (!m || (m[2] && m[1] !== 'Z')) return NaN;
+        return 37.5 + 1.25 * ((m[2] ? 25 + +m[2] : m[1].charCodeAt(0) - 65) + (m[3] ? .5 : 0));
+      };
+      const SYS = {
+        us:   { l: 'US / Canada',            ph: '7',       toC: s => PI * (11.63 + .8128 * s), rep: c => nf(Math.round((c / PI - 11.63) / .8128 * 4) / 4, 2) },
+        uk:   { l: 'UK / Australia',         ph: 'N or N½', toC: null,                          rep: ukFmt },
+        eu:   { l: 'EU (ISO circumference)', ph: '54.4',    toC: s => s,                        rep: c => nf(c, 1) },
+        'in': { l: 'India',                  ph: '14',      toC: s => s + 40,                   rep: c => nf(c - 40, 1) },
+        jp:   { l: 'Japan',                  ph: '14',      toC: s => PI * (s + 38) / 3,        rep: c => String(Math.round(3 * c / PI - 38)) },
+        dia:  { l: 'Inner diameter (mm)',    ph: '17.3',    toC: d => PI * d,                   rep: c => nf(c / PI, 2) },
+        circ: { l: 'Inner circumference (mm)', ph: '54.4',  toC: c => c,                        rep: c => nf(c, 2) }
+      };
+      $('rSys').innerHTML = Object.entries(SYS).map(([k, o]) => `<option value="${k}">${o.l}</option>`).join('');
+      let lastC = null;
+      function ring() {
+        const sys = $('rSys').value, raw =$('rVal').value;
+        const v = sys === 'uk' ? ukParse(raw) : parseFloat(raw);
+        const c = sys === 'uk' ? v : SYS[sys].toC(v);
+        $('rVal').placeholder = SYS[sys].ph;
+        if (!isFinite(c) || c < 30 || c > 90) {
+          $('rOut').innerHTML = `<p class="tk-note">${raw.trim() ? 'Size not recognised or outside the typical range (about 36–75 mm circumference).' : 'Enter a size.'}</p>`;
+          lastC = null; table(null); return;
+        }
+        lastC = c;
+        $('rOut').innerHTML =
+          tile('US', SYS.us.rep(c)) + tile('UK', ukFmt(c)) + tile('EU', SYS.eu.rep(c)) +
+          tile('India', SYS['in'].rep(c)) + tile('Japan', SYS.jp.rep(c)) +
+          tile('Inner diameter', nf(c / PI, 2) + ' mm', true) + tile('Inner circumference', nf(c, 2) + ' mm', true);
+        table(c);
+      }
+      function table(c) {
+        let best = -1, bestD = 99, rows = [];
+        for (let s = 3; s <= 13; s += .5) {
+          const rc = PI * (11.63 + .8128 * s);
+          if (c != null && Math.abs(rc - c) < bestD) { bestD = Math.abs(rc - c); best = rows.length; }
+          rows.push(`<tr data-i="${rows.length}"><td>${s}</td><td>${ukFmt(rc)}</td><td>${nf(rc, 1)}</td><td>${nf(rc - 40, 1)}</td><td>${nf(3 * rc / PI - 38, 1)}</td><td>${nf(rc / PI, 2)}</td><td>${nf(rc, 2)}</td></tr>`);
+        }
+        $('rTbl').innerHTML = `<table class="tk-tbl"><thead><tr><th>US</th><th>UK</th><th>EU</th><th>India</th><th>Japan</th><th>Ø mm</th><th>Circ. mm</th></tr></thead><tbody>${rows.join('')}</tbody></table>`;
+        if (best >= 0 && bestD < .65) {
+          const tr = $('rTbl').querySelector(`tr[data-i="${best}"]`);
+          tr.classList.add('hit');
+          $('rTbl').scrollTop = tr.offsetTop - $('rTbl').clientHeight / 2;         }       }$('rSys').addEventListener('change', () => {
+        if (lastC) $('rVal').value = SYS[$('rSys').value].rep(lastC);
+        ring();
+      });
+
+      /* ---------- 3. Metal weight ---------- */
+      const M = [
+        ['g24', 'Gold 24K (fine)', 19.32], ['g22', 'Gold 22K', 17.7], ['g18', 'Gold 18K', 15.5], ['g14', 'Gold 14K', 13.0],
+        ['ag', 'Silver (fine)', 10.49], ['st', 'Sterling silver 925', 10.36], ['pt', 'Platinum', 21.45], ['pd', 'Palladium', 12.02]
+      ];
+      $('mMetal').innerHTML = M.map(m => `<option value="${m[0]}">${m[1]} — ${m[2]}</option>`).join('');
+      let lastMetal = null;
+      function resetDensity() {
+        $('mDen').value = M.find(m => m[0] === $('mMetal').value)[2];$('mDenNote').textContent = '';
+      }
+      function metal() {
+        const wax = $('mMode').value === 'wax';$('mWaxW').hidden = !wax;
+        $('mAmtL').textContent = wax ? 'Wax weight (g)' : 'Volume (cc)';
+        const a = parseFloat($('mAmt').value), d = parseFloat($('mDen').value);
+        const w = Math.max(0, parseFloat($('mWaste').value) \vert{}\vert{} 0), wd = parseFloat($('mWax').value);
+        if (!(a > 0) || !(d > 0) || (wax && !(wd > 0))) {
+          $('mOut').innerHTML = '<p class="tk-note">Enter a positive amount and density.</p>'; lastMetal = null; return;
+        }
+        const vol = wax ? a / wd : a, net = vol * d, gross = net * (1 + w / 100);
+        lastMetal = { net, w };
+        $('mOut').innerHTML =
+          tile('Net metal weight', nf(net, 3) + ' g', true) +
+          tile('Weight incl. wastage', nf(gross, 3) + ' g', true) +
+          tile('Wastage added', nf(gross - net, 3) + ' g') +
+          tile('Net in dwt', nf(net / 1.55517, 3)) +
+          tile('Net in carats', nf(net / 0.2, 2)) +
+          tile(wax ? 'Volume from wax' : 'Volume', nf(vol, 3) + ' cc');
+      }
+      $('mMetal').addEventListener('change', () => { resetDensity(); metal(); });
+      $('mDen').addEventListener('input', () => {$('mDenNote').textContent = 'edited'; });
+      resetDensity();
+
+      /* ---------- 4. Cost sheet ---------- */
+      const val = id => Math.max(0, parseFloat($(id).value) || 0);
+      const money = n => ($('cCur').value || '') + n.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      function cost() {
+        const wt = val('cWt'), w = val('cWaste'), rate = val('cRate'), mk = val('cMk'), st = val('cStone'),
+              ot = val('cOther'), mu = val('cMarkup'), gs = val('cGst'), perG = $('cMkT').value === 'g';
+        const gross = wt * (1 + w / 100), metalC = gross * rate, making = perG ? wt * mk : mk;
+        const sub = metalC + making + st + ot, mkp = sub * mu / 100, tax = sub + mkp, gst = tax * gs / 100, total = tax + gst;
+        const rows = [
+          ['Metal', `${nf(wt, 3)} g + ${nf(w, 2)}% wastage = ${nf(gross, 3)} g × ${money(rate)}/g`, metalC],
+          ['Making charge', perG ? `${nf(wt, 3)} g × ${money(mk)}/g` : 'Flat amount', making],
+          ['Stones', '', st],
+          ['Other costs', '', ot],
+          ['Subtotal', '', sub, 'sub'],
+          [`Markup (${nf(mu, 2)}%)`, '', mkp],
+          ['Taxable value', '', tax, 'sub'],
+          [`GST (${nf(gs, 2)}%)`, '', gst]
+        ];
+        const ref = $('cName').value.trim();$('csPrint').innerHTML =
+          `<div class="tk-printhead"><h3>Cost Sheet${ref ? ' — ' + esc(ref) : ''}</h3><p>${new Date().toLocaleDateString()} · MSH Jewelry Toolkit</p></div>` +
+          `<table class="tk-cs"><tbody>` +
+          rows.map(r => `<tr class="${r[3] || ''}"><td>${r[0]}${r[1] ? `<small>${r[1]}</small>` : ''}</td><td>${money(r[2])}</td></tr>`).join('') +
+          `<tr class="total"><td>Final price</td><td>${money(total)}</td></tr></tbody></table>`;
+      }
+      $('cFromMetal').addEventListener('click', () => {
+        if (!lastMetal) { show(tabs[2]); return; }
+        $('cWt').value = +lastMetal.net.toFixed(3);$('cWaste').value = lastMetal.w;
+        cost();
+      });
+      $('cPrint').addEventListener('click', () => {
+        cost();
+        const root = document.createElement('div');
+        root.id = 'tkPrintRoot';
+        root.innerHTML = $('csPrint').innerHTML;
+        document.body.appendChild(root);
+        document.documentElement.classList.add('tk-printing');
+        const done = () => {
+          root.remove();
+          document.documentElement.classList.remove('tk-printing');
+          window.removeEventListener('afterprint', done);
+        };
+        window.addEventListener('afterprint', done);
+        window.print();
+      });
+
+      /* ---------- Live updates ---------- */
+      const live = (id, fn) => { const p = $(id); p.addEventListener('input', fn); p.addEventListener('change', fn); };
+      live('tkp-units', units); live('tkp-ring', ring); live('tkp-metal', metal); live('tkp-cost', cost);
+      units(); ring(); metal(); cost();
+    })();
   </script>
-
 </body>
 </html>
